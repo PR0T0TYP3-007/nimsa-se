@@ -1,0 +1,88 @@
+<%- include('layout-top') %>
+
+<div class="admin-header">
+  <h1>Manage Events</h1>
+  <p>Create and manage webinars, conventions, campaigns, and other events.</p>
+</div>
+
+<!-- Add Event Form -->
+<div class="admin-card">
+  <div class="admin-card-header"><h3>Add New Event</h3></div>
+  <div class="admin-card-body">
+    <form action="/admin/events" method="POST">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+        <div class="form-group" style="grid-column:1/-1;">
+          <label class="form-label">Event Title *</label>
+          <input type="text" name="title" class="form-control" placeholder="e.g. Clinical Skills Webinar — Cardiology" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Date *</label>
+          <input type="date" name="date" class="form-control" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Time *</label>
+          <input type="time" name="time" class="form-control" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Event Type *</label>
+          <select name="type" class="form-control" required>
+            <option>Webinar</option>
+            <option>Convention</option>
+            <option>Workshop</option>
+            <option>Campaign</option>
+            <option>Seminar</option>
+            <option>Summit</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Location *</label>
+          <input type="text" name="location" class="form-control" placeholder="e.g. Online (Zoom) or University of Nigeria, Nsukka" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Image URL</label>
+          <input type="url" name="image" class="form-control" placeholder="https://... (optional)">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Registration Link</label>
+          <input type="url" name="registrationLink" class="form-control" placeholder="https://...">
+        </div>
+        <div class="form-group" style="grid-column:1/-1;">
+          <label class="form-label">Description *</label>
+          <textarea name="description" class="form-control" rows="4" placeholder="Full event description..." required></textarea>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-gold">+ Add Event</button>
+    </form>
+  </div>
+</div>
+
+<!-- Events Table -->
+<div class="admin-card">
+  <div class="admin-card-header">
+    <h3>All Events (<%= events.length %>)</h3>
+  </div>
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr><th>Title</th><th>Date</th><th>Type</th><th>Status</th><th>Actions</th></tr>
+      </thead>
+      <tbody>
+        <% events.sort((a,b) => new Date(b.date) - new Date(a.date)).forEach(ev => { %>
+        <tr>
+          <td><strong><%= ev.title %></strong></td>
+          <td><%= new Date(ev.date).toLocaleDateString('en-NG', {day:'numeric',month:'short',year:'numeric'}) %></td>
+          <td><span class="badge badge-green"><%= ev.type %></span></td>
+          <td><span class="badge <%= ev.status==='upcoming'?'badge-gold':'badge-blue' %>"><%= ev.status %></span></td>
+          <td>
+            <form action="/admin/events/<%= ev.id %>/delete" method="POST" style="display:inline;">
+              <button type="submit" class="btn btn-sm btn-danger" data-confirm="Delete this event? This cannot be undone.">Delete</button>
+            </form>
+          </td>
+        </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<%- include('layout-bottom') %>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<%- include('partials/nav') %>
+
+<div class="page-hero">
+  <div class="container">
+    <div class="eyebrow">News & Stories</div>
+    <h1>Latest from NiMSA SE</h1>
+    <p>Achievements, outreach reports, announcements, and success stories from across the South East Region.</p>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container">
+    <% if (isAdmin) { %>
+    <div class="info-box" style="margin-bottom:2rem;">
+      <p>🔧 <strong>Admin:</strong> <a href="/admin/news">Manage news posts</a> — add, edit, or remove news articles.</p>
+    </div>
+    <% } %>
+
+    <!-- Featured -->
+    <% if (featured) { %>
+    <div class="news-featured fade-in" style="margin-bottom:4rem;">
+      <div class="news-featured-img">
+        <div style="text-align:center;color:white;padding:2rem;">
+          <span class="badge badge-gold" style="margin-bottom:1rem;"><%= featured.category %></span>
+          <h2 style="color:white;font-size:1.6rem;margin-bottom:1rem;"><%= featured.title %></h2>
+          <p style="color:rgba(255,255,255,0.75);font-size:0.9rem;"><%= new Date(featured.date).toLocaleDateString('en-NG', {day:'numeric',month:'long',year:'numeric'}) %></p>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;justify-content:center;">
+        <span class="badge badge-gold" style="width:fit-content;margin-bottom:1rem;"><%= featured.category %></span>
+        <h2 style="margin-bottom:1rem;"><%= featured.title %></h2>
+        <p style="color:var(--text-muted);margin-bottom:0.8rem;font-size:0.85rem;">
+          <%= new Date(featured.date).toLocaleDateString('en-NG', {weekday:'long',day:'numeric',month:'long',year:'numeric'}) %>
+        </p>
+        <p style="margin-bottom:1.5rem;"><%= featured.excerpt %></p>
+        <a href="#" class="btn btn-green" style="width:fit-content;">Read Full Story →</a>
+      </div>
+    </div>
+    <% } %>
+
+    <!-- Rest of news -->
+    <% if (rest.length) { %>
+    <div class="section-header" style="text-align:left;margin-bottom:2rem;">
+      <h3>More Stories</h3>
+    </div>
+    <div class="grid-3">
+      <% rest.forEach((item, i) => { %>
+      <div class="news-card fade-in" style="transition-delay:<%= i*0.1 %>s">
+        <div class="news-card-img">
+          <div style="text-align:center;padding:1rem;">
+            <span class="badge badge-gold"><%= item.category %></span>
+          </div>
+        </div>
+        <div class="news-card-body">
+          <p class="news-date"><%= new Date(item.date).toLocaleDateString('en-NG', {day:'numeric',month:'long',year:'numeric'}) %></p>
+          <h4 class="news-title"><%= item.title %></h4>
+          <p class="news-excerpt"><%= item.excerpt.substring(0,110) %>...</p>
+          <a href="#" style="font-size:0.82rem;font-weight:600;color:var(--green-primary);display:inline-block;margin-top:0.8rem;">Read More →</a>
+        </div>
+      </div>
+      <% }) %>
+    </div>
+    <% } %>
+
+    <% if (!featured && !rest.length) { %>
+    <div style="text-align:center;padding:4rem 0;color:var(--text-muted);">
+      <h3>No news posts yet</h3>
+      <p>Check back soon for updates from NiMSA SE.</p>
+    </div>
+    <% } %>
+  </div>
+</section>
+
+<%- include('partials/footer') %>
+<script src="/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,95 @@
+<%- include('layout-top') %>
+
+<div class="admin-header">
+  <h1>Welcome, <%= user.name.split(' ')[0] %> 👋</h1>
+  <p>NiMSA SE Admin Dashboard — <%= new Date().toLocaleDateString('en-NG', {weekday:'long',day:'numeric',month:'long',year:'numeric'}) %></p>
+</div>
+
+<!-- Stats -->
+<div class="grid-4" style="margin-bottom:2rem;">
+  <div class="stat-card">
+    <div class="stat-icon green">
+      <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+    </div>
+    <div>
+      <div class="stat-num"><%= stats.executives %></div>
+      <div class="stat-label">Executives</div>
+    </div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon gold">
+      <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"/></svg>
+    </div>
+    <div>
+      <div class="stat-num"><%= stats.events %></div>
+      <div class="stat-label">Events</div>
+    </div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon blue">
+      <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zM6 20V4h7v5h5v11H6z"/></svg>
+    </div>
+    <div>
+      <div class="stat-num"><%= stats.bulletins %></div>
+      <div class="stat-label">Bulletins</div>
+    </div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon purple">
+      <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+    </div>
+    <div>
+      <div class="stat-num"><%= stats.users %></div>
+      <div class="stat-label">Registered Users</div>
+    </div>
+  </div>
+</div>
+
+<!-- Quick Actions -->
+<div class="admin-card">
+  <div class="admin-card-header">
+    <h3>Quick Actions</h3>
+  </div>
+  <div class="admin-card-body">
+    <div class="grid-4">
+      <a href="/admin/executives" class="btn btn-green" style="justify-content:center;">+ Add Executive</a>
+      <a href="/admin/events" class="btn btn-green" style="justify-content:center;">+ Add Event</a>
+      <a href="/admin/bulletin" class="btn btn-green" style="justify-content:center;">+ Upload Bulletin</a>
+      <a href="/admin/news" class="btn btn-green" style="justify-content:center;">+ Post News</a>
+    </div>
+  </div>
+</div>
+
+<!-- Recent Users -->
+<div class="admin-card">
+  <div class="admin-card-header">
+    <h3>Recent Registrations</h3>
+    <a href="/admin/users" class="btn btn-sm btn-outline-gold">View All</a>
+  </div>
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th><th>Email</th><th>Role</th><th>Joined</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% recentUsers.forEach(u => { %>
+        <tr>
+          <td><strong><%= u.name %></strong></td>
+          <td><%= u.email %></td>
+          <td><span class="badge <%= u.role === 'admin' ? 'badge-gold' : 'badge-green' %>"><%= u.role %></span></td>
+          <td><%= new Date(u.createdAt).toLocaleDateString('en-NG') %></td>
+        </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Admin Info -->
+<div class="info-box">
+  <p>🔐 <strong>Security Reminder:</strong> Change the default admin password via the Settings page. Never share admin credentials.</p>
+</div>
+
+<%- include('layout-bottom') %>

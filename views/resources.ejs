@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<%- include('partials/nav') %>
+
+<div class="page-hero">
+  <div class="container">
+    <div class="eyebrow">Resource Hub</div>
+    <h1>Academic Resources</h1>
+    <p>Past questions, clinical guides, scholarships, and more — everything a Southeast medical student needs, in one place.</p>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container">
+    <% const resources = [
+      { icon: '📄', title: 'Past Questions', desc: 'Curated past exam questions from all six member schools — organised by year, course, and level. Updated each semester.', count: '200+ files', link: settings.resPastQuestions || '#', color: '#e8f5e9', iconColor: '#006400' },
+      { icon: '🩺', title: 'Clinical Guides', desc: 'Step-by-step clinical examination guides, OSCE prep materials, and bedside manuals for clinical-year students.', count: '45+ guides', link: settings.resClinicalGuides || '#', color: '#e3f2fd', iconColor: '#1565c0' },
+      { icon: '✈️', title: 'IFMSA Exchange', desc: 'Everything you need to apply for international medical exchanges — documents, deadlines, past participants\' experiences.', count: '12 resources', link: settings.resIFMSA || '#', color: '#fff3e0', iconColor: '#e65100' },
+      { icon: '🎓', title: 'Scholarships', desc: 'Locally and internationally available scholarships for medical students — updated as new opportunities emerge.', count: '30+ listings', link: settings.resScholarships || '#', color: '#f3e5f5', iconColor: '#6a1b9a' },
+      { icon: '🔬', title: 'Research Hub', desc: 'Research templates, published works by NiMSA SE members, and guides on how to get started with medical research.', count: '60+ resources', link: settings.resResearch || '#', color: '#fce4ec', iconColor: '#ad1457' },
+      { icon: '📋', title: 'NMA & MDCN Documents', desc: 'Official documents from the Nigerian Medical Association and the Medical and Dental Council of Nigeria relevant to students.', count: '18 documents', link: settings.resNMAMDCN || '#', color: '#e0f2f1', iconColor: '#00695c' }
+    ]; %>
+
+    <div class="grid-3">
+      <% resources.forEach((r, i) => { %>
+      <a href="<%= r.link %>" class="resource-card fade-in" style="transition-delay:<%= i*0.08 %>s;text-decoration:none;" target="_blank">
+        <div class="resource-icon" style="background:<%= r.color %>;color:<%= r.iconColor %>;">
+          <span style="font-size:1.8rem;"><%= r.icon %></span>
+        </div>
+        <h3 style="font-size:1rem;margin-bottom:0.5rem;"><%= r.title %></h3>
+        <p style="font-size:0.83rem;color:var(--text-muted);margin-bottom:0.8rem;"><%= r.desc %></p>
+        <div class="resource-count">
+          <span class="badge badge-green"><%= r.count %></span>
+        </div>
+        <div style="margin-top:1rem;color:var(--green-primary);font-size:0.82rem;font-weight:600;">View All →</div>
+      </a>
+      <% }) %>
+    </div>
+
+    <div class="info-box" style="margin-top:3rem;">
+      <p>📁 Resources are currently hosted on Google Drive. Click <strong>View All</strong> on any category to access the files. If a link isn't working, contact the <a href="/contact">ICT Directorate</a>.</p>
+    </div>
+
+    <% if (isAdmin) { %>
+    <div class="info-box" style="margin-top:1rem;border-left-color:var(--green-primary);">
+      <p>🔧 <strong>Admin:</strong> Resource links are managed through the Google Drive folder settings. Contact the ICT Directorate to update resource links.</p>
+    </div>
+    <% } %>
+  </div>
+</section>
+
+<section class="section section-alt">
+  <div class="container" style="text-align:center;">
+    <div class="eyebrow" style="display:inline-block;background:var(--gold-light);color:var(--gold-dark);font-size:0.78rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;padding:0.3rem 1rem;border-radius:100px;margin-bottom:0.8rem;">Need Help?</div>
+    <h2 style="margin-bottom:1rem;">Can't Find What You Need?</h2>
+    <p style="color:var(--text-muted);max-width:440px;margin:0 auto 2rem;">Reach out to the ICT Directorate or contact your school's chapter president.</p>
+    <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+      <a href="https://wa.me/<%= settings.whatsappNumber %>" class="btn btn-gold btn-lg" target="_blank">💬 WhatsApp Us</a>
+      <a href="/contact" class="btn btn-outline-gold btn-lg">Contact Us</a>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer') %>
+<script src="/js/main.js"></script>
+</body>
+</html>

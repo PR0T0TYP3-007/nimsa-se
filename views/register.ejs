@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div class="auth-page">
+  <div class="auth-card" style="max-width:500px;">
+    <div class="auth-logo">
+      <div class="logo-circle-lg"><img src="/logo.jpg" alt="NiMSA SE Logo" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"></div>
+      <h1 class="auth-title">Join NiMSA SE</h1>
+      <p class="auth-subtitle">Create your account to access member features</p>
+    </div>
+
+    <% if (error.length) { %><div class="alert alert-error">✗ <%= error[0] %></div><% } %>
+
+    <form action="/auth/register" method="POST" data-validate>
+      <div class="form-group">
+        <label class="form-label">Full Name</label>
+        <input type="text" name="name" class="form-control" placeholder="Dr. Jane Doe" required autocomplete="name">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Email Address</label>
+        <input type="email" name="email" class="form-control" placeholder="your@email.com" required autocomplete="email">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Institution</label>
+        <select name="institution" class="form-control" required>
+          <option value="">— Select your school —</option>
+          <option value="University of Nigeria, Nsukka (UNN)">University of Nigeria, Nsukka (UNN)</option>
+          <option value="Abia State University (ABSU)">Abia State University (ABSU)</option>
+          <option value="Enugu State University of Science & Technology (ESUT)">ESUT</option>
+          <option value="Imo State University (IMSU)">Imo State University (IMSU)</option>
+          <option value="Nnamdi Azikiwe University (UNIZIK)">Nnamdi Azikiwe University (UNIZIK)</option>
+          <option value="Ebonyi State University (EBSU)">Ebonyi State University (EBSU)</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Level</label>
+        <select name="level" class="form-control" required>
+          <option value="">— Select your level —</option>
+          <option value="100L">100 Level</option>
+          <option value="200L">200 Level</option>
+          <option value="300L">300 Level</option>
+          <option value="400L">400 Level</option>
+          <option value="500L">500 Level</option>
+          <option value="600L">600 Level</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Password</label>
+        <input type="password" name="password" class="form-control" placeholder="Min. 6 characters" required minlength="6" autocomplete="new-password">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Confirm Password</label>
+        <input type="password" name="confirmPassword" class="form-control" placeholder="Repeat password" required autocomplete="new-password">
+      </div>
+      <button type="submit" class="btn btn-green btn-block" style="justify-content:center;">Create Account</button>
+    </form>
+
+    <p class="auth-footer" style="margin-top:1.2rem;">
+      Already have an account? <a href="/auth/login">Sign in</a>
+    </p>
+    <p class="auth-footer" style="margin-top:0.5rem;">
+      <a href="/" style="color:var(--text-muted);">← Back to website</a>
+    </p>
+  </div>
+</div>
+<script src="/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<%- include('partials/nav') %>
+
+<div class="page-hero">
+  <div class="container">
+    <div class="eyebrow">Impact & Opportunities</div>
+    <h1>Campaigns & Career Corner</h1>
+    <p>Public health campaigns making a difference across Southeast Nigeria, plus career opportunities for medical students.</p>
+  </div>
+</div>
+
+<!-- Public Health Campaigns -->
+<section class="section">
+  <div class="container">
+    <div class="section-header fade-in">
+      <div class="eyebrow">Public Health</div>
+      <h2>Our Campaigns</h2>
+      <p>NiMSA SE medical students take healthcare to communities across all five Southeast states.</p>
+      <div class="gold-line"></div>
+    </div>
+
+    <div class="grid-3">
+      <% const campaigns = [
+        { icon: '🩸', title: 'Malaria Prevention Drive', state: 'Imo & Ebonyi States', desc: 'Mass distribution of mosquito nets, community education on malaria prevention, and free malaria rapid tests for over 1,000 residents.', status: 'Completed', color: '#006400' },
+        { icon: '❤️', title: 'Hypertension Awareness Campaign', state: 'Enugu State', desc: 'Free blood pressure screenings, lifestyle counselling, and education sessions at community centres and markets across Enugu.', status: 'Upcoming', color: '#c62828' },
+        { icon: '🌡️', title: 'Typhoid & Hepatitis Screening', state: 'Abia State', desc: 'Free serological testing for typhoid fever and hepatitis B/C, with referrals provided for positive cases to local health facilities.', status: 'Completed', color: '#e65100' },
+        { icon: '🧠', title: 'Mental Health Awareness Month', state: 'Anambra State', desc: 'A month-long campaign combating mental health stigma in Southeast communities — talks, social media, and free consultations.', status: 'Planning', color: '#6a1b9a' },
+        { icon: '🚺', title: 'Women\'s Health & Reproductive Education', state: 'All 5 States', desc: 'Cervical cancer awareness, maternal health education, and free consultations for women across the Southeast region.', status: 'Ongoing', color: '#ad1457' },
+        { icon: '🦷', title: 'Oral Health Community Outreach', state: 'Ebonyi State', desc: 'Free dental screening, oral hygiene education, and distribution of basic oral care kits to school children and adults.', status: 'Completed', color: '#00695c' }
+      ]; %>
+      <% campaigns.forEach((c, i) => { %>
+      <div class="campaign-card fade-in" style="transition-delay:<%= i*0.08 %>s">
+        <div class="campaign-img" style="background:linear-gradient(135deg,<%= c.color %>CC,<%= c.color %>99);">
+          <div style="text-align:center;color:white;">
+            <div style="font-size:3rem;margin-bottom:0.5rem;"><%= c.icon %></div>
+            <div style="font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;background:rgba(255,255,255,0.2);padding:0.25rem 0.8rem;border-radius:100px;">
+              <%= c.status %>
+            </div>
+          </div>
+        </div>
+        <div class="campaign-body">
+          <h3 style="font-size:1rem;margin-bottom:0.4rem;"><%= c.title %></h3>
+          <div style="font-size:0.75rem;color:var(--gold-dark);font-weight:600;margin-bottom:0.7rem;">📍 <%= c.state %></div>
+          <p style="font-size:0.83rem;color:var(--text-muted);margin-bottom:1rem;"><%= c.desc %></p>
+          <a href="https://wa.me/<%= settings.whatsappNumber %>" class="btn btn-sm btn-green" target="_blank">Volunteer →</a>
+        </div>
+      </div>
+      <% }) %>
+    </div>
+  </div>
+</section>
+
+<!-- Career Corner -->
+<section class="section section-alt">
+  <div class="container">
+    <div class="section-header fade-in">
+      <div class="eyebrow">Career Corner</div>
+      <h2>Opportunities for You</h2>
+      <p>Jobs, internships, research openings, and mentorship programs curated for Southeast medical students.</p>
+      <div class="gold-line"></div>
+    </div>
+
+    <div style="display:flex; flex-direction:column; gap:1rem;">
+      <% const careers = [
+        { title: 'IFMSA Professional Exchange Programme', org: 'IFMSA / NiMSA', type: 'Exchange', deadline: 'April 15, 2026', badge: 'badge-blue', desc: 'Clinical and research exchanges at hospitals across Europe, Asia, and the Americas. Open to 300L+ students.' },
+        { title: 'Medical Research Internship — UNTH', org: 'University of Nigeria Teaching Hospital', type: 'Internship', deadline: 'March 30, 2026', badge: 'badge-green', desc: 'Summer research internship in clinical medicine and basic sciences at UNTH Enugu. Stipend provided.' },
+        { title: 'NiMSA Leadership Academy 2026', org: 'NiMSA National Secretariat', type: 'Training', deadline: 'May 1, 2026', badge: 'badge-gold', desc: 'A 5-day residential leadership training for medical student leaders across all six geopolitical regions.' },
+        { title: 'Public Health Mentorship Programme', org: 'NiMSA SE — Public Health Committee', type: 'Mentorship', deadline: 'Open', badge: 'badge-purple', desc: 'Be mentored by a senior medical student or junior doctor in public health, research, or clinical medicine.' }
+      ]; %>
+      <% careers.forEach((job, i) => { %>
+      <div class="card fade-in" style="padding:1.5rem;transition-delay:<%= i*0.1 %>s">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:1rem;">
+          <div style="flex:1;">
+            <div style="display:flex;align-items:center;gap:0.8rem;margin-bottom:0.5rem;flex-wrap:wrap;">
+              <h3 style="font-size:1rem;margin:0;"><%= job.title %></h3>
+              <span class="badge <%= job.badge %>"><%= job.type %></span>
+            </div>
+            <p style="font-size:0.82rem;color:var(--text-muted);margin-bottom:0.5rem;">🏥 <%= job.org %></p>
+            <p style="font-size:0.83rem;color:var(--text-body);"><%= job.desc %></p>
+          </div>
+          <div style="text-align:right;flex-shrink:0;">
+            <div style="font-size:0.75rem;color:var(--text-muted);margin-bottom:0.8rem;">⏰ Deadline: <strong><%= job.deadline %></strong></div>
+            <a href="/contact" class="btn btn-sm btn-gold">Apply Now</a>
+          </div>
+        </div>
+      </div>
+      <% }) %>
+    </div>
+
+    <div class="info-box" style="margin-top:2rem;">
+      <p>📣 Have an opportunity to share with NiMSA SE students? <a href="/contact">Submit it to us</a> and we'll add it to the Career Corner.</p>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer') %>
+<script src="/js/main.js"></script>
+</body>
+</html>

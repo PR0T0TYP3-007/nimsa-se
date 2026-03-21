@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<%- include('partials/nav') %>
+
+<div class="page-hero">
+  <div class="container">
+    <div class="eyebrow">Who We Are</div>
+    <h1>About NiMSA South East Region</h1>
+    <p>The regional body uniting, representing, and developing medical students across five Southeast states of Nigeria.</p>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container">
+    <div class="about-grid fade-in">
+      <div>
+        <div class="eyebrow" style="display:inline-block;background:var(--gold-light);color:var(--gold-dark);font-size:0.78rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;padding:0.3rem 1rem;border-radius:100px;margin-bottom:0.8rem;">Our Identity</div>
+        <h2 style="margin-bottom:1.2rem;">What is NiMSA South East Region?</h2>
+        <p style="margin-bottom:1rem;">The <strong>Nigerian Medical Students' Association (NiMSA)</strong> is the official umbrella body for all medical students in Nigeria, representing their interests nationally and internationally.</p>
+        <p style="margin-bottom:1rem;">Nigeria is structured along six geopolitical regions, and NiMSA mirrors this structure. The <strong>NiMSA South East Region</strong> is the regional branch that represents all medical students in the Southeast states — Abia, Anambra, Ebonyi, Enugu, and Imo.</p>
+        <p style="margin-bottom:2rem; color:var(--text-muted);">Consistently recognized as the <em>"Most Exceptional Region"</em> of NiMSA, our region operates like a mini-government of medical students — governed by the <strong>Regional Coordinator</strong> and the <strong>Regional Executive Council (REC)</strong>.</p>
+        <div class="info-box">
+          <p><strong>Note on Terminology:</strong> We are a <em>Region</em>, not a zone. Our governance is led by a <em>Regional Coordinator</em> — not a "Regional President." The Regional Coordinator coordinates and governs the region, working with the REC to serve all member schools.</p>
+        </div>
+      </div>
+      <div class="about-img-block">
+        <div style="text-align:center; color:white; padding:2.5rem;">
+          <div style="font-family:var(--font-display);font-size:4.5rem;font-weight:800;color:var(--gold);line-height:1;">SE</div>
+          <div style="font-size:1.1rem;color:rgba(255,255,255,0.8);margin-top:0.5rem;font-family:var(--font-display);">South East Region</div>
+          <div style="width:60px;height:2px;background:var(--gold);margin:1rem auto;"></div>
+          <div style="font-size:0.85rem;color:var(--gold);font-weight:600;letter-spacing:0.08em;">"Most Exceptional Region" 🏆</div>
+          <div style="margin-top:2rem;display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+            <div style="background:rgba(255,255,255,0.08);border-radius:10px;padding:1rem;border:1px solid rgba(212,175,55,0.2);">
+              <div style="font-family:var(--font-display);font-size:2rem;font-weight:800;color:var(--gold);">5</div>
+              <div style="font-size:0.72rem;color:rgba(255,255,255,0.6);text-transform:uppercase;letter-spacing:0.1em;">States</div>
+            </div>
+            <div style="background:rgba(255,255,255,0.08);border-radius:10px;padding:1rem;border:1px solid rgba(212,175,55,0.2);">
+              <div style="font-family:var(--font-display);font-size:2rem;font-weight:800;color:var(--gold);">6</div>
+              <div style="font-size:0.72rem;color:rgba(255,255,255,0.6);text-transform:uppercase;letter-spacing:0.1em;">Schools</div>
+            </div>
+            <div style="background:rgba(255,255,255,0.08);border-radius:10px;padding:1rem;border:1px solid rgba(212,175,55,0.2);">
+              <div style="font-family:var(--font-display);font-size:2rem;font-weight:800;color:var(--gold);">2.4K+</div>
+              <div style="font-size:0.72rem;color:rgba(255,255,255,0.6);text-transform:uppercase;letter-spacing:0.1em;">Students</div>
+            </div>
+            <div style="background:rgba(255,255,255,0.08);border-radius:10px;padding:1rem;border:1px solid rgba(212,175,55,0.2);">
+              <div style="font-family:var(--font-display);font-size:2rem;font-weight:800;color:var(--gold);">3×</div>
+              <div style="font-size:0.72rem;color:rgba(255,255,255,0.6);text-transform:uppercase;letter-spacing:0.1em;">Award Wins</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- What We Do -->
+<section class="section section-alt">
+  <div class="container">
+    <div class="section-header fade-in">
+      <div class="eyebrow">Core Functions</div>
+      <h2>What We Do</h2>
+      <p>NiMSA SE operates across five key areas, functioning as the representative body and advocate for all Southeast medical students.</p>
+      <div class="gold-line"></div>
+    </div>
+    <div class="grid-2" style="gap:1.5rem;">
+      <% const functions = [
+        { icon: '🗣️', title: 'Representation & Advocacy', desc: 'We speak on behalf of Southeast medical students at the national NiMSA level and beyond — addressing welfare concerns, academic issues, and policies that affect our members. Every student\'s voice matters.' },
+        { icon: '🏥', title: 'Public Health & Medical Outreach', desc: 'We organize free health campaigns across the Southeast — screenings for malaria, hypertension, and other diseases. Hundreds of community members benefit from our outreach each year.' },
+        { icon: '📚', title: 'Academic & Professional Development', desc: 'From webinars and workshops to clinical skills training and research support — we prepare Southeast medical students for excellence in clinical practice and beyond.' },
+        { icon: '🤝', title: 'Networking & Collaboration', desc: 'We connect students across six institutions, partner with NGOs and health bodies, and create opportunities through conferences, exchanges, and mentorship programs.' },
+        { icon: '🏆', title: 'Competitions & Programs', desc: 'We run the Southeast Literary Awards, academic competitions, leadership programs, and cultural activities that celebrate and develop well-rounded medical professionals.' },
+        { icon: '🌐', title: 'Digital & ICT Innovation', desc: 'Through our ICT Directorate, we are building a digital-first region — from this website to WhatsApp notification systems and the Neura AI integration program.' }
+      ]; %>
+      <% functions.forEach((fn, i) => { %>
+      <div class="mission-card fade-in" style="transition-delay:<%= i*0.08 %>s">
+        <div class="mission-icon" style="font-size:1.4rem;background:none;width:auto;height:auto;margin-bottom:0.8rem;"><%= fn.icon %></div>
+        <h3 style="font-size:1rem; margin-bottom:0.6rem;"><%= fn.title %></h3>
+        <p style="font-size:0.85rem; color:var(--text-muted);"><%= fn.desc %></p>
+      </div>
+      <% }) %>
+    </div>
+  </div>
+</section>
+
+<!-- Member Schools -->
+<section class="section">
+  <div class="container">
+    <div class="section-header fade-in">
+      <div class="eyebrow">Our Schools</div>
+      <h2>Member Institutions</h2>
+      <p>Six schools across five Southeast states — united under the NiMSA South East Region.</p>
+      <div class="gold-line"></div>
+    </div>
+    <div class="grid-3">
+      <% const schools = [
+        { abbr: 'UNN', full: 'University of Nigeria, Nsukka', assoc: 'SUMSA', state: 'Enugu', color: '#003d00' },
+        { abbr: 'ABSU', full: 'Abia State University', assoc: 'MEDSSA', state: 'Abia', color: '#1a3a5c' },
+        { abbr: 'ESUT', full: 'Enugu State University of Science & Technology', assoc: 'SMSAS', state: 'Enugu', color: '#5c1a1a' },
+        { abbr: 'IMSU', full: 'Imo State University', assoc: 'SMSA', state: 'Imo', color: '#3a1a5c' },
+        { abbr: 'UNIZIK', full: 'Nnamdi Azikiwe University', assoc: 'NUMSA', state: 'Anambra', color: '#1a3d1a' },
+        { abbr: 'EBSU', full: 'Ebonyi State University', assoc: 'SMSA', state: 'Ebonyi', color: '#3d3d1a' }
+      ]; %>
+      <% schools.forEach(s => { %>
+      <div class="card fade-in" style="padding:0;overflow:hidden;">
+        <div style="height:80px;background:linear-gradient(135deg,<%= s.color %>,var(--green-primary));display:flex;align-items:center;justify-content:center;">
+          <div style="font-family:var(--font-display);font-size:1.5rem;font-weight:800;color:var(--gold);"><%= s.abbr %></div>
+        </div>
+        <div style="padding:1.2rem;">
+          <div style="font-weight:700;color:var(--green-deep);font-size:1rem;margin-bottom:0.3rem;"><%= s.assoc %></div>
+          <div style="font-size:0.8rem;color:var(--text-muted);margin-bottom:0.6rem;"><%= s.full %></div>
+          <span class="badge badge-green"><%= s.state %> State</span>
+        </div>
+      </div>
+      <% }) %>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section style="background:linear-gradient(135deg,var(--green-deep),var(--green-primary));padding:5rem 0;text-align:center;">
+  <div class="container">
+    <h2 style="color:white;margin-bottom:1rem;">Ready to Be Part of Something Exceptional?</h2>
+    <p style="color:rgba(255,255,255,0.75);max-width:480px;margin:0 auto 2rem;">Join over 2,400 medical students shaping the future of healthcare in the Southeast Region.</p>
+    <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+      <a href="/join" class="btn btn-gold btn-lg">Join NiMSA SE</a>
+      <a href="/contact" class="btn btn-outline btn-lg" style="color:white;border-color:rgba(255,255,255,0.4);">Contact Us</a>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer') %>
+<script src="/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,99 @@
+<%- include('layout-top') %>
+
+<div class="admin-header">
+  <h1>Site Settings</h1>
+  <p>Update global contact details, social media links, and site configuration.</p>
+</div>
+
+<div class="admin-card">
+  <div class="admin-card-header"><h3>Contact & Social Settings</h3></div>
+  <div class="admin-card-body">
+    <form action="/admin/settings" method="POST">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;">
+        <div class="form-group">
+          <label class="form-label">Official Email</label>
+          <input type="email" name="email" class="form-control" value="<%= settings.email %>">
+        </div>
+        <div class="form-group">
+          <label class="form-label">WhatsApp Number (with country code, no +)</label>
+          <input type="text" name="whatsappNumber" class="form-control" value="<%= settings.whatsappNumber %>" placeholder="e.g. 2348012345678">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Facebook URL</label>
+          <input type="url" name="facebook" class="form-control" value="<%= settings.facebook %>">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Instagram URL</label>
+          <input type="url" name="instagram" class="form-control" value="<%= settings.instagram %>">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Twitter/X URL</label>
+          <input type="url" name="twitter" class="form-control" value="<%= settings.twitter %>">
+        </div>
+        <div class="form-group">
+          <label class="form-label">YouTube URL</label>
+          <input type="url" name="youtube" class="form-control" value="<%= settings.youtube %>">
+        </div>
+        <div class="form-group" style="grid-column:1/-1;">
+          <label class="form-label">Site Name</label>
+          <input type="text" name="siteName" class="form-control" value="<%= settings.siteName %>">
+        </div>
+      </div>
+      <button type="submit" class="btn btn-gold">Save Settings</button>
+    </form>
+  </div>
+</div>
+
+<div class="admin-card">
+  <div class="admin-card-header"><h3>Resource Hub — Google Drive Links</h3>
+    <span style="font-size:0.78rem;color:var(--text-muted);">These links appear as "View All" buttons on the Resources page</span>
+  </div>
+  <div class="admin-card-body">
+    <form action="/admin/settings" method="POST">
+      <p style="font-size:0.84rem;color:var(--text-muted);margin-bottom:1.5rem;">Paste your Google Drive folder links below. Make sure the folders are set to <strong>"Anyone with the link can view"</strong> in Google Drive sharing settings.</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+        <div class="form-group">
+          <label class="form-label">📄 Past Questions — Google Drive Link</label>
+          <input type="url" name="resPastQuestions" class="form-control" value="<%= settings.resPastQuestions || '' %>" placeholder="https://drive.google.com/drive/folders/...">
+        </div>
+        <div class="form-group">
+          <label class="form-label">🩺 Clinical Guides — Google Drive Link</label>
+          <input type="url" name="resClinicalGuides" class="form-control" value="<%= settings.resClinicalGuides || '' %>" placeholder="https://drive.google.com/drive/folders/...">
+        </div>
+        <div class="form-group">
+          <label class="form-label">✈️ IFMSA Exchange — Google Drive Link</label>
+          <input type="url" name="resIFMSA" class="form-control" value="<%= settings.resIFMSA || '' %>" placeholder="https://drive.google.com/drive/folders/...">
+        </div>
+        <div class="form-group">
+          <label class="form-label">🎓 Scholarships — Google Drive Link</label>
+          <input type="url" name="resScholarships" class="form-control" value="<%= settings.resScholarships || '' %>" placeholder="https://drive.google.com/drive/folders/...">
+        </div>
+        <div class="form-group">
+          <label class="form-label">🔬 Research Hub — Google Drive Link</label>
+          <input type="url" name="resResearch" class="form-control" value="<%= settings.resResearch || '' %>" placeholder="https://drive.google.com/drive/folders/...">
+        </div>
+        <div class="form-group">
+          <label class="form-label">📋 NMA & MDCN Documents — Google Drive Link</label>
+          <input type="url" name="resNMAMDCN" class="form-control" value="<%= settings.resNMAMDCN || '' %>" placeholder="https://drive.google.com/drive/folders/...">
+        </div>
+      </div>
+      <button type="submit" class="btn btn-gold">Save Resource Links</button>
+    </form>
+  </div>
+</div>
+
+<div class="admin-card">
+  <div class="admin-card-header"><h3>Deployment Notes</h3></div>
+  <div class="admin-card-body">
+    <div class="info-box" style="margin:0;">
+      <p>⚙️ This site uses a JSON flat-file database (<code>data/db.json</code>). For production deployment:
+        <br>• Host on <strong>Railway, Render, or Heroku</strong> (supports Node.js + persistent storage)
+        <br>• Or migrate to <strong>MongoDB / PostgreSQL</strong> for multi-user concurrent access
+        <br>• Update Formspree IDs in contact/join forms
+        <br>• Replace the default admin password immediately
+      </p>
+    </div>
+  </div>
+</div>
+
+<%- include('layout-bottom') %>

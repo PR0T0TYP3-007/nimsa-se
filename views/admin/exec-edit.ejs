@@ -1,0 +1,65 @@
+<%- include('layout-top') %>
+
+<div class="admin-header">
+  <h1>Edit Executive</h1>
+  <p>Update profile information for <%= exec.name %></p>
+</div>
+
+<div class="admin-card">
+  <div class="admin-card-header">
+    <h3>Edit: <%= exec.name %></h3>
+    <a href="/admin/executives" class="btn btn-sm btn-outline-gold">← Back</a>
+  </div>
+  <div class="admin-card-body">
+    <form action="/admin/executives/<%= exec.id %>/edit" method="POST">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+        <div class="form-group">
+          <label class="form-label">Full Name *</label>
+          <input type="text" name="name" class="form-control" value="<%= exec.name %>" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Position *</label>
+          <input type="text" name="position" class="form-control" value="<%= exec.position %>" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Category *</label>
+          <select name="category" class="form-control" required>
+            <option value="coordinator" <%= exec.category==='coordinator'?'selected':'' %>>Regional Coordinator</option>
+            <option value="rec" <%= exec.category==='rec'?'selected':'' %>>REC Member</option>
+            <option value="school-president" <%= exec.category==='school-president'?'selected':'' %>>School Chapter President</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">School *</label>
+          <select name="school" class="form-control" required>
+            <% ['University of Nigeria, Nsukka','Abia State University','Enugu State University of Science & Technology','Imo State University','Nnamdi Azikiwe University','Ebonyi State University'].forEach(s => { %>
+              <option value="<%= s %>" <%= exec.school===s?'selected':'' %>><%= s %></option>
+            <% }) %>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">WhatsApp Number</label>
+          <input type="text" name="whatsapp" class="form-control" value="<%= exec.whatsapp %>">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email</label>
+          <input type="email" name="email" class="form-control" value="<%= exec.email %>">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Photo URL</label>
+          <input type="url" name="photo" class="form-control" value="<%= exec.photo %>">
+        </div>
+        <div class="form-group" style="grid-column:1/-1;">
+          <label class="form-label">Bio</label>
+          <textarea name="bio" class="form-control" rows="3"><%= exec.bio %></textarea>
+        </div>
+      </div>
+      <div style="display:flex;gap:1rem;">
+        <button type="submit" class="btn btn-gold">Save Changes</button>
+        <a href="/admin/executives" class="btn btn-outline-gold">Cancel</a>
+      </div>
+    </form>
+  </div>
+</div>
+
+<%- include('layout-bottom') %>

@@ -1,0 +1,98 @@
+<%- include('layout-top') %>
+
+<div class="admin-header">
+  <h1>Manage Bulletins</h1>
+  <p>Upload new bulletin issues and manage the archive of The Pulse newsletter.</p>
+</div>
+
+<div class="admin-card">
+  <div class="admin-card-header"><h3>Upload New Bulletin Issue</h3></div>
+  <div class="admin-card-body">
+    <form action="/admin/bulletin" method="POST">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+        <div class="form-group" style="grid-column:1/-1;">
+          <label class="form-label">Bulletin Title *</label>
+          <input type="text" name="title" class="form-control" placeholder="e.g. The Pulse — March 2026" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Month *</label>
+          <select name="month" class="form-control" required>
+            <% ['January','February','March','April','May','June','July','August','September','October','November','December'].forEach(m => { %>
+              <option value="<%= m %>"><%= m %></option>
+            <% }) %>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Year *</label>
+          <input type="text" name="year" class="form-control" value="<%= new Date().getFullYear() %>" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Issue Label</label>
+          <input type="text" name="issue" class="form-control" placeholder="e.g. Vol. 3, Issue 3">
+        </div>
+        <div class="form-group">
+          <label class="form-label">PDF Link (Google Drive / URL) *</label>
+          <input type="url" name="pdfUrl" class="form-control" placeholder="https://drive.google.com/..." required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Cover Image URL</label>
+          <input type="url" name="coverImage" class="form-control" placeholder="https://... (optional — auto-generated if blank)">
+        </div>
+        <div class="form-group" style="grid-column:1/-1;">
+          <label class="form-label">Summary / Teaser</label>
+          <textarea name="summary" class="form-control" rows="3" placeholder="Brief summary of this issue's contents..."></textarea>
+        </div>
+        <div class="form-group" style="grid-column:1/-1;">
+          <label class="form-check">
+            <input type="checkbox" name="featured" value="on">
+            <span>Set as <strong>featured</strong> (latest issue shown on homepage and bulletin page)</span>
+          </label>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-gold">+ Upload Bulletin</button>
+    </form>
+  </div>
+</div>
+
+<div class="admin-card">
+  <div class="admin-card-header">
+    <h3>All Bulletins (<%= bulletins.length %>)</h3>
+  </div>
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr><th>Title</th><th>Issue</th><th>Status</th><th>Actions</th></tr>
+      </thead>
+      <tbody>
+        <% bulletins.forEach(b => { %>
+        <tr>
+          <td><strong><%= b.title %></strong></td>
+          <td><%= b.issue || b.month + ' ' + b.year %></td>
+          <td>
+            <% if (b.featured) { %>
+              <span class="badge badge-gold">Featured</span>
+            <% } else { %>
+              <span class="badge badge-green">Archived</span>
+            <% } %>
+          </td>
+          <td>
+            <div style="display:flex;gap:0.4rem;flex-wrap:wrap;">
+              <% if (!b.featured) { %>
+              <form action="/admin/bulletin/<%= b.id %>/feature" method="POST" style="display:inline;">
+                <button type="submit" class="btn btn-sm btn-outline-gold">Set Featured</button>
+              </form>
+              <% } %>
+              <a href="<%= b.pdfUrl %>" class="btn btn-sm btn-green" target="_blank">View PDF</a>
+              <form action="/admin/bulletin/<%= b.id %>/delete" method="POST" style="display:inline;">
+                <button type="submit" class="btn btn-sm btn-danger" data-confirm="Delete this bulletin? This cannot be undone.">Delete</button>
+              </form>
+            </div>
+          </td>
+        </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<%- include('layout-bottom') %>

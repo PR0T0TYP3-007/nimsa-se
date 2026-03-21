@@ -1,0 +1,175 @@
+// NiMSA SE — Main JS
+
+document.addEventListener('DOMContentLoaded', () => {
+
+  // ── HAMBURGER MENU ──
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobile-menu');
+  if (hamburger && mobileMenu) {
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('open');
+      mobileMenu.classList.toggle('open');
+    });
+    // Close on link click
+    mobileMenu.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => {
+        hamburger.classList.remove('open');
+        mobileMenu.classList.remove('open');
+      });
+    });
+  }
+
+  // ── NAVBAR SCROLL EFFECT ──
+  const navbar = document.getElementById('navbar');
+  if (navbar) {
+    window.addEventListener('scroll', () => {
+      navbar.style.boxShadow = window.scrollY > 10
+        ? '0 4px 30px rgba(0,0,0,0.4)'
+        : '0 2px 20px rgba(0,0,0,0.3)';
+    });
+  }
+
+  // ── SCROLL FADE ANIMATION ──
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  // ── TABS ──
+  document.querySelectorAll('[data-tabs]').forEach(container => {
+    const tabs = container.querySelectorAll('.tab-btn');
+    const panels = document.querySelectorAll('[data-tab-panel]');
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        const target = tab.dataset.tab;
+        panels.forEach(p => {
+          p.style.display = p.dataset.tabPanel === target ? 'block' : 'none';
+        });
+      });
+    });
+  });
+
+  // ── AUTO-DISMISS FLASH MESSAGES ──
+  document.querySelectorAll('.alert').forEach(alert => {
+    setTimeout(() => {
+      alert.style.opacity = '0';
+      alert.style.transform = 'translateY(-8px)';
+      alert.style.transition = 'all 0.4s ease';
+      setTimeout(() => alert.remove(), 400);
+    }, 4000);
+  });
+
+  // ── HERO BANNER SLIDER ──
+  const slides = document.querySelectorAll('.hero-slide');
+  if (slides.length > 1) {
+    let current = 0;
+    const dots = document.querySelectorAll('.hero-dot');
+    const advance = () => {
+      slides[current].classList.remove('active');
+      dots[current]?.classList.remove('active');
+      current = (current + 1) % slides.length;
+      slides[current].classList.add('active');
+      dots[current]?.classList.add('active');
+    };
+    let timer = setInterval(advance, 4500);
+    dots.forEach((dot, i) => {
+      dot.addEventListener('click', () => {
+        clearInterval(timer);
+        slides[current].classList.remove('active');
+        dots[current].classList.remove('active');
+        current = i;
+        slides[current].classList.add('active');
+        dots[current].classList.add('active');
+        timer = setInterval(advance, 4500);
+      });
+    });
+  }
+
+  // ── EXEC FILTER TABS ──
+  const execFilter = document.getElementById('exec-filter');
+  if (execFilter) {
+    execFilter.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        execFilter.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const cat = btn.dataset.cat;
+        document.querySelectorAll('.exec-card-wrap').forEach(card => {
+          card.style.display = (cat === 'all' || card.dataset.category === cat) ? 'block' : 'none';
+        });
+      });
+    });
+  }
+
+  // ── EVENT FILTER TABS ──
+  const eventFilter = document.getElementById('event-filter');
+  if (eventFilter) {
+    eventFilter.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        eventFilter.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const type = btn.dataset.type;
+        document.querySelectorAll('.event-item').forEach(item => {
+          item.style.display = (type === 'all' || item.dataset.type === type) ? 'block' : 'none';
+        });
+      });
+    });
+  }
+
+  // ── BULLETIN SEARCH ──
+  const bulletinSearch = document.getElementById('bulletin-search');
+  if (bulletinSearch) {
+    bulletinSearch.addEventListener('input', e => {
+      const q = e.target.value.toLowerCase();
+      document.querySelectorAll('.bulletin-archive-item').forEach(item => {
+        const text = item.textContent.toLowerCase();
+        item.style.display = text.includes(q) ? 'block' : 'none';
+      });
+    });
+  }
+
+  // ── CONFIRM DELETES ──
+  document.querySelectorAll('[data-confirm]').forEach(btn => {
+    btn.addEventListener('click', e => {
+      if (!confirm(btn.dataset.confirm || 'Are you sure?')) {
+        e.preventDefault();
+      }
+    });
+  });
+
+  // ── ADMIN SIDEBAR ACTIVE ──
+  const adminLinks = document.querySelectorAll('.admin-nav-item');
+  adminLinks.forEach(link => {
+    if (link.href && window.location.pathname.startsWith(new URL(link.href, window.location).pathname)) {
+      link.classList.add('active');
+    }
+  });
+
+  // ── FORM VALIDATION FEEDBACK ──
+  document.querySelectorAll('form[data-validate]').forEach(form => {
+    form.addEventListener('submit', e => {
+      let valid = true;
+      form.querySelectorAll('[required]').forEach(input => {
+        if (!input.value.trim()) {
+          input.style.borderColor = '#e74c3c';
+          valid = false;
+        } else {
+          input.style.borderColor = '';
+        }
+      });
+      if (!valid) {
+        e.preventDefault();
+        const err = form.querySelector('.form-error');
+        if (err) err.style.display = 'block';
+      }
+    });
+  });
+
+});

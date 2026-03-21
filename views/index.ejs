@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/css/style.css">
+  <meta name="description" content="NiMSA South East Region — The official website of the Nigerian Medical Students' Association, South East Region. Most Exceptional Region.">
+</head>
+<body>
+<%- include('partials/nav') %>
+
+<!-- Flash Messages -->
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <!-- Flash messages inside hero so no dark strip -->
+    <% if (success.length) { %><div class="alert alert-success" style="margin-bottom:1.5rem;max-width:500px;">✓ <%= success[0] %></div><% } %>
+    <% if (error.length) { %><div class="alert alert-error" style="margin-bottom:1.5rem;max-width:500px;">✗ <%= error[0] %></div><% } %>
+    <div class="hero-tag">
+      🏆 Most Exceptional Region of NiMSA
+    </div>
+    <h1 class="hero-title">
+      Uniting Medical<br>
+      Students of the<br>
+      <span class="gold">South East Region</span>
+    </h1>
+    <p class="hero-subtitle">
+      Advocacy. Outreach. Excellence. The NiMSA South East Region represents over 2,400 medical students across Abia, Anambra, Ebonyi, Enugu, and Imo states.
+    </p>
+    <div class="hero-actions">
+      <a href="/join" class="btn btn-gold btn-lg">Join NiMSA SE</a>
+      <a href="/about" class="btn btn-outline btn-lg">Learn More</a>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="num">6</div>
+        <div class="label">Member Schools</div>
+      </div>
+      <div class="hero-stat">
+        <div class="num">2,400+</div>
+        <div class="label">Medical Students</div>
+      </div>
+      <div class="hero-stat">
+        <div class="num">5</div>
+        <div class="label">Southeast States</div>
+      </div>
+      <div class="hero-stat">
+        <div class="num">3×</div>
+        <div class="label">Award Wins</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUICK ACTIONS -->
+<section style="background:white; padding: 2rem 0; border-bottom: 1px solid var(--border);">
+  <div class="container">
+    <div class="grid-4">
+      <a href="/leadership" class="card" style="padding:1.5rem; text-align:center; text-decoration:none;">
+        <div style="width:52px;height:52px;border-radius:12px;background:var(--green-light);display:flex;align-items:center;justify-content:center;margin:0 auto 0.8rem;color:var(--green-primary);">
+          <svg width="26" height="26" fill="currentColor" viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+        </div>
+        <div style="font-weight:700;color:var(--green-deep);font-size:0.9rem;">Meet Executives</div>
+        <div style="font-size:0.78rem;color:var(--text-muted);margin-top:0.2rem;">Regional leadership team</div>
+      </a>
+      <a href="/events" class="card" style="padding:1.5rem; text-align:center; text-decoration:none;">
+        <div style="width:52px;height:52px;border-radius:12px;background:var(--gold-light);display:flex;align-items:center;justify-content:center;margin:0 auto 0.8rem;color:var(--gold-dark);">
+          <svg width="26" height="26" fill="currentColor" viewBox="0 0 24 24"><path d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"/></svg>
+        </div>
+        <div style="font-weight:700;color:var(--green-deep);font-size:0.9rem;">Upcoming Events</div>
+        <div style="font-size:0.78rem;color:var(--text-muted);margin-top:0.2rem;">Webinars, conventions & more</div>
+      </a>
+      <a href="/join" class="card" style="padding:1.5rem; text-align:center; text-decoration:none;">
+        <div style="width:52px;height:52px;border-radius:12px;background:#e8f5e9;display:flex;align-items:center;justify-content:center;margin:0 auto 0.8rem;color:var(--green-primary);">
+          <svg width="26" height="26" fill="currentColor" viewBox="0 0 24 24"><path d="M15 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm-9-2V7H4v3H1v2h3v3h2v-3h3v-2H6zm9 4c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+        </div>
+        <div style="font-weight:700;color:var(--green-deep);font-size:0.9rem;">Register Now</div>
+        <div style="font-size:0.78rem;color:var(--text-muted);margin-top:0.2rem;">Become a member today</div>
+      </a>
+      <a href="/bulletin" class="card" style="padding:1.5rem; text-align:center; text-decoration:none;">
+        <div style="width:52px;height:52px;border-radius:12px;background:var(--green-light);display:flex;align-items:center;justify-content:center;margin:0 auto 0.8rem;color:var(--green-primary);">
+          <svg width="26" height="26" fill="currentColor" viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zM6 20V4h7v5h5v11H6z"/></svg>
+        </div>
+        <div style="font-weight:700;color:var(--green-deep);font-size:0.9rem;">Download Bulletin</div>
+        <div style="font-size:0.78rem;color:var(--text-muted);margin-top:0.2rem;">Monthly newsletter</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- UPCOMING EVENTS -->
+<% if (upcomingEvents.length) { %>
+<section class="section">
+  <div class="container">
+    <div class="section-header fade-in">
+      <div class="eyebrow">What's Happening</div>
+      <h2>Upcoming Events</h2>
+      <p>Join medical students across the Southeast Region at our upcoming programs and activities.</p>
+      <div class="gold-line"></div>
+    </div>
+    <div class="grid-3">
+      <% upcomingEvents.forEach((event, i) => { %>
+      <div class="event-card fade-in" style="transition-delay: <%= i * 0.1 %>s">
+        <div class="event-img">
+          <span class="event-type-badge"><%= event.type %></span>
+          <span class="event-date-badge">
+            <%= new Date(event.date).toLocaleDateString('en-NG', {day:'numeric', month:'short', year:'numeric'}) %>
+          </span>
+          <svg width="48" height="48" fill="rgba(255,255,255,0.2)" viewBox="0 0 24 24"><path d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"/></svg>
+        </div>
+        <div class="event-body">
+          <div class="event-title"><%= event.title %></div>
+          <div class="event-meta">
+            <span>🕐 <%= event.time %></span>
+            <span>📍 <%= event.location %></span>
+          </div>
+          <p class="event-desc"><%= event.description.substring(0, 100) %>...</p>
+        </div>
+        <div class="event-footer">
+          <a href="<%= event.registrationLink %>" class="btn btn-gold btn-sm" style="width:100%;justify-content:center;">Register</a>
+        </div>
+      </div>
+      <% }) %>
+    </div>
+    <div style="text-align:center; margin-top:2.5rem;">
+      <a href="/events" class="btn btn-outline-gold btn-lg">View All Events</a>
+    </div>
+  </div>
+</section>
+<% } %>
+
+<!-- ABOUT TEASER -->
+<section class="section section-alt">
+  <div class="container">
+    <div class="about-grid fade-in">
+      <div>
+        <div class="eyebrow" style="display:inline-block;background:var(--gold-light);color:var(--gold-dark);font-size:0.78rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;padding:0.3rem 1rem;border-radius:100px;margin-bottom:0.8rem;">About NiMSA SE</div>
+        <h2 style="margin-bottom:1.2rem;">The Most Exceptional<br>Region of NiMSA</h2>
+        <p style="margin-bottom:1.5rem;">The NiMSA South East Region is the regional body that unites, represents, and develops medical students in Abia, Anambra, Ebonyi, Enugu, and Imo states.</p>
+        <p style="margin-bottom:2rem; color:var(--text-muted);">We operate through advocacy, public health outreach, academic development, and leadership programs — governed by the Regional Coordinator and the Regional Executive Council (REC).</p>
+        <div class="grid-2" style="gap:1rem; margin-bottom:2rem;">
+          <div class="mission-card">
+            <div class="mission-icon">🗣️</div>
+            <h4 style="font-size:0.95rem;margin-bottom:0.3rem;">Representation & Advocacy</h4>
+            <p style="font-size:0.82rem;">Speaking for Southeast medical students at national and international levels.</p>
+          </div>
+          <div class="mission-card">
+            <div class="mission-icon">🏥</div>
+            <h4 style="font-size:0.95rem;margin-bottom:0.3rem;">Health Outreach</h4>
+            <p style="font-size:0.82rem;">Free screenings, awareness campaigns, and community health education.</p>
+          </div>
+        </div>
+        <a href="/about" class="btn btn-green">Learn More About Us</a>
+      </div>
+      <div class="about-img-block">
+        <div style="text-align:center; color:white; padding:2rem;">
+          <div style="font-family:var(--font-display);font-size:5rem;font-weight:800;color:var(--gold);line-height:1;">SE</div>
+          <div style="font-size:1rem; opacity:0.8; margin-top:0.5rem;">South East Region</div>
+          <div style="font-size:0.8rem; color:var(--gold); margin-top:0.5rem; font-weight:600;">Most Exceptional Region 🏆</div>
+          <div style="display:flex; gap:1.5rem; justify-content:center; margin-top:2rem; flex-wrap:wrap;">
+            <div style="text-align:center;"><div style="font-family:var(--font-display);font-size:1.5rem;font-weight:800;">5</div><div style="font-size:0.72rem;opacity:0.7;text-transform:uppercase;letter-spacing:0.1em;">States</div></div>
+            <div style="text-align:center;"><div style="font-family:var(--font-display);font-size:1.5rem;font-weight:800;">6</div><div style="font-size:0.72rem;opacity:0.7;text-transform:uppercase;letter-spacing:0.1em;">Schools</div></div>
+            <div style="text-align:center;"><div style="font-family:var(--font-display);font-size:1.5rem;font-weight:800;">3×</div><div style="font-size:0.72rem;opacity:0.7;text-transform:uppercase;letter-spacing:0.1em;">Winners</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LEADERSHIP TEASER -->
+<section class="section">
+  <div class="container">
+    <div class="section-header fade-in">
+      <div class="eyebrow">Our Leadership</div>
+      <h2>Regional Executive Council</h2>
+      <p>Meet the leaders coordinating and governing NiMSA South East Region.</p>
+      <div class="gold-line"></div>
+    </div>
+    <div class="grid-3">
+      <% featuredExecs.forEach((exec, i) => { %>
+      <div class="exec-card fade-in" style="transition-delay: <%= i * 0.1 %>s">
+        <% if (exec.photo) { %>
+          <img src="<%= exec.photo %>" alt="<%= exec.name %>" class="exec-photo" style="width:90px;height:90px;">
+        <% } else { %>
+          <div class="exec-photo"><%= exec.name.charAt(0) %></div>
+        <% } %>
+        <div class="exec-name"><%= exec.name %></div>
+        <div class="exec-position"><%= exec.position %></div>
+        <div class="exec-school"><%= exec.school %></div>
+        <div class="exec-footer">
+          <% if (exec.whatsapp) { %>
+            <a href="https://wa.me/<%= exec.whatsapp %>" class="btn btn-sm" style="background:#25D366;color:white;border-color:#25D366;" target="_blank">
+              <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+              WhatsApp
+            </a>
+          <% } %>
+        </div>
+      </div>
+      <% }) %>
+    </div>
+    <div style="text-align:center; margin-top:2.5rem;">
+      <a href="/leadership" class="btn btn-outline-gold btn-lg">View Full Leadership</a>
+    </div>
+  </div>
+</section>
+
+<!-- LATEST NEWS -->
+<% if (latestNews.length) { %>
+<section class="section section-alt">
+  <div class="container">
+    <div class="section-header fade-in">
+      <div class="eyebrow">Latest News</div>
+      <h2>News & Updates</h2>
+      <div class="gold-line"></div>
+    </div>
+    <div class="grid-3">
+      <% latestNews.forEach((item, i) => { %>
+      <div class="news-card fade-in" style="transition-delay: <%= i * 0.1 %>s">
+        <div class="news-card-img">
+          <svg width="40" height="40" fill="rgba(255,255,255,0.3)" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+        </div>
+        <div class="news-card-body">
+          <div class="news-date"><%= new Date(item.date).toLocaleDateString('en-NG', {day:'numeric',month:'long',year:'numeric'}) %></div>
+          <div class="news-title"><%= item.title %></div>
+          <p class="news-excerpt"><%= item.excerpt.substring(0,100) %>...</p>
+        </div>
+      </div>
+      <% }) %>
+    </div>
+    <div style="text-align:center; margin-top:2.5rem;">
+      <a href="/news" class="btn btn-outline-gold btn-lg">Read All News</a>
+    </div>
+  </div>
+</section>
+<% } %>
+
+<!-- BULLETIN CTA -->
+<% if (latestBulletin) { %>
+<section class="section">
+  <div class="container">
+    <div class="bulletin-featured fade-in">
+      <div>
+        <div class="issue-badge"><%= latestBulletin.issue %></div>
+        <h2 style="color:white; margin-bottom:0.8rem;"><%= latestBulletin.title %></h2>
+        <p class="subtitle" style="margin-bottom:1.5rem;"><%= latestBulletin.summary %></p>
+        <div style="display:flex; gap:1rem; flex-wrap:wrap;">
+          <a href="<%= latestBulletin.pdfUrl %>" class="btn btn-gold" target="_blank">
+            📥 Download Issue
+          </a>
+          <a href="/bulletin" class="btn btn-outline" style="color:white;border-color:rgba(255,255,255,0.4);">
+            View Archive
+          </a>
+        </div>
+      </div>
+      <div class="bulletin-featured-cover">
+        <div style="font-size:0.75rem;color:var(--gold);font-weight:700;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.5rem;">THE PULSE</div>
+        <div style="font-family:var(--font-display);font-size:2rem;font-weight:800;color:white;"><%= latestBulletin.month %></div>
+        <div style="font-size:1rem;color:rgba(255,255,255,0.7);"><%= latestBulletin.year %></div>
+        <div style="margin-top:1rem;padding-top:1rem;border-top:1px solid rgba(255,255,255,0.2);">
+          <p style="font-size:0.8rem;color:rgba(255,255,255,0.6);">NiMSA South East Region<br>Official Monthly Bulletin</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<% } %>
+
+<%- include('partials/footer') %>
+<script src="/js/main.js"></script>
+</body>
+</html>

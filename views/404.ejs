@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<%- include('partials/nav') %>
+<div class="not-found">
+  <div>
+    <div class="not-found-num">404</div>
+    <h2 style="margin-bottom:0.8rem;">Page Not Found</h2>
+    <p style="color:var(--text-muted);margin-bottom:2rem;">The page you're looking for doesn't exist or has been moved.</p>
+    <a href="/" class="btn btn-gold btn-lg">← Back to Home</a>
+  </div>
+</div>
+<%- include('partials/footer') %>
+<script src="/js/main.js"></script>
+</body>
+</html>
