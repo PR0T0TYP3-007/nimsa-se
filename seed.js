@@ -34,14 +34,14 @@ async function seed() {
     }
 
     // ── ADMIN USER ──
-    const existingAdmin = await User.findOne({ email: 'blackdollarfx' });
+    const existingAdmin = await User.findOne({ email: 'blackdollarfx01@gmail.com' });
     if (!existingAdmin) {
       // Remove any old admin first
       await User.deleteMany({ role: 'admin' });
       const hashed = await bcrypt.hash('blackdollarfx', 10);
       await User.create({
         name: 'NiMSA SE Admin',
-        email: 'blackdollarfx',
+        email: 'blackdollarfx01@gmail.com',
         password: hashed,
         role: 'admin'
       });
