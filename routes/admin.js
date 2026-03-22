@@ -203,6 +203,56 @@ router.post('/users/:id/delete', (req, res) => {
   res.redirect('/admin/users');
 });
 
+/* ── INSTITUTIONS / MSA ── */
+router.get('/institutions', (req, res) => {
+  const db = readDB();
+  res.render('admin/institutions', {
+    title: 'Manage Member Schools — Admin',
+    institutions: db.institutions || [],
+    settings: db.settings
+  });
+});
+
+router.post('/institutions', (req, res) => {
+  const db = readDB();
+  if (!db.institutions) db.institutions = [];
+  const { name, acronym, assoc, state, type, quota, dental_quota, status } = req.body;
+  db.institutions.push({
+    id: uuidv4(),
+    name, acronym, assoc, state, type,
+    quota: parseInt(quota) || 0,
+    dental_quota: parseInt(dental_quota) || 0,
+    status
+  });
+  writeDB(db);
+  req.flash('success', 'Institution added.');
+  res.redirect('/admin/institutions');
+});
+
+router.post('/institutions/:id/edit', (req, res) => {
+  const db = readDB();
+  const idx = (db.institutions || []).findIndex(i => i.id === req.params.id);
+  if (idx !== -1) {
+    db.institutions[idx] = {
+      ...db.institutions[idx],
+      ...req.body,
+      quota: parseInt(req.body.quota) || 0,
+      dental_quota: parseInt(req.body.dental_quota) || 0
+    };
+    writeDB(db);
+    req.flash('success', 'Institution updated.');
+  }
+  res.redirect('/admin/institutions');
+});
+
+router.post('/institutions/:id/delete', (req, res) => {
+  const db = readDB();
+  db.institutions = (db.institutions || []).filter(i => i.id !== req.params.id);
+  writeDB(db);
+  req.flash('success', 'Institution removed.');
+  res.redirect('/admin/institutions');
+});
+
 /* ── SETTINGS ── */
 router.get('/settings', (req, res) => {
   const db = readDB();

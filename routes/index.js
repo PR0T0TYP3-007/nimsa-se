@@ -21,6 +21,7 @@ router.get('/about', (req, res) => {
   const db = readDB();
   res.render('about', {
     title: 'About Us — NiMSA South East Region',
+    institutions: db.institutions || [],
     settings: db.settings
   });
 });

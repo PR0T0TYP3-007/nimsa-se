@@ -68,7 +68,7 @@
       <input type="text" id="bulletin-search" class="form-control" placeholder="🔍 Search bulletins by month or year...">
     </div>
 
-    <div class="grid-4">
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1.2rem;">
       <% archive.forEach((b, i) => { %>
       <div class="bulletin-archive-item bulletin-card fade-in" style="transition-delay:<%= i*0.05 %>s">
         <div class="bulletin-cover">

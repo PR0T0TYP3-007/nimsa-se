@@ -372,5 +372,150 @@
     "resScholarships": "",
     "resResearch": "",
     "resNMAMDCN": ""
-  }
+  },
+  "institutions": [
+    {
+      "id": "inst-001",
+      "name": "University of Nigeria (Enugu Campus)",
+      "acronym": "UNMSA",
+      "assoc": "UNMSA",
+      "state": "Enugu",
+      "type": "Federal",
+      "quota": 165,
+      "dental_quota": 15,
+      "status": "Fully Accredited"
+    },
+    {
+      "id": "inst-002",
+      "name": "Nnamdi Azikiwe University, Nnewi",
+      "acronym": "NAUMSA",
+      "assoc": "NAUMSA",
+      "state": "Anambra",
+      "type": "Federal",
+      "quota": 100,
+      "dental_quota": 0,
+      "status": "Fully Accredited"
+    },
+    {
+      "id": "inst-003",
+      "name": "Abia State University, Uturu",
+      "acronym": "ABSUMSA",
+      "assoc": "ABSUMSA",
+      "state": "Abia",
+      "type": "State",
+      "quota": 135,
+      "dental_quota": 0,
+      "status": "Fully Accredited"
+    },
+    {
+      "id": "inst-004",
+      "name": "Enugu State University (ESUT)",
+      "acronym": "ESUMSA",
+      "assoc": "ESUMSA",
+      "state": "Enugu",
+      "type": "State",
+      "quota": 50,
+      "dental_quota": 0,
+      "status": "Fully Accredited"
+    },
+    {
+      "id": "inst-005",
+      "name": "Imo State University, Owerri",
+      "acronym": "IMSUMSA",
+      "assoc": "IMSUMSA",
+      "state": "Imo",
+      "type": "State",
+      "quota": 50,
+      "dental_quota": 0,
+      "status": "Fully Accredited"
+    },
+    {
+      "id": "inst-006",
+      "name": "Ebonyi State University, Abakaliki",
+      "acronym": "EBSUMSA",
+      "assoc": "EBSUMSA",
+      "state": "Ebonyi",
+      "type": "State",
+      "quota": 100,
+      "dental_quota": 0,
+      "status": "Fully Accredited"
+    },
+    {
+      "id": "inst-007",
+      "name": "Godfrey Okoye University",
+      "acronym": "GOUMSA",
+      "assoc": "GOUMSA",
+      "state": "Enugu",
+      "type": "Private",
+      "quota": 0,
+      "dental_quota": 0,
+      "status": "Fully Accredited"
+    },
+    {
+      "id": "inst-008",
+      "name": "Gregory University, Uturu",
+      "acronym": "GUMSA",
+      "assoc": "GUMSA",
+      "state": "Abia",
+      "type": "Private",
+      "quota": 120,
+      "dental_quota": 0,
+      "status": "Fully Accredited"
+    },
+    {
+      "id": "inst-009",
+      "name": "Chukwuemeka Odumegwu Ojukwu University",
+      "acronym": "COOUMSA",
+      "assoc": "COOUMSA",
+      "state": "Anambra",
+      "type": "State",
+      "quota": 50,
+      "dental_quota": 0,
+      "status": "Fully Accredited"
+    },
+    {
+      "id": "inst-010",
+      "name": "Alex Ekwueme Federal University",
+      "acronym": "AE-FUMSA",
+      "assoc": "AE-FUMSA",
+      "state": "Ebonyi",
+      "type": "Federal",
+      "quota": 50,
+      "dental_quota": 0,
+      "status": "Fully Accredited"
+    },
+    {
+      "id": "inst-011",
+      "name": "Madonna University, Elele/Okija",
+      "acronym": "MUMSA",
+      "assoc": "MUMSA",
+      "state": "Imo/Anambra",
+      "type": "Private",
+      "quota": 50,
+      "dental_quota": 0,
+      "status": "Fully Accredited"
+    },
+    {
+      "id": "inst-012",
+      "name": "David Umahi Federal University",
+      "acronym": "DUMSA SE",
+      "assoc": "DUMSA SE",
+      "state": "Ebonyi",
+      "type": "Federal",
+      "quota": 30,
+      "dental_quota": 0,
+      "status": "Partially Accredited"
+    },
+    {
+      "id": "inst-013",
+      "name": "Nnamdi Azikiwe University Dental School",
+      "acronym": "UNIZIK Dental",
+      "assoc": "UNIZIK Dental",
+      "state": "Anambra",
+      "type": "Federal",
+      "quota": 0,
+      "dental_quota": 25,
+      "status": "Fully Accredited"
+    }
+  ]
 }

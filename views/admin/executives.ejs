@@ -67,39 +67,26 @@
   <div class="admin-card-header">
     <h3>All Executives (<%= executives.length %>)</h3>
   </div>
-  <div class="table-wrapper">
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th><th>Position</th><th>Category</th><th>School</th><th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% executives.forEach(exec => { %>
-        <tr>
-          <td>
-            <div style="display:flex;align-items:center;gap:0.7rem;">
-              <div style="width:36px;height:36px;border-radius:50%;background:var(--green-light);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.75rem;color:var(--green-primary);flex-shrink:0;">
-                <%= exec.name.charAt(0) %>
-              </div>
-              <strong><%= exec.name %></strong>
-            </div>
-          </td>
-          <td><%= exec.position %></td>
-          <td><span class="badge <%= exec.category === 'coordinator' ? 'badge-gold' : exec.category === 'rec' ? 'badge-green' : 'badge-blue' %>"><%= exec.category %></span></td>
-          <td style="font-size:0.82rem;"><%= exec.school %></td>
-          <td>
-            <div style="display:flex;gap:0.4rem;">
-              <a href="/admin/executives/<%= exec.id %>/edit" class="btn btn-sm btn-outline-gold">Edit</a>
-              <form action="/admin/executives/<%= exec.id %>/delete" method="POST" style="display:inline;">
-                <button type="submit" class="btn btn-sm btn-danger" data-confirm="Delete <%= exec.name %>? This cannot be undone.">Delete</button>
-              </form>
-            </div>
-          </td>
-        </tr>
-        <% }) %>
-      </tbody>
-    </table>
+  <div class="admin-card-body" style="padding:0;">
+    <% executives.forEach((exec, i) => { %>
+    <div style="display:flex;flex-wrap:wrap;align-items:center;gap:0.8rem;padding:1rem 1.2rem;border-bottom:1px solid var(--border);background:<%= i%2===0?'white':'var(--green-pale)' %>;">
+      <div style="display:flex;align-items:center;gap:0.7rem;flex:1;min-width:160px;">
+        <div style="width:38px;height:38px;border-radius:50%;background:var(--green-light);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.85rem;color:var(--green-primary);flex-shrink:0;border:1px solid var(--border);"><%= exec.name.charAt(0) %></div>
+        <div style="min-width:0;">
+          <div style="font-weight:700;font-size:0.88rem;color:var(--green-deep);"><%= exec.name %></div>
+          <div style="font-size:0.75rem;color:var(--text-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:220px;"><%= exec.position %></div>
+          <div style="font-size:0.7rem;color:var(--text-muted);"><%= exec.school %></div>
+        </div>
+      </div>
+      <span class="badge <%= exec.category==='coordinator'?'badge-gold':exec.category==='rec'?'badge-green':'badge-blue' %>" style="flex-shrink:0;"><%= exec.category %></span>
+      <div style="display:flex;gap:0.4rem;flex-shrink:0;">
+        <a href="/admin/executives/<%= exec.id %>/edit" class="btn btn-sm btn-outline-gold">Edit</a>
+        <form action="/admin/executives/<%= exec.id %>/delete" method="POST" style="display:inline;">
+          <button type="submit" class="btn btn-sm btn-danger" data-confirm="Delete <%= exec.name %>?">Delete</button>
+        </form>
+      </div>
+    </div>
+    <% }) %>
   </div>
 </div>
 
