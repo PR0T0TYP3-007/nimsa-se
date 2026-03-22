@@ -173,3 +173,51 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
 });
+
+// ── DRAG & DROP UPLOAD ZONES ──
+document.querySelectorAll('.drop-zone').forEach(zone => {
+  const input    = zone.querySelector('input[type="file"]');
+  const textEl   = zone.querySelector('.drop-zone-text');
+  const previewGrid = zone.querySelector('.preview-grid');
+
+  zone.addEventListener('dragover',  e => { e.preventDefault(); zone.classList.add('dragover'); });
+  zone.addEventListener('dragleave', () => zone.classList.remove('dragover'));
+  zone.addEventListener('drop', e => {
+    e.preventDefault();
+    zone.classList.remove('dragover');
+    if (input) {
+      input.files = e.dataTransfer.files;
+      handleFiles(input.files, zone, textEl, previewGrid);
+    }
+  });
+
+  if (input) {
+    input.addEventListener('change', () => {
+      handleFiles(input.files, zone, textEl, previewGrid);
+    });
+  }
+});
+
+function handleFiles(files, zone, textEl, previewGrid) {
+  if (!files || files.length === 0) return;
+  zone.classList.add('has-file');
+  if (textEl) {
+    textEl.textContent = files.length === 1
+      ? files[0].name
+      : `${files.length} files selected`;
+  }
+  if (previewGrid) {
+    previewGrid.innerHTML = '';
+    Array.from(files).forEach(file => {
+      if (!file.type.startsWith('image/')) return;
+      const reader = new FileReader();
+      reader.onload = e => {
+        const item = document.createElement('div');
+        item.className = 'preview-item';
+        item.innerHTML = `<img src="${e.target.result}" alt="${file.name}">`;
+        previewGrid.appendChild(item);
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+}

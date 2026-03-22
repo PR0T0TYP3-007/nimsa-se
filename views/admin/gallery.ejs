@@ -1,0 +1,89 @@
+<%- include('layout-top') %>
+
+<div class="admin-header">
+  <h1>Manage Gallery</h1>
+  <p>Upload photos from events, outreaches, conventions and campus life. Drag and drop up to 20 photos at once.</p>
+</div>
+
+<!-- Upload Form -->
+<div class="admin-card">
+  <div class="admin-card-header"><h3>Upload Photos</h3></div>
+  <div class="admin-card-body">
+    <form action="/admin/gallery" method="POST" enctype="multipart/form-data">
+      <!-- Multi-file drag drop zone -->
+      <div class="drop-zone" style="margin-bottom:1.2rem;">
+        <div class="drop-zone-icon">📸</div>
+        <div class="drop-zone-text">Click or drag photos here</div>
+        <div class="drop-zone-sub">JPG, PNG, WebP — max 5MB each — up to 20 photos at once</div>
+        <input type="file" name="photos" accept="image/*" multiple>
+        <div class="preview-grid"></div>
+      </div>
+
+      <div class="admin-form-grid">
+        <div class="form-group">
+          <label class="form-label">Category *</label>
+          <select name="category" class="form-control" required>
+            <option value="convention">Convention</option>
+            <option value="webinar">Webinar</option>
+            <option value="campaign">Campaign / Outreach</option>
+            <option value="campus" selected>Campus Life</option>
+            <option value="outreach">Health Outreach</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Caption (optional)</label>
+          <input type="text" name="caption" class="form-control" placeholder="e.g. Annual Convention 2026 — UNN">
+        </div>
+      </div>
+      <button type="submit" class="btn btn-gold">Upload Photos</button>
+    </form>
+  </div>
+</div>
+
+<!-- Photo Grid -->
+<div class="admin-card">
+  <div class="admin-card-header">
+    <h3>All Photos (<%= photos.length %>)</h3>
+    <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
+      <span class="badge badge-green"><%= photos.filter(p=>p.category==='convention').length %> Convention</span>
+      <span class="badge badge-blue"><%= photos.filter(p=>p.category==='campaign'||p.category==='outreach').length %> Outreach</span>
+      <span class="badge badge-gold"><%= photos.filter(p=>p.category==='campus').length %> Campus</span>
+    </div>
+  </div>
+  <div class="admin-card-body">
+    <% if (!photos.length) { %>
+    <div style="text-align:center;padding:3rem;color:var(--text-muted);">
+      <div style="font-size:3rem;margin-bottom:1rem;">📷</div>
+      <p>No photos yet. Upload some above!</p>
+    </div>
+    <% } else { %>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:0.8rem;">
+      <% photos.forEach(photo => { %>
+      <div style="position:relative;border-radius:10px;overflow:hidden;aspect-ratio:1;background:var(--green-light);">
+        <img src="<%= photo.url %>" alt="<%= photo.caption || photo.category %>"
+             style="width:100%;height:100%;object-fit:cover;">
+        <!-- Category badge -->
+        <div style="position:absolute;top:6px;left:6px;">
+          <span class="badge badge-gold" style="font-size:0.58rem;"><%= photo.category %></span>
+        </div>
+        <!-- Delete button -->
+        <form action="/admin/gallery/<%= photo._id %>/delete" method="POST"
+              style="position:absolute;top:4px;right:4px;">
+          <button type="submit"
+                  class="btn btn-sm btn-danger"
+                  data-confirm="Delete this photo?"
+                  style="padding:0.2rem 0.5rem;font-size:0.65rem;border-radius:6px;">✕</button>
+        </form>
+        <% if (photo.caption) { %>
+        <div style="position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,0.6);color:white;font-size:0.65rem;padding:0.3rem 0.5rem;text-overflow:ellipsis;white-space:nowrap;overflow:hidden;">
+          <%= photo.caption %>
+        </div>
+        <% } %>
+      </div>
+      <% }) %>
+    </div>
+    <% } %>
+  </div>
+</div>
+
+<%- include('layout-bottom') %>

@@ -11,7 +11,7 @@
     <h3>Add New Executive</h3>
   </div>
   <div class="admin-card-body">
-    <form action="/admin/executives" method="POST">
+    <form action="/admin/executives" method="POST" enctype="multipart/form-data">
       <div class="admin-form-grid">
         <div class="form-group">
           <label class="form-label">Full Name *</label>
@@ -49,8 +49,15 @@
           <input type="email" name="email" class="form-control" placeholder="executive@nimsase.org">
         </div>
         <div class="form-group">
-          <label class="form-label">Photo URL</label>
-          <input type="url" name="photo" class="form-control" placeholder="https://... (leave blank for initials avatar)">
+          <label class="form-label">Photo</label>
+          <div class="drop-zone" style="margin-bottom:0.5rem;">
+            <div class="drop-zone-icon">📸</div>
+            <div class="drop-zone-text">Click or drag photo here</div>
+            <div class="drop-zone-sub">JPG, PNG, WebP — max 5MB</div>
+            <input type="file" name="photoFile" accept="image/*">
+            <div class="preview-grid"></div>
+          </div>
+          <input type="url" name="photo" class="form-control" placeholder="Or paste image URL (optional)">
         </div>
         <div class="form-group" >
           <label class="form-label">Short Bio</label>

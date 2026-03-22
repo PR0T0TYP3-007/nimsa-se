@@ -5,13 +5,78 @@
   <title><%= title %></title>
   <link rel="stylesheet" href="/css/style.css">
   <style>
-    .gallery-grid { columns: 3; gap: 1rem; }
-    @media (max-width:768px) { .gallery-grid { columns: 2; } }
-    @media (max-width:480px) { .gallery-grid { columns: 1; } }
-    .gallery-item { break-inside: avoid; margin-bottom: 1rem; border-radius: 10px; overflow: hidden; position: relative; cursor: pointer; }
+    .gallery-masonry {
+      columns: 4; gap: 1rem;
+    }
+    @media (max-width: 1024px) { .gallery-masonry { columns: 3; } }
+    @media (max-width: 768px)  { .gallery-masonry { columns: 2; } }
+    @media (max-width: 480px)  { .gallery-masonry { columns: 1; } }
+
+    .gallery-item {
+      break-inside: avoid; margin-bottom: 1rem;
+      border-radius: 10px; overflow: hidden;
+      position: relative; cursor: pointer;
+      display: block;
+    }
+    .gallery-item img {
+      width: 100%; display: block;
+      transition: transform 0.3s ease;
+    }
+    .gallery-item:hover img { transform: scale(1.03); }
+    .gallery-item .gallery-overlay {
+      position: absolute; inset: 0;
+      background: rgba(0,50,0,0.7);
+      opacity: 0; transition: all 0.3s ease;
+      display: flex; align-items: center; justify-content: center;
+      flex-direction: column; gap: 0.4rem;
+      color: white; text-align: center; padding: 1rem;
+    }
     .gallery-item:hover .gallery-overlay { opacity: 1; }
-    .gallery-overlay { position:absolute;inset:0;background:rgba(0,100,0,0.7);opacity:0;transition:all 0.3s ease;display:flex;align-items:center;justify-content:center;color:white;font-size:0.85rem;font-weight:600; }
-    .gallery-placeholder { display:flex;flex-direction:column;align-items:center;justify-content:center;color:rgba(255,255,255,0.7);font-size:0.82rem;text-align:center;padding:1.5rem; }
+    .gallery-placeholder-block {
+      width: 100%;
+      background: linear-gradient(135deg, var(--green-primary), var(--green-deep));
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      color: rgba(255,255,255,0.7); font-size: 0.82rem;
+      text-align: center; padding: 2rem 1rem;
+      min-height: 160px;
+    }
+
+    /* Lightbox */
+    .lightbox {
+      display: none; position: fixed; inset: 0; z-index: 9999;
+      background: rgba(0,0,0,0.95);
+      align-items: center; justify-content: center;
+      flex-direction: column;
+    }
+    .lightbox.open { display: flex; }
+    .lightbox img {
+      max-width: 90vw; max-height: 80vh;
+      object-fit: contain; border-radius: 8px;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.6);
+    }
+    .lightbox-caption {
+      color: rgba(255,255,255,0.8); margin-top: 1rem;
+      font-size: 0.9rem; text-align: center;
+    }
+    .lightbox-close {
+      position: absolute; top: 1.5rem; right: 1.5rem;
+      background: none; border: none; color: white;
+      font-size: 2rem; cursor: pointer; line-height: 1;
+      opacity: 0.7; transition: opacity 0.2s;
+    }
+    .lightbox-close:hover { opacity: 1; }
+    .lightbox-nav {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+      color: white; font-size: 1.5rem; width: 48px; height: 48px;
+      border-radius: 50%; cursor: pointer; display: flex;
+      align-items: center; justify-content: center;
+      transition: all 0.2s;
+    }
+    .lightbox-nav:hover { background: rgba(255,255,255,0.2); }
+    .lightbox-prev { left: 1.5rem; }
+    .lightbox-next { right: 1.5rem; }
   </style>
 </head>
 <body>
@@ -21,90 +86,135 @@
   <div class="container">
     <div class="eyebrow">Gallery</div>
     <h1>Moments & Memories</h1>
-    <p>A visual record of NiMSA SE's conventions, outreaches, webinars, and campus activities across the region.</p>
+    <p>A visual record of NiMSA SE's conventions, outreaches, webinars, and campus life across the Southeast Region.</p>
   </div>
 </div>
 
 <section class="section">
   <div class="container">
+
     <!-- Filter Tabs -->
-    <div class="tabs" style="max-width:700px; margin: 0 auto 3rem;" id="gallery-filter">
-      <button class="tab-btn active" data-cat="all" onclick="filterGallery('all')">All Photos</button>
-      <button class="tab-btn" data-cat="convention" onclick="filterGallery('convention')">Conventions</button>
-      <button class="tab-btn" data-cat="webinar" onclick="filterGallery('webinar')">Webinars</button>
-      <button class="tab-btn" data-cat="campaign" onclick="filterGallery('campaign')">Campaigns</button>
-      <button class="tab-btn" data-cat="campus" onclick="filterGallery('campus')">Campus Life</button>
+    <div class="tabs" id="gallery-filter" style="max-width:700px;margin:0 auto 3rem;">
+      <button class="tab-btn active" onclick="filterGallery('all', this)">All Photos</button>
+      <button class="tab-btn" onclick="filterGallery('convention', this)">Conventions</button>
+      <button class="tab-btn" onclick="filterGallery('webinar', this)">Webinars</button>
+      <button class="tab-btn" onclick="filterGallery('campaign', this)">Campaigns</button>
+      <button class="tab-btn" onclick="filterGallery('outreach', this)">Outreaches</button>
+      <button class="tab-btn" onclick="filterGallery('campus', this)">Campus Life</button>
     </div>
 
-    <div class="gallery-grid" id="gallery-grid">
-      <%
-      const placeholders = [
-        { cat: 'convention', label: 'Annual Regional Convention', color: 'linear-gradient(135deg,#006400,#003300)', h: 260 },
-        { cat: 'campaign', label: 'Hypertension Screening — Enugu', color: 'linear-gradient(135deg,#1a5c1a,#006400)', h: 180 },
-        { cat: 'webinar', label: 'Clinical Skills Webinar', color: 'linear-gradient(135deg,#003300,#006400)', h: 200 },
-        { cat: 'campus', label: 'UNN SUMSA Chapter Meeting', color: 'linear-gradient(135deg,#004d00,#1a5c1a)', h: 220 },
-        { cat: 'convention', label: 'Award Night — Most Exceptional Region', color: 'linear-gradient(135deg,#b8941f,#d4af37)', h: 180 },
-        { cat: 'campaign', label: 'Malaria Prevention Drive — Imo', color: 'linear-gradient(135deg,#006400,#004d00)', h: 240 },
-        { cat: 'campus', label: 'New Executives Swearing-In', color: 'linear-gradient(135deg,#003300,#1a5c1a)', h: 190 },
-        { cat: 'webinar', label: 'Research Methodology Workshop', color: 'linear-gradient(135deg,#1a3a5c,#1565c0)', h: 210 },
-        { cat: 'convention', label: 'Cultural Night — Convention 2025', color: 'linear-gradient(135deg,#5c1a1a,#c62828)', h: 170 },
-        { cat: 'campaign', label: 'Free Blood Pressure Check — Ebonyi', color: 'linear-gradient(135deg,#006400,#003d00)', h: 195 },
-        { cat: 'campus', label: 'MEDSSA Abia State Chapter', color: 'linear-gradient(135deg,#3a1a5c,#6a1b9a)', h: 230 },
-        { cat: 'webinar', label: 'IFMSA Exchange Info Session', color: 'linear-gradient(135deg,#00695c,#004d40)', h: 200 }
-      ];
-      %>
-      <% placeholders.forEach((p, i) => { %>
-      <div class="gallery-item" data-cat="<%= p.cat %>"
-           style="background:<%= p.color %>; height:<%= p.h %>px;"
-           onclick="openLightbox('<%= p.label %>')">
-        <div class="gallery-placeholder">
-          <svg width="36" height="36" fill="rgba(255,255,255,0.3)" viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
-          <span style="margin-top:0.5rem;"><%= p.label %></span>
+    <% if (photos && photos.length > 0) { %>
+    <!-- Real photos from database -->
+    <div class="gallery-masonry" id="galleryGrid">
+      <% photos.forEach((photo, i) => { %>
+      <div class="gallery-item" data-cat="<%= photo.category %>"
+           onclick="openLightbox(<%= i %>)">
+        <img src="<%= photo.url %>"
+             alt="<%= photo.caption || photo.category %>"
+             loading="lazy">
+        <div class="gallery-overlay">
+          <span class="badge badge-gold" style="font-size:0.65rem;"><%= photo.category %></span>
+          <% if (photo.caption) { %>
+          <span style="font-size:0.8rem;"><%= photo.caption %></span>
+          <% } %>
+          <span style="font-size:0.75rem;opacity:0.7;">🔍 View</span>
         </div>
-        <div class="gallery-overlay">🔍 View Photo</div>
       </div>
       <% }) %>
     </div>
 
-    <div class="info-box" style="margin-top:3rem;">
-      <p>📸 Want to contribute photos? Send your event photos to <a href="mailto:<%= settings.email %>"><%= settings.email %></a> or WhatsApp the PRO directly.</p>
+    <% } else { %>
+    <!-- Empty state — show placeholders -->
+    <div style="text-align:center;padding:4rem 0;">
+      <div style="font-size:4rem;margin-bottom:1rem;">📷</div>
+      <h3 style="color:var(--text-muted);font-size:1.2rem;margin-bottom:0.8rem;">No photos yet</h3>
+      <p style="color:var(--text-muted);max-width:400px;margin:0 auto 2rem;">
+        Photos from regional events and outreaches will appear here once uploaded.
+      </p>
+      <% if (isAdmin) { %>
+      <a href="/admin/gallery" class="btn btn-gold">Upload Photos →</a>
+      <% } %>
     </div>
+    <% } %>
 
     <% if (isAdmin) { %>
-    <div class="info-box" style="border-left-color:var(--green-primary);">
-      <p>🔧 <strong>Admin:</strong> Gallery photo management (upload/delete) coming in the next update. For now, photos can be submitted via email to the ICT Directorate.</p>
+    <div class="info-box" style="margin-top:3rem;">
+      <p>🔧 <strong>Admin:</strong> <a href="/admin/gallery">Manage gallery photos</a> — upload, categorise, and delete photos from all events and activities.</p>
     </div>
     <% } %>
   </div>
 </section>
 
 <!-- Lightbox -->
-<div id="lightbox" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.9);z-index:9999;align-items:center;justify-content:center;flex-direction:column;">
-  <button onclick="closeLightbox()" style="position:absolute;top:1.5rem;right:1.5rem;background:none;border:none;color:white;font-size:2rem;cursor:pointer;">✕</button>
-  <div id="lightbox-caption" style="color:var(--gold);font-family:var(--font-display);font-size:1.2rem;text-align:center;padding:2rem;"></div>
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+  <button class="lightbox-nav lightbox-prev" onclick="changeLightbox(-1)">‹</button>
+  <img id="lightboxImg" src="" alt="">
+  <div class="lightbox-caption" id="lightboxCaption"></div>
+  <button class="lightbox-nav lightbox-next" onclick="changeLightbox(1)">›</button>
 </div>
 
 <%- include('partials/footer') %>
 <script src="/js/main.js"></script>
 <script>
-function filterGallery(cat) {
-  document.querySelectorAll('#gallery-filter .tab-btn').forEach(b => b.classList.remove('active'));
-  event.target.classList.add('active');
-  document.querySelectorAll('.gallery-item').forEach(item => {
-    item.style.display = (cat === 'all' || item.dataset.cat === cat) ? 'block' : 'none';
+  // Build photos array from server data
+  const galleryPhotos = [
+    <% if (photos && photos.length) { %>
+    <% photos.forEach((p, i) => { %>
+    { url: '<%= p.url %>', caption: '<%= (p.caption || p.category).replace(/'/g, "\\'") %>', cat: '<%= p.category %>' }<%= i < photos.length - 1 ? ',' : '' %>
+    <% }) %>
+    <% } %>
+  ];
+
+  let currentIdx = 0;
+  let visiblePhotos = [...galleryPhotos];
+
+  function filterGallery(cat, btn) {
+    document.querySelectorAll('#gallery-filter .tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.gallery-item').forEach(item => {
+      item.style.display = (cat === 'all' || item.dataset.cat === cat) ? 'block' : 'none';
+    });
+    visiblePhotos = cat === 'all' ? galleryPhotos : galleryPhotos.filter(p => p.cat === cat);
+  }
+
+  function openLightbox(idx) {
+    currentIdx = idx;
+    showLightboxPhoto();
+    document.getElementById('lightbox').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function changeLightbox(dir) {
+    currentIdx = (currentIdx + dir + visiblePhotos.length) % visiblePhotos.length;
+    showLightboxPhoto();
+  }
+
+  function showLightboxPhoto() {
+    const p = visiblePhotos[currentIdx];
+    if (!p) return;
+    document.getElementById('lightboxImg').src = p.url;
+    document.getElementById('lightboxImg').alt = p.caption;
+    document.getElementById('lightboxCaption').textContent = p.caption || '';
+  }
+
+  // Close on backdrop click
+  document.getElementById('lightbox').addEventListener('click', function(e) {
+    if (e.target === this) closeLightbox();
   });
-}
-function openLightbox(caption) {
-  const lb = document.getElementById('lightbox');
-  document.getElementById('lightbox-caption').textContent = caption;
-  lb.style.display = 'flex';
-}
-function closeLightbox() {
-  document.getElementById('lightbox').style.display = 'none';
-}
-document.getElementById('lightbox').addEventListener('click', function(e) {
-  if (e.target === this) closeLightbox();
-});
+
+  // Keyboard navigation
+  document.addEventListener('keydown', e => {
+    if (!document.getElementById('lightbox').classList.contains('open')) return;
+    if (e.key === 'ArrowRight') changeLightbox(1);
+    if (e.key === 'ArrowLeft')  changeLightbox(-1);
+    if (e.key === 'Escape')     closeLightbox();
+  });
 </script>
 </body>
 </html>

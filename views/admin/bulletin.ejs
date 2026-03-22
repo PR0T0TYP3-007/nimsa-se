@@ -8,7 +8,7 @@
 <div class="admin-card">
   <div class="admin-card-header"><h3>Upload New Bulletin Issue</h3></div>
   <div class="admin-card-body">
-    <form action="/admin/bulletin" method="POST">
+    <form action="/admin/bulletin" method="POST" enctype="multipart/form-data">
       <div class="admin-form-grid">
         <div class="form-group" style="grid-column:1/-1;">
           <label class="form-label">Bulletin Title *</label>
@@ -31,12 +31,25 @@
           <input type="text" name="issue" class="form-control" placeholder="e.g. Vol. 3, Issue 3">
         </div>
         <div class="form-group">
-          <label class="form-label">PDF Link (Google Drive / URL) *</label>
-          <input type="url" name="pdfUrl" class="form-control" placeholder="https://drive.google.com/..." required>
+          <label class="form-label">Cover Image</label>
+          <div class="drop-zone" style="margin-bottom:0.5rem;">
+            <div class="drop-zone-icon">🖼️</div>
+            <div class="drop-zone-text">Click or drag cover image here</div>
+            <div class="drop-zone-sub">JPG, PNG, WebP — max 5MB (optional)</div>
+            <input type="file" name="coverImageFile" accept="image/*">
+            <div class="preview-grid"></div>
+          </div>
+          <input type="url" name="coverImage" class="form-control" placeholder="Or paste image URL (optional)">
         </div>
         <div class="form-group">
-          <label class="form-label">Cover Image URL</label>
-          <input type="url" name="coverImage" class="form-control" placeholder="https://... (optional — auto-generated if blank)">
+          <label class="form-label">Bulletin PDF</label>
+          <div class="drop-zone" style="margin-bottom:0.5rem;">
+            <div class="drop-zone-icon">📄</div>
+            <div class="drop-zone-text">Click or drag PDF here</div>
+            <div class="drop-zone-sub">PDF files only — max 5MB</div>
+            <input type="file" name="pdfFile" accept=".pdf,application/pdf">
+          </div>
+          <input type="url" name="pdfUrl" class="form-control" placeholder="Or paste Google Drive / external PDF link">
         </div>
         <div class="form-group" style="grid-column:1/-1;">
           <label class="form-label">Summary / Teaser</label>

@@ -2,6 +2,7 @@ const express     = require('express');
 const router      = express.Router();
 const bcrypt      = require('bcryptjs');
 const { requireAdmin } = require('../middleware/auth');
+const { cloudinary, uploadExec, uploadEvent, uploadBulletin, uploadNews, uploadGallery } = require('../middleware/upload');
 
 const User        = require('../models/User');
 const Executive   = require('../models/Executive');
@@ -14,11 +15,29 @@ const Settings    = require('../models/Settings');
 // Protect all admin routes
 router.use(requireAdmin);
 
-// Helper
+// Helper — always get settings
 async function getSettings() {
   let s = await Settings.findOne();
   if (!s) s = await Settings.create({});
   return s;
+}
+
+// Helper — delete a file from Cloudinary by its URL
+async function deleteCloudinaryFile(url, resourceType = 'image') {
+  if (!url || url.startsWith('/')) return; // skip empty or local paths
+  try {
+    // Extract public_id from Cloudinary URL
+    // URL format: https://res.cloudinary.com/cloud/image/upload/v123/nimsa-se/folder/filename.ext
+    const parts = url.split('/');
+    const uploadIdx = parts.indexOf('upload');
+    if (uploadIdx === -1) return;
+    // public_id is everything after upload/v{version}/
+    const publicIdWithExt = parts.slice(uploadIdx + 2).join('/');
+    const publicId = publicIdWithExt.replace(/\.[^/.]+$/, ''); // remove extension
+    await cloudinary.uploader.destroy(publicId, { resource_type: resourceType });
+  } catch (err) {
+    console.error('Cloudinary delete error:', err.message);
+  }
 }
 
 /* ════════════════════════════════
@@ -56,13 +75,15 @@ router.get('/executives', async (req, res) => {
   res.render('admin/executives', { title: 'Manage Executives — Admin', executives, settings });
 });
 
-router.post('/executives', async (req, res) => {
+router.post('/executives', uploadExec.single('photoFile'), async (req, res) => {
   try {
-    const { name, position, category, school, bio, photo, whatsapp, email } = req.body;
+    const { name, position, category, school, bio, whatsapp, email } = req.body;
     const count = await Executive.countDocuments();
+    const photo = req.file ? req.file.path : (req.body.photo || '');
     await Executive.create({ name, position, category, school, bio, photo, whatsapp, email, order: count + 1 });
     req.flash('success', `${name} added successfully.`);
   } catch (err) {
+    console.error(err);
     req.flash('error', 'Failed to add executive.');
   }
   res.redirect('/admin/executives');
@@ -76,17 +97,33 @@ router.get('/executives/:id/edit', async (req, res) => {
   } catch { req.flash('error', 'Not found.'); res.redirect('/admin/executives'); }
 });
 
-router.post('/executives/:id/edit', async (req, res) => {
+router.post('/executives/:id/edit', uploadExec.single('photoFile'), async (req, res) => {
   try {
-    await Executive.findByIdAndUpdate(req.params.id, req.body);
+    const exec = await Executive.findById(req.params.id);
+    if (!exec) { req.flash('error', 'Not found.'); return res.redirect('/admin/executives'); }
+    let photo = exec.photo;
+    if (req.file) {
+      await deleteCloudinaryFile(exec.photo);
+      photo = req.file.path;
+    } else if (req.body.photo !== undefined) {
+      photo = req.body.photo;
+    }
+    await Executive.findByIdAndUpdate(req.params.id, { ...req.body, photo });
     req.flash('success', 'Executive updated.');
-  } catch { req.flash('error', 'Update failed.'); }
+  } catch (err) {
+    console.error(err);
+    req.flash('error', 'Update failed.');
+  }
   res.redirect('/admin/executives');
 });
 
 router.post('/executives/:id/delete', async (req, res) => {
   try {
-    await Executive.findByIdAndDelete(req.params.id);
+    const exec = await Executive.findById(req.params.id);
+    if (exec) {
+      await deleteCloudinaryFile(exec.photo);
+      await exec.deleteOne();
+    }
     req.flash('success', 'Executive removed.');
   } catch { req.flash('error', 'Delete failed.'); }
   res.redirect('/admin/executives');
@@ -100,19 +137,27 @@ router.get('/events', async (req, res) => {
   res.render('admin/events', { title: 'Manage Events — Admin', events, settings });
 });
 
-router.post('/events', async (req, res) => {
+router.post('/events', uploadEvent.single('imageFile'), async (req, res) => {
   try {
-    const { title, date, time, type, location, description, image, registrationLink } = req.body;
+    const { title, date, time, type, location, description, registrationLink } = req.body;
     const status = new Date(date) >= new Date() ? 'upcoming' : 'past';
+    const image = req.file ? req.file.path : (req.body.image || '');
     await Event.create({ title, date, time, type, location, description, image, registrationLink, status });
     req.flash('success', 'Event added.');
-  } catch { req.flash('error', 'Failed to add event.'); }
+  } catch (err) {
+    console.error(err);
+    req.flash('error', 'Failed to add event.');
+  }
   res.redirect('/admin/events');
 });
 
 router.post('/events/:id/delete', async (req, res) => {
   try {
-    await Event.findByIdAndDelete(req.params.id);
+    const ev = await Event.findById(req.params.id);
+    if (ev) {
+      await deleteCloudinaryFile(ev.image);
+      await ev.deleteOne();
+    }
     req.flash('success', 'Event deleted.');
   } catch { req.flash('error', 'Delete failed.'); }
   res.redirect('/admin/events');
@@ -126,13 +171,21 @@ router.get('/bulletin', async (req, res) => {
   res.render('admin/bulletin', { title: 'Manage Bulletins — Admin', bulletins, settings });
 });
 
-router.post('/bulletin', async (req, res) => {
+router.post('/bulletin', uploadBulletin.fields([
+  { name: 'coverImageFile', maxCount: 1 },
+  { name: 'pdfFile', maxCount: 1 }
+]), async (req, res) => {
   try {
-    const { title, month, year, issue, coverImage, pdfUrl, summary, featured } = req.body;
+    const { title, month, year, issue, summary, featured } = req.body;
     if (featured === 'on') await Bulletin.updateMany({}, { featured: false });
+    const coverImage = req.files?.coverImageFile?.[0]?.path || req.body.coverImage || '';
+    const pdfUrl     = req.files?.pdfFile?.[0]?.path     || req.body.pdfUrl     || '#';
     await Bulletin.create({ title, month, year, issue, coverImage, pdfUrl, summary, featured: featured === 'on' });
     req.flash('success', 'Bulletin uploaded.');
-  } catch { req.flash('error', 'Failed to add bulletin.'); }
+  } catch (err) {
+    console.error(err);
+    req.flash('error', 'Failed to add bulletin.');
+  }
   res.redirect('/admin/bulletin');
 });
 
@@ -147,7 +200,12 @@ router.post('/bulletin/:id/feature', async (req, res) => {
 
 router.post('/bulletin/:id/delete', async (req, res) => {
   try {
-    await Bulletin.findByIdAndDelete(req.params.id);
+    const b = await Bulletin.findById(req.params.id);
+    if (b) {
+      await deleteCloudinaryFile(b.coverImage);
+      await deleteCloudinaryFile(b.pdfUrl, 'raw');
+      await b.deleteOne();
+    }
     req.flash('success', 'Bulletin deleted.');
   } catch { req.flash('error', 'Delete failed.'); }
   res.redirect('/admin/bulletin');
@@ -161,22 +219,76 @@ router.get('/news', async (req, res) => {
   res.render('admin/news', { title: 'Manage News — Admin', news, settings });
 });
 
-router.post('/news', async (req, res) => {
+router.post('/news', uploadNews.single('imageFile'), async (req, res) => {
   try {
-    const { title, category, date, excerpt, content, image, featured } = req.body;
+    const { title, category, date, excerpt, content, featured } = req.body;
     if (featured === 'on') await News.updateMany({}, { featured: false });
+    const image = req.file ? req.file.path : (req.body.image || '');
     await News.create({ title, category, date, excerpt, content, image, featured: featured === 'on' });
     req.flash('success', 'News post published.');
-  } catch { req.flash('error', 'Failed to publish post.'); }
+  } catch (err) {
+    console.error(err);
+    req.flash('error', 'Failed to publish post.');
+  }
   res.redirect('/admin/news');
 });
 
 router.post('/news/:id/delete', async (req, res) => {
   try {
-    await News.findByIdAndDelete(req.params.id);
+    const n = await News.findById(req.params.id);
+    if (n) {
+      await deleteCloudinaryFile(n.image);
+      await n.deleteOne();
+    }
     req.flash('success', 'Post deleted.');
   } catch { req.flash('error', 'Delete failed.'); }
   res.redirect('/admin/news');
+});
+
+/* ════════════════════════════════
+   GALLERY
+════════════════════════════════ */
+router.get('/gallery', async (req, res) => {
+  const [settings, photos] = await Promise.all([
+    getSettings(),
+    require('../models/Gallery').find().sort({ createdAt: -1 })
+  ]);
+  res.render('admin/gallery', { title: 'Manage Gallery — Admin', photos, settings });
+});
+
+router.post('/gallery', uploadGallery.array('photos', 20), async (req, res) => {
+  try {
+    const GalleryModel = require('../models/Gallery');
+    const { category, caption } = req.body;
+    if (!req.files || req.files.length === 0) {
+      req.flash('error', 'Please select at least one image.');
+      return res.redirect('/admin/gallery');
+    }
+    const docs = req.files.map(f => ({
+      url:      f.path,   // Cloudinary URL
+      category: category || 'campus',
+      caption:  caption  || ''
+    }));
+    await GalleryModel.insertMany(docs);
+    req.flash('success', `${req.files.length} photo(s) uploaded to Cloudinary.`);
+  } catch (err) {
+    console.error(err);
+    req.flash('error', 'Upload failed.');
+  }
+  res.redirect('/admin/gallery');
+});
+
+router.post('/gallery/:id/delete', async (req, res) => {
+  try {
+    const GalleryModel = require('../models/Gallery');
+    const photo = await GalleryModel.findById(req.params.id);
+    if (photo) {
+      await deleteCloudinaryFile(photo.url);
+      await photo.deleteOne();
+    }
+    req.flash('success', 'Photo deleted.');
+  } catch { req.flash('error', 'Delete failed.'); }
+  res.redirect('/admin/gallery');
 });
 
 /* ════════════════════════════════

@@ -11,7 +11,7 @@
     <a href="/admin/executives" class="btn btn-sm btn-outline-gold">← Back</a>
   </div>
   <div class="admin-card-body">
-    <form action="/admin/executives/<%= exec._id %>/edit" method="POST">
+    <form action="/admin/executives/<%= exec._id %>/edit" method="POST" enctype="multipart/form-data">
       <div class="admin-form-grid">
         <div class="form-group">
           <label class="form-label">Full Name *</label>
@@ -46,8 +46,21 @@
           <input type="email" name="email" class="form-control" value="<%= exec.email %>">
         </div>
         <div class="form-group">
-          <label class="form-label">Photo URL</label>
-          <input type="url" name="photo" class="form-control" value="<%= exec.photo %>">
+          <label class="form-label">Photo</label>
+          <% if (exec.photo) { %>
+          <div style="margin-bottom:0.6rem;">
+            <img src="<%= exec.photo %>" alt="Current photo" style="width:70px;height:70px;border-radius:50%;object-fit:cover;border:2px solid var(--gold);">
+            <div style="font-size:0.75rem;color:var(--text-muted);margin-top:0.3rem;">Current photo — upload new to replace</div>
+          </div>
+          <% } %>
+          <div class="drop-zone" style="margin-bottom:0.5rem;">
+            <div class="drop-zone-icon">📸</div>
+            <div class="drop-zone-text">Click or drag new photo here</div>
+            <div class="drop-zone-sub">JPG, PNG, WebP — max 5MB</div>
+            <input type="file" name="photoFile" accept="image/*">
+            <div class="preview-grid"></div>
+          </div>
+          <input type="url" name="photo" class="form-control" value="<%= exec.photo %>" placeholder="Or paste image URL">
         </div>
         <div class="form-group" style="grid-column:1/-1;">
           <label class="form-label">Bio</label>

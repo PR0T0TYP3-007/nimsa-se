@@ -76,8 +76,11 @@ router.get('/resources', async (req, res) => {
 
 // Gallery
 router.get('/gallery', async (req, res) => {
-  const settings = await getSettings();
-  res.render('gallery', { title: 'Gallery — NiMSA South East Region', settings });
+  const [settings, photos] = await Promise.all([
+    getSettings(),
+    require('../models/Gallery').find().sort({ createdAt: -1 })
+  ]);
+  res.render('gallery', { title: 'Gallery — NiMSA South East Region', settings, photos });
 });
 
 // News
