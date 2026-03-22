@@ -13,16 +13,13 @@ cloudinary.config({
 function makeStorage(folder, allowPDF = false) {
   return new CloudinaryStorage({
     cloudinary,
-    params: (req, file) => {
-      const isPDF = file.mimetype === 'application/pdf';
-      return {
-        folder:        `nimsa-se/${folder}`,
-        resource_type: isPDF ? 'raw' : 'image',
-        allowed_formats: allowPDF
-          ? ['jpg', 'jpeg', 'png', 'gif', 'webp', 'pdf']
-          : ['jpg', 'jpeg', 'png', 'gif', 'webp'],
-        transformation: isPDF ? [] : [{ quality: 'auto', fetch_format: 'auto' }],
-      };
+    params: {
+      folder:          `nimsa-se/${folder}`,
+      allowed_formats: allowPDF
+        ? ['jpg', 'jpeg', 'png', 'gif', 'webp', 'pdf']
+        : ['jpg', 'jpeg', 'png', 'gif', 'webp'],
+      resource_type:   'auto',
+      transformation:  [{ quality: 'auto', fetch_format: 'auto' }],
     },
   });
 }

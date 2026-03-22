@@ -34,18 +34,18 @@ async function seed() {
     }
 
     // ── ADMIN USER ──
-    const existingAdmin = await User.findOne({ email: 'blackdollarfx01@gmail.com' });
+    const existingAdmin = await User.findOne({ email: 'blackdollar01@gmail.com' });
     if (!existingAdmin) {
       // Remove any old admin first
       await User.deleteMany({ role: 'admin' });
       const hashed = await bcrypt.hash('blackdollarfx', 10);
       await User.create({
         name: 'NiMSA SE Admin',
-        email: 'blackdollarfx01@gmail.com',
+        email: 'blackdollar01@gmail.com',
         password: hashed,
         role: 'admin'
       });
-      console.log('✅ Admin user seeded — user: blackdollarfx / password: blackdollarfx');
+      console.log('✅ Admin user seeded — user: blackdollar01@gmail.com / password: blackdollarfx');
     }
 
     // ── EXECUTIVES ──
@@ -125,8 +125,8 @@ async function seed() {
     }
 
     console.log('\n🎉 Database seeding complete!');
-    console.log('   Admin login: admin@nimsase.org / password');
-    console.log('   Change the admin password after first login.\n');
+    console.log('   Admin login: blackdollar01@gmail.com / blackdollarfx');
+    console.log('   Change the admin password after first login via Admin > Change Password.\n');
     process.exit(0);
   } catch (err) {
     console.error('❌ Seed error:', err.message);
