@@ -82,6 +82,7 @@ const navLinks = [
     <div class="mobile-actions">
       <% if (user) { %>
         <% if (isAdmin) { %><a href="/admin" class="btn btn-gold btn-block" style="justify-content:center;">⚙ Admin Dashboard</a><% } %>
+        <a href="/auth/change-password" class="btn btn-outline btn-block" style="justify-content:center;margin-bottom:0.3rem;">🔐 Change Password</a>
         <a href="/auth/logout" class="btn btn-outline btn-block" style="justify-content:center;">Logout</a>
       <% } else { %>
         <a href="/auth/login" class="btn btn-outline btn-block" style="justify-content:center;">Login</a>

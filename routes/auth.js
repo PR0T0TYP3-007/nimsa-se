@@ -101,4 +101,47 @@ router.get('/logout', (req, res) => {
   req.session.destroy(() => res.redirect('/'));
 });
 
+// GET /auth/change-password
+router.get('/change-password', (req, res) => {
+  if (!req.session.user) {
+    req.flash('error', 'Please log in first.');
+    return res.redirect('/auth/login');
+  }
+  res.render('change-password', { title: 'Change Password — NiMSA SE' });
+});
+
+// POST /auth/change-password
+router.post('/change-password', async (req, res) => {
+  if (!req.session.user) return res.redirect('/auth/login');
+  try {
+    const { currentPassword, newPassword, confirmPassword } = req.body;
+
+    if (newPassword !== confirmPassword) {
+      req.flash('error', 'New passwords do not match.');
+      return res.redirect('/auth/change-password');
+    }
+    if (newPassword.length < 6) {
+      req.flash('error', 'Password must be at least 6 characters.');
+      return res.redirect('/auth/change-password');
+    }
+
+    const user = await User.findById(req.session.user.id);
+    const match = await bcrypt.compare(currentPassword, user.password);
+    if (!match) {
+      req.flash('error', 'Current password is incorrect.');
+      return res.redirect('/auth/change-password');
+    }
+
+    user.password = await bcrypt.hash(newPassword, 10);
+    await user.save();
+
+    req.flash('success', 'Password changed successfully!');
+    res.redirect('/auth/change-password');
+  } catch (err) {
+    console.error(err);
+    req.flash('error', 'Something went wrong.');
+    res.redirect('/auth/change-password');
+  }
+});
+
 module.exports = router;

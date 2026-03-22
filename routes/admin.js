@@ -180,6 +180,51 @@ router.post('/news/:id/delete', async (req, res) => {
 });
 
 /* ════════════════════════════════
+   CHANGE PASSWORD
+════════════════════════════════ */
+router.get('/change-password', async (req, res) => {
+  const settings = await getSettings();
+  res.render('admin/change-password', { title: 'Change Password — Admin', settings });
+});
+
+router.post('/change-password', async (req, res) => {
+  try {
+    const { currentPassword, newPassword, confirmPassword } = req.body;
+
+    if (newPassword !== confirmPassword) {
+      req.flash('error', 'New passwords do not match.');
+      return res.redirect('/admin/change-password');
+    }
+    if (newPassword.length < 6) {
+      req.flash('error', 'New password must be at least 6 characters.');
+      return res.redirect('/admin/change-password');
+    }
+
+    const user = await User.findById(req.session.user.id);
+    if (!user) {
+      req.flash('error', 'User not found.');
+      return res.redirect('/admin/change-password');
+    }
+
+    const match = await bcrypt.compare(currentPassword, user.password);
+    if (!match) {
+      req.flash('error', 'Current password is incorrect.');
+      return res.redirect('/admin/change-password');
+    }
+
+    user.password = await bcrypt.hash(newPassword, 10);
+    await user.save();
+
+    req.flash('success', 'Password changed successfully!');
+    res.redirect('/admin/change-password');
+  } catch (err) {
+    console.error(err);
+    req.flash('error', 'Failed to change password.');
+    res.redirect('/admin/change-password');
+  }
+});
+
+/* ════════════════════════════════
    INSTITUTIONS / MSA
 ════════════════════════════════ */
 router.get('/institutions', async (req, res) => {
