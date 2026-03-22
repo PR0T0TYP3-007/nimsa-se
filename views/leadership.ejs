@@ -83,38 +83,28 @@
       <div class="gold-line"></div>
     </div>
     <div class="grid-3">
-      <%
-      const schools = [
-        { abbr:'UNMSA',       assoc:'University of Nigeria Medical Students Association', inst:'University of Nigeria (Enugu Campus)', state:'Enugu',         type:'Federal',  quota:'150–180 Medical, 15 Dental' },
-        { abbr:'NAUMSA',      assoc:'Nnamdi Azikiwe University Medical Students Assoc.',  inst:'Nnamdi Azikiwe University, Nnewi',    state:'Anambra',       type:'Federal',  quota:'100 Medical' },
-        { abbr:'ABSUMSA',     assoc:'Abia State University Medical Students Association', inst:'Abia State University, Uturu',         state:'Abia',          type:'State',    quota:'120–150 Medical' },
-        { abbr:'EBSUMSA',     assoc:'Ebonyi State University Medical Students Assoc.',   inst:'Ebonyi State University, Abakaliki',   state:'Ebonyi',        type:'State',    quota:'100 Medical' },
-        { abbr:'ESUMSA',      assoc:'Enugu State University Medical Students Assoc.',    inst:'Enugu State University (ESUT)',         state:'Enugu',         type:'State',    quota:'50 Medical' },
-        { abbr:'IMSUMSA',     assoc:'Imo State University Medical Students Association', inst:'Imo State University, Owerri',         state:'Imo',           type:'State',    quota:'50 Medical' },
-        { abbr:'COOUMSA',     assoc:'Chukwuemeka Odumegwu Ojukwu University MSA',        inst:'COOU, Anambra',                        state:'Anambra',       type:'State',    quota:'50 Medical' },
-        { abbr:'AE-FUMSA',    assoc:'Alex Ekwueme Federal University MSA',               inst:'Alex Ekwueme Federal University',      state:'Ebonyi',        type:'Federal',  quota:'50 Medical' },
-        { abbr:'GOUMSA',      assoc:'Godfrey Okoye University Medical Students Assoc.',  inst:'Godfrey Okoye University',             state:'Enugu',         type:'Private',  quota:'Accredited' },
-        { abbr:'GUMSA',       assoc:'Gregory University Medical Students Association',   inst:'Gregory University, Uturu',            state:'Abia',          type:'Private',  quota:'120 Medical' },
-        { abbr:'MUMSA',       assoc:'Madonna University Medical Students Association',   inst:'Madonna University, Elele/Okija',      state:'Rivers/Anambra',type:'Private',  quota:'50 Medical' },
-        { abbr:'UNIZIK Dental',assoc:'UNIZIK Dental School Students Association',        inst:'Nnamdi Azikiwe University Dental',     state:'Anambra',       type:'Federal',  quota:'Dental' },
-        { abbr:'DUMSA',       assoc:'David Umahi Federal University MSA',                inst:'David Umahi Federal University',       state:'Ebonyi',        type:'Federal',  quota:'30 (Partially Accredited)' },
-      ];
-      const typeColor = { Federal:'badge-blue', State:'badge-green', Private:'badge-gold' };
-      %>
-      <% schools.forEach((s, i) => { %>
+      <% const typeColor = { Federal:'badge-blue', State:'badge-green', Private:'badge-purple' }; %>
+      <% (institutions && institutions.length ? institutions : []).forEach((s, i) => { %>
       <div class="card fade-in" style="transition-delay:<%= i*0.04 %>s">
         <div style="padding:1.4rem 1.4rem 0;">
           <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:0.5rem;margin-bottom:0.8rem;">
-            <div style="font-family:var(--font-display);font-size:1.3rem;font-weight:700;color:var(--green-deep);"><%= s.abbr %></div>
+            <div style="font-family:var(--font-display);font-size:1.3rem;font-weight:700;color:var(--green-deep);"><%= s.acronym %></div>
             <span class="badge <%= typeColor[s.type] || 'badge-green' %>"><%= s.type %></span>
           </div>
           <div style="font-size:0.8rem;font-weight:600;color:var(--text-body);margin-bottom:0.3rem;"><%= s.assoc %></div>
-          <div style="font-size:0.75rem;color:var(--text-muted);margin-bottom:0.6rem;"><%= s.inst %></div>
+          <div style="font-size:0.75rem;color:var(--text-muted);margin-bottom:0.6rem;"><%= s.name %></div>
         </div>
         <div style="padding:0.8rem 1.4rem 1.2rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.4rem;">
-          <span class="badge badge-green"><%= s.state %> State</span>
-          <span style="font-size:0.7rem;color:var(--text-muted);">MDCN Quota: <%= s.quota %></span>
+          <span class="badge badge-gold"><%= s.state %></span>
+          <span class="badge <%= s.status==='Fully Accredited'?'badge-green':'badge-orange' %>" style="font-size:0.6rem;"><%= s.status %></span>
+          <% if (s.quota > 0 || s.dental_quota > 0) { %>
+          <span style="font-size:0.7rem;color:var(--text-muted);">
+            <% if (s.quota > 0) { %>Med: <%= s.quota %><% } %>
+            <% if (s.dental_quota > 0) { %> · Dental: <%= s.dental_quota %><% } %>
+          </span>
+          <% } %>
         </div>
+      </div>
       </div>
       <% }) %>
     </div>

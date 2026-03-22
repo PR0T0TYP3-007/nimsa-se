@@ -65,7 +65,7 @@
       <div style="display:flex;align-items:center;gap:0.5rem;flex-shrink:0;flex-wrap:wrap;">
         <span class="badge badge-green"><%= n.category %></span>
         <span class="badge <%= n.featured?'badge-gold':'badge-blue' %>"><%= n.featured?'Featured':'Published' %></span>
-        <form action="/admin/news/<%= n.id %>/delete" method="POST" style="display:inline;">
+        <form action="/admin/news/<%= n._id %>/delete" method="POST" style="display:inline;">
           <button type="submit" class="btn btn-sm btn-danger" data-confirm="Delete this post?">Delete</button>
         </form>
       </div>

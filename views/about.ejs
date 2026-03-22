@@ -118,34 +118,18 @@
       <div class="gold-line"></div>
     </div>
     <div class="grid-3">
-      <%
-      const schools = [
-        { abbr:'UNMSA',    full:'University of Nigeria (Enugu Campus)',        state:'Enugu',    quota:'150–180',  type:'Federal',  color:'#003d00' },
-        { abbr:'NAUMSA',   full:'Nnamdi Azikiwe University, Nnewi',            state:'Anambra',  quota:'100',      type:'Federal',  color:'#1a3a5c' },
-        { abbr:'ABSUMSA',  full:'Abia State University, Uturu',                state:'Abia',     quota:'120–150',  type:'State',    color:'#5c1a1a' },
-        { abbr:'EBSUMSA',  full:'Ebonyi State University, Abakaliki',          state:'Ebonyi',   quota:'100',      type:'State',    color:'#3a1a5c' },
-        { abbr:'ESUMSA',   full:'Enugu State University (ESUT)',                state:'Enugu',    quota:'50',       type:'State',    color:'#1a3d1a' },
-        { abbr:'IMSUMSA',  full:'Imo State University, Owerri',                state:'Imo',      quota:'50',       type:'State',    color:'#3d2a1a' },
-        { abbr:'COOUMSA',  full:'Chukwuemeka Odumegwu Ojukwu University',      state:'Anambra',  quota:'50',       type:'State',    color:'#1a2a5c' },
-        { abbr:'AE-FUMSA', full:'Alex Ekwueme Federal University',              state:'Ebonyi',   quota:'50',       type:'Federal',  color:'#2a3d1a' },
-        { abbr:'GOUMSA',   full:'Godfrey Okoye University',                     state:'Enugu',    quota:'—',        type:'Private',  color:'#5c3d1a' },
-        { abbr:'GUMSA',    full:'Gregory University, Uturu',                    state:'Abia',     quota:'120',      type:'Private',  color:'#3d1a3d' },
-        { abbr:'MUMSA',    full:'Madonna University, Elele/Okija',              state:'Rivers/Anambra', quota:'50', type:'Private', color:'#1a4a3a' },
-        { abbr:'UNIZIK Dental', full:'Nnamdi Azikiwe University Dental School', state:'Anambra',  quota:'Dental',   type:'Federal',  color:'#3a2a1a' },
-        { abbr:'DUMSA',    full:'David Umahi Federal University',                state:'Ebonyi',   quota:'30',       type:'Federal',  color:'#1a3a3a' }
-      ];
-      %>
-      <% schools.forEach((s, i) => { %>
+      <% (institutions && institutions.length ? institutions : []).forEach((s, i) => { %>
       <div class="card fade-in" style="padding:0;overflow:hidden;transition-delay:<%= i*0.04 %>s">
-        <div style="height:70px;background:linear-gradient(135deg,<%= s.color %>,var(--green-primary));display:flex;align-items:center;justify-content:center;gap:1rem;padding:0 1.2rem;">
-          <div style="font-family:var(--font-display);font-size:1.1rem;font-weight:700;color:var(--gold);"><%= s.abbr %></div>
-          <span class="badge" style="background:rgba(255,255,255,0.15);color:rgba(255,255,255,0.9);font-size:0.58rem;"><%= s.type %></span>
+        <div style="height:70px;background:linear-gradient(135deg,var(--green-deep),var(--green-primary));display:flex;align-items:center;justify-content:space-between;padding:0 1.2rem;">
+          <div style="font-family:var(--font-display);font-size:1.05rem;font-weight:700;color:var(--gold);"><%= s.acronym %></div>
+          <span class="badge <%= s.type==='Federal'?'badge-blue':s.type==='Private'?'badge-purple':'badge-green' %>" style="font-size:0.58rem;"><%= s.type %></span>
         </div>
         <div style="padding:1rem 1.2rem;">
-          <div style="font-weight:700;color:var(--green-deep);font-size:0.88rem;margin-bottom:0.3rem;"><%= s.full %></div>
+          <div style="font-weight:700;color:var(--green-deep);font-size:0.88rem;margin-bottom:0.3rem;"><%= s.name %></div>
           <div style="display:flex;gap:0.5rem;align-items:center;flex-wrap:wrap;">
-            <span class="badge badge-green"><%= s.state %></span>
-            <% if (s.quota !== '—') { %>
+            <span class="badge badge-gold"><%= s.state %></span>
+            <span class="badge <%= s.status==='Fully Accredited'?'badge-green':'badge-orange' %>" style="font-size:0.6rem;"><%= s.status %></span>
+            <% if (s.quota > 0) { %>
             <span style="font-size:0.72rem;color:var(--text-muted);">Quota: <%= s.quota %></span>
             <% } %>
           </div>
@@ -154,7 +138,7 @@
       <% }) %>
     </div>
     <div class="info-box" style="margin-top:2rem;">
-      <p>📋 Accreditation status and training quotas are as approved by the <strong>Medical and Dental Council of Nigeria (MDCN)</strong>. Data sourced from latest available MDCN records. David Umahi Federal University is partially accredited and represents the next wave of regional growth.</p>
+      <p>📋 Accreditation status and training quotas are as approved by the <strong>Medical and Dental Council of Nigeria (MDCN)</strong>. Quotas are managed live by the ICT Directorate — <a href="/admin/institutions">update via Admin Panel</a>.</p>
     </div>
   </div>
 </section>

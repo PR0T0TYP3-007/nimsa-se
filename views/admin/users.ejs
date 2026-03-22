@@ -21,7 +21,7 @@
         <div style="min-width:0;">
           <div style="font-weight:700;font-size:0.88rem;color:var(--green-deep);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
             <%= u.name %>
-            <% if (u.id === user.id) { %><span class="badge badge-green" style="margin-left:4px;font-size:0.58rem;">You</span><% } %>
+            <% if (u._id.toString() === user.id) { %><span class="badge badge-green" style="margin-left:4px;font-size:0.58rem;">You</span><% } %>
           </div>
           <div style="font-size:0.75rem;color:var(--text-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:200px;"><%= u.email %></div>
           <% if (u.institution) { %><div style="font-size:0.7rem;color:var(--text-muted);"><%= u.institution %><% if(u.level){%> · <%=u.level%><% } %></div><% } %>
@@ -33,14 +33,14 @@
         <span style="font-size:0.7rem;color:var(--text-muted);white-space:nowrap;"><%= new Date(u.createdAt).toLocaleDateString('en-NG',{day:'numeric',month:'short',year:'numeric'}) %></span>
       </div>
       <!-- Actions -->
-      <% if (u.id !== user.id) { %>
+      <% if (u._id.toString() !== user.id) { %>
       <div style="display:flex;gap:0.4rem;flex-shrink:0;flex-wrap:wrap;">
-        <form action="/admin/users/<%= u.id %>/toggle-admin" method="POST" style="display:inline;">
+        <form action="/admin/users/<%= u._id %>/toggle-admin" method="POST" style="display:inline;">
           <button type="submit" class="btn btn-sm btn-outline-gold" data-confirm="Change role for <%= u.name %>?">
             <%= u.role==='admin'?'Remove Admin':'Make Admin' %>
           </button>
         </form>
-        <form action="/admin/users/<%= u.id %>/delete" method="POST" style="display:inline;">
+        <form action="/admin/users/<%= u._id %>/delete" method="POST" style="display:inline;">
           <button type="submit" class="btn btn-sm btn-danger" data-confirm="Permanently delete <%= u.name %>?">Delete</button>
         </form>
       </div>

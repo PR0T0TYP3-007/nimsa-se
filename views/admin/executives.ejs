@@ -80,8 +80,8 @@
       </div>
       <span class="badge <%= exec.category==='coordinator'?'badge-gold':exec.category==='rec'?'badge-green':'badge-blue' %>" style="flex-shrink:0;"><%= exec.category %></span>
       <div style="display:flex;gap:0.4rem;flex-shrink:0;">
-        <a href="/admin/executives/<%= exec.id %>/edit" class="btn btn-sm btn-outline-gold">Edit</a>
-        <form action="/admin/executives/<%= exec.id %>/delete" method="POST" style="display:inline;">
+        <a href="/admin/executives/<%= exec._id %>/edit" class="btn btn-sm btn-outline-gold">Edit</a>
+        <form action="/admin/executives/<%= exec._id %>/delete" method="POST" style="display:inline;">
           <button type="submit" class="btn btn-sm btn-danger" data-confirm="Delete <%= exec.name %>?">Delete</button>
         </form>
       </div>

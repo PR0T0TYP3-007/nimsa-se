@@ -68,12 +68,12 @@
       <div style="display:flex;align-items:center;gap:0.5rem;flex-shrink:0;flex-wrap:wrap;">
         <span class="badge <%= b.featured?'badge-gold':'badge-green' %>"><%= b.featured?'Featured':'Archived' %></span>
         <% if (!b.featured) { %>
-        <form action="/admin/bulletin/<%= b.id %>/feature" method="POST" style="display:inline;">
+        <form action="/admin/bulletin/<%= b._id %>/feature" method="POST" style="display:inline;">
           <button type="submit" class="btn btn-sm btn-outline-gold">Set Featured</button>
         </form>
         <% } %>
         <a href="<%= b.pdfUrl %>" class="btn btn-sm btn-green" target="_blank">PDF</a>
-        <form action="/admin/bulletin/<%= b.id %>/delete" method="POST" style="display:inline;">
+        <form action="/admin/bulletin/<%= b._id %>/delete" method="POST" style="display:inline;">
           <button type="submit" class="btn btn-sm btn-danger" data-confirm="Delete this bulletin?">Delete</button>
         </form>
       </div>

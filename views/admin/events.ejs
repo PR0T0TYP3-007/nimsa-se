@@ -71,7 +71,7 @@
       <div style="display:flex;align-items:center;gap:0.5rem;flex-shrink:0;flex-wrap:wrap;">
         <span class="badge badge-green"><%= ev.type %></span>
         <span class="badge <%= ev.status==='upcoming'?'badge-gold':'badge-blue' %>"><%= ev.status %></span>
-        <form action="/admin/events/<%= ev.id %>/delete" method="POST" style="display:inline;">
+        <form action="/admin/events/<%= ev._id %>/delete" method="POST" style="display:inline;">
           <button type="submit" class="btn btn-sm btn-danger" data-confirm="Delete this event?">Delete</button>
         </form>
       </div>
