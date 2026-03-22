@@ -1,5 +1,35 @@
   </main>
 </div>
+
 <script src="/js/main.js"></script>
+<script>
+// Admin sidebar toggle
+const adminHamburger = document.getElementById('adminHamburger');
+const adminSidebar   = document.getElementById('adminSidebar');
+const adminOverlay   = document.getElementById('adminOverlay');
+const adminClose     = document.getElementById('adminSidebarClose');
+
+function openSidebar() {
+  adminSidebar.classList.add('open');
+  adminOverlay.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+function closeSidebar() {
+  adminSidebar.classList.remove('open');
+  adminOverlay.classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+if (adminHamburger) adminHamburger.addEventListener('click', openSidebar);
+if (adminClose)     adminClose.addEventListener('click', closeSidebar);
+if (adminOverlay)   adminOverlay.addEventListener('click', closeSidebar);
+
+// Mark active nav item
+document.querySelectorAll('.admin-nav-item').forEach(link => {
+  if (link.href && window.location.pathname === new URL(link.href, window.location).pathname) {
+    link.classList.add('active');
+  }
+});
+</script>
 </body>
 </html>

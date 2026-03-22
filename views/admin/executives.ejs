@@ -12,7 +12,7 @@
   </div>
   <div class="admin-card-body">
     <form action="/admin/executives" method="POST">
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+      <div class="admin-form-grid">
         <div class="form-group">
           <label class="form-label">Full Name *</label>
           <input type="text" name="name" class="form-control" placeholder="Dr. Jane Doe" required>
@@ -52,7 +52,7 @@
           <label class="form-label">Photo URL</label>
           <input type="url" name="photo" class="form-control" placeholder="https://... (leave blank for initials avatar)">
         </div>
-        <div class="form-group" style="grid-column:1/-1;">
+        <div class="form-group" >
           <label class="form-label">Short Bio</label>
           <textarea name="bio" class="form-control" rows="3" placeholder="Brief biography (2-3 sentences)..."></textarea>
         </div>

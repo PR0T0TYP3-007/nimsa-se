@@ -141,6 +141,83 @@
       "photo": "",
       "whatsapp": "2348021234567",
       "email": "smsa@ebsu.edu.ng"
+    },
+    {
+      "id": "exec-013",
+      "name": "[Vacant]",
+      "position": "GOUMSA President",
+      "category": "school-president",
+      "school": "Godfrey Okoye University",
+      "bio": "Leading the Godfrey Okoye University Medical Students Association. GOUMSA won Academic Mentor of the Year and Trailblazer in Leadership at the most recent regional convention.",
+      "photo": "",
+      "whatsapp": "",
+      "email": "goumsa@gouni.edu.ng"
+    },
+    {
+      "id": "exec-014",
+      "name": "[Vacant]",
+      "position": "GUMSA President",
+      "category": "school-president",
+      "school": "Gregory University, Uturu",
+      "bio": "Leading the Gregory University Medical Students Association in Abia State.",
+      "photo": "",
+      "whatsapp": "",
+      "email": ""
+    },
+    {
+      "id": "exec-015",
+      "name": "[Vacant]",
+      "position": "COOUMSA President",
+      "category": "school-president",
+      "school": "Chukwuemeka Odumegwu Ojukwu University",
+      "bio": "Leading the COOU Medical Students Association in Anambra State.",
+      "photo": "",
+      "whatsapp": "",
+      "email": ""
+    },
+    {
+      "id": "exec-016",
+      "name": "[Vacant]",
+      "position": "AE-FUMSA President",
+      "category": "school-president",
+      "school": "Alex Ekwueme Federal University, Ebonyi",
+      "bio": "Leading the Alex Ekwueme Federal University Medical Students Association.",
+      "photo": "",
+      "whatsapp": "",
+      "email": ""
+    },
+    {
+      "id": "exec-017",
+      "name": "[Vacant]",
+      "position": "MUMSA President",
+      "category": "school-president",
+      "school": "Madonna University, Elele/Okija",
+      "bio": "Leading the Madonna University Medical Students Association.",
+      "photo": "",
+      "whatsapp": "",
+      "email": ""
+    },
+    {
+      "id": "exec-018",
+      "name": "[Vacant]",
+      "position": "DUMSA SE President",
+      "category": "school-president",
+      "school": "David Umahi Federal University, Ebonyi",
+      "bio": "Leading DUMSA SE \u2014 a growing institution with partial accreditation and a quota of 30 students.",
+      "photo": "",
+      "whatsapp": "",
+      "email": ""
+    },
+    {
+      "id": "exec-019",
+      "name": "[Vacant]",
+      "position": "UNIZIK Dental President",
+      "category": "school-president",
+      "school": "Nnamdi Azikiwe University Dental School",
+      "bio": "Leading the NiMSA chapter at the UNIZIK Dental School, Anambra State.",
+      "photo": "",
+      "whatsapp": "",
+      "email": ""
     }
   ],
   "events": [
@@ -242,11 +319,11 @@
   "news": [
     {
       "id": "news-001",
-      "title": "NiMSA SE Wins Most Exceptional Region Award for Third Consecutive Year",
+      "title": "NiMSA SE Wins Most Exceptional Region Award at National Convention",
       "category": "Achievement",
       "date": "2026-03-01",
-      "excerpt": "The South East Region has once again been recognized as the Most Exceptional Region of NiMSA at the national convention, marking three consecutive years of excellence.",
-      "content": "The South East Region has once again been recognized as the Most Exceptional Region of NiMSA at the national convention, marking three consecutive years of excellence in advocacy, outreach, and regional development.",
+      "excerpt": "The South East Region has once again been recognized as the Most Exceptional Region of NiMSA, marking three consecutive years of excellence in advocacy, outreach, and student leadership.",
+      "content": "The South East Region has once again been recognized as the Most Exceptional Region of NiMSA, marking three consecutive years of excellence in advocacy, outreach, and student leadership.",
       "image": "",
       "featured": true
     },
@@ -267,6 +344,16 @@
       "date": "2026-01-20",
       "excerpt": "The NiMSA Southeast Literary Awards returns for its second edition, calling for submissions in essay, poetry, and medical storytelling categories.",
       "content": "The NiMSA Southeast Literary Awards returns for its second edition, calling for submissions in essay, poetry, and medical storytelling categories from all medical students across the five Southeast states.",
+      "image": "",
+      "featured": false
+    },
+    {
+      "id": "news-004",
+      "title": "NiMSA SE Hosts Inaugural MAK NiMSA Health Week in Abakaliki",
+      "category": "Outreach",
+      "date": "2025-11-10",
+      "excerpt": "The South East Region proudly hosted the inaugural MAK NiMSA Health Week in Abakaliki, honouring the memory of Mustapha, Aisha, and Kabiru \u2014 medical students lost in the tragic 2023 boat mishap.",
+      "content": "In honour of Mustapha, Aisha, and Kabiru \u2014 three medical students tragically lost in a boat mishap in 2023 \u2014 the NiMSA Health Week was renamed the MAK NiMSA Health Week. The inaugural edition was hosted by EBSUMSA in Abakaliki, Ebonyi State, uniting Southeast medical students in remembrance and continued service.",
       "image": "",
       "featured": false
     }

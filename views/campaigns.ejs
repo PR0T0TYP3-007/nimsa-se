@@ -12,43 +12,89 @@
   <div class="container">
     <div class="eyebrow">Impact & Opportunities</div>
     <h1>Campaigns & Career Corner</h1>
-    <p>Public health campaigns making a difference across Southeast Nigeria, plus career opportunities for medical students.</p>
+    <p>Public health campaigns, advocacy programs, sports, and career opportunities — NiMSA SE students making a difference across Southeast Nigeria.</p>
   </div>
 </div>
 
-<!-- Public Health Campaigns -->
+<!-- MAK HEALTH WEEK HERO -->
 <section class="section">
   <div class="container">
+    <div style="background:linear-gradient(140deg,var(--green-deep),var(--green-primary));border-radius:var(--radius-xl);padding:3rem;color:white;border:1px solid rgba(201,168,76,0.2);margin-bottom:4rem;" class="fade-in">
+      <div style="display:grid;grid-template-columns:1fr auto;gap:2rem;align-items:center;flex-wrap:wrap;">
+        <div>
+          <div class="eyebrow" style="background:rgba(201,168,76,0.14);border:1px solid rgba(201,168,76,0.4);color:var(--gold);">Flagship Program</div>
+          <h2 style="color:white;margin:1rem 0 0.8rem;">MAK NiMSA Health Week</h2>
+          <p style="color:rgba(255,255,255,0.8);margin-bottom:1rem;">Named in honour of <strong style="color:var(--gold);">Mustapha, Aisha, and Kabiru</strong> — three medical students tragically lost in the 2023 boat mishap — the MAK Health Week is NiMSA's most significant annual community service event.</p>
+          <p style="color:rgba(255,255,255,0.7);margin-bottom:1.5rem;">The NiMSA South East Region proudly hosted the <strong>inaugural MAK NiMSA Health Week</strong> through EBSUMSA in Abakaliki, Ebonyi State — a tribute to their memory and a commitment to continued service.</p>
+          <a href="https://wa.me/<%= settings.whatsappNumber %>" class="btn btn-gold" target="_blank">Volunteer for Next Edition →</a>
+        </div>
+        <div style="text-align:center;padding:1.5rem;background:rgba(255,255,255,0.06);border-radius:var(--radius);border:1px solid rgba(201,168,76,0.2);min-width:160px;">
+          <div style="font-size:2.5rem;margin-bottom:0.5rem;">🕯️</div>
+          <div style="font-family:var(--font-display);font-size:1.4rem;font-weight:700;color:var(--gold);">M·A·K</div>
+          <div style="font-size:0.68rem;color:rgba(255,255,255,0.55);margin-top:0.3rem;text-transform:uppercase;letter-spacing:0.1em;">In Memoriam</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CAMPAIGNS GRID -->
     <div class="section-header fade-in">
-      <div class="eyebrow">Public Health</div>
-      <h2>Our Campaigns</h2>
-      <p>NiMSA SE medical students take healthcare to communities across all five Southeast states.</p>
+      <div class="eyebrow">Public Health Campaigns</div>
+      <h2>Our Active Campaigns</h2>
+      <p>NiMSA SE medical students take healthcare directly to communities across all five Southeast states.</p>
       <div class="gold-line"></div>
     </div>
 
     <div class="grid-3">
       <% const campaigns = [
-        { icon: '🩸', title: 'Malaria Prevention Drive', state: 'Imo & Ebonyi States', desc: 'Mass distribution of mosquito nets, community education on malaria prevention, and free malaria rapid tests for over 1,000 residents.', status: 'Completed', color: '#006400' },
-        { icon: '❤️', title: 'Hypertension Awareness Campaign', state: 'Enugu State', desc: 'Free blood pressure screenings, lifestyle counselling, and education sessions at community centres and markets across Enugu.', status: 'Upcoming', color: '#c62828' },
-        { icon: '🌡️', title: 'Typhoid & Hepatitis Screening', state: 'Abia State', desc: 'Free serological testing for typhoid fever and hepatitis B/C, with referrals provided for positive cases to local health facilities.', status: 'Completed', color: '#e65100' },
-        { icon: '🧠', title: 'Mental Health Awareness Month', state: 'Anambra State', desc: 'A month-long campaign combating mental health stigma in Southeast communities — talks, social media, and free consultations.', status: 'Planning', color: '#6a1b9a' },
-        { icon: '🚺', title: 'Women\'s Health & Reproductive Education', state: 'All 5 States', desc: 'Cervical cancer awareness, maternal health education, and free consultations for women across the Southeast region.', status: 'Ongoing', color: '#ad1457' },
-        { icon: '🦷', title: 'Oral Health Community Outreach', state: 'Ebonyi State', desc: 'Free dental screening, oral hygiene education, and distribution of basic oral care kits to school children and adults.', status: 'Completed', color: '#00695c' }
+        {
+          icon: '🤱', title: 'Maternal Mortality Prevention',
+          states: 'All 5 SE States', status: 'Ongoing',
+          desc: 'Community education on maternal health, hospital-based outreaches, and awareness campaigns aimed at reducing the high maternal death rates across the Southeast. NiMSA SE students partner with state health ministries to reach rural communities.',
+          color: '#ad1457'
+        },
+        {
+          icon: '🌿', title: 'Climate Change & Environmental Health',
+          states: 'Enugu & Anambra', status: 'Ongoing',
+          desc: 'Recognising the nexus between environmental health and clinical outcomes, NiMSA SE students run campaigns to halt local drivers of climate change — deforestation, poor waste management, and industrial pollution — that worsen respiratory and infectious diseases.',
+          color: '#2e7d32'
+        },
+        {
+          icon: '🚺', title: 'Sexual & Reproductive Health Outreach',
+          states: 'Abia & Imo States', status: 'Ongoing',
+          desc: 'Targeting secondary school girls across the Southeast, this outreach promotes early awareness of reproductive rights, cervical cancer screening, family planning, and maternal health. We work with schools and community health workers for sustainable impact.',
+          color: '#6a1b9a'
+        },
+        {
+          icon: '🩺', title: 'Hypertension & Cardiovascular Screening',
+          states: 'Enugu State', status: 'Upcoming',
+          desc: 'Free blood pressure screenings, lifestyle counselling, and education sessions at markets, churches, and community centres across Enugu State. Over 1,000 residents expected to benefit from the next edition.',
+          color: '#c62828'
+        },
+        {
+          icon: '🦟', title: 'Malaria Prevention Drive',
+          states: 'Imo & Ebonyi States', status: 'Completed',
+          desc: 'Mass distribution of insecticide-treated mosquito nets, community education on malaria prevention, and free malaria rapid diagnostic tests. Over 1,500 community members reached in the last edition across Imo and Ebonyi states.',
+          color: '#00695c'
+        },
+        {
+          icon: '🏛️', title: 'Medicine & Politics Mentorship',
+          states: 'All 5 SE States', status: 'Ongoing',
+          desc: 'A mentorship programme designed to prepare medical students for leadership roles in healthcare administration, policy-making, and broader socio-political spaces — developing doctors who are not just clinicians but informed community leaders.',
+          color: '#1565c0'
+        }
       ]; %>
       <% campaigns.forEach((c, i) => { %>
       <div class="campaign-card fade-in" style="transition-delay:<%= i*0.08 %>s">
-        <div class="campaign-img" style="background:linear-gradient(135deg,<%= c.color %>CC,<%= c.color %>99);">
+        <div class="campaign-img" style="background:linear-gradient(135deg,<%= c.color %>CC,<%= c.color %>88);">
           <div style="text-align:center;color:white;">
-            <div style="font-size:3rem;margin-bottom:0.5rem;"><%= c.icon %></div>
-            <div style="font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;background:rgba(255,255,255,0.2);padding:0.25rem 0.8rem;border-radius:100px;">
-              <%= c.status %>
-            </div>
+            <div style="font-size:2.8rem;margin-bottom:0.5rem;"><%= c.icon %></div>
+            <span style="background:rgba(255,255,255,0.2);font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;padding:0.22rem 0.75rem;border-radius:100px;"><%= c.status %></span>
           </div>
         </div>
         <div class="campaign-body">
-          <h3 style="font-size:1rem;margin-bottom:0.4rem;"><%= c.title %></h3>
-          <div style="font-size:0.75rem;color:var(--gold-dark);font-weight:600;margin-bottom:0.7rem;">📍 <%= c.state %></div>
-          <p style="font-size:0.83rem;color:var(--text-muted);margin-bottom:1rem;"><%= c.desc %></p>
+          <h3 style="font-size:1rem;margin-bottom:0.35rem;"><%= c.title %></h3>
+          <div style="font-size:0.72rem;color:var(--gold-dark);font-weight:600;margin-bottom:0.7rem;">📍 <%= c.states %></div>
+          <p style="font-size:0.82rem;color:var(--text-muted);margin-bottom:1rem;"><%= c.desc %></p>
           <a href="https://wa.me/<%= settings.whatsappNumber %>" class="btn btn-sm btn-green" target="_blank">Volunteer →</a>
         </div>
       </div>
@@ -57,37 +103,82 @@
   </div>
 </section>
 
-<!-- Career Corner -->
+<!-- NIMSA GAMES & CONVENTION -->
 <section class="section section-alt">
   <div class="container">
     <div class="section-header fade-in">
+      <div class="eyebrow">Academic & Sports Programs</div>
+      <h2>Competitions & Regional Events</h2>
+      <div class="gold-line"></div>
+    </div>
+    <div class="grid-2" style="gap:2rem;">
+      <div class="card fade-in" style="padding:2rem;">
+        <div style="font-size:2.5rem;margin-bottom:1rem;">🏆</div>
+        <h3 style="margin-bottom:0.7rem;">South East Regional Convention</h3>
+        <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:1rem;">Our flagship annual gathering — recently hosted by ESUMSA. Features academic competitions, quiz contests including the <strong>Dr. Charles Egwuatu Memorial Lecture & Debate</strong>, leadership elections, the "Face of NiMSA SE" title, and cultural nights. Schools like GOUMSA have shone here — winning "Academic Mentor of the Year" and "Trailblazer in Leadership."</p>
+        <a href="/events" class="btn btn-outline-gold btn-sm">View Events →</a>
+      </div>
+      <div class="card fade-in" style="padding:2rem;transition-delay:0.1s">
+        <div style="font-size:2.5rem;margin-bottom:1rem;">⚽</div>
+        <h3 style="margin-bottom:0.7rem;">NiMSA Biennial Games</h3>
+        <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:1rem;">The largest sporting event for medical students in Nigeria — held biennially across the country. The 19th edition was hosted by AMSUL (University of Lagos) in 2024. The South East Region consistently fields competitive teams, embodying the ideal of the well-rounded physician — intellectually sharp and physically fit.</p>
+        <a href="/events" class="btn btn-outline-gold btn-sm">Stay Updated →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CAREER CORNER -->
+<section class="section">
+  <div class="container">
+    <div class="section-header fade-in">
       <div class="eyebrow">Career Corner</div>
-      <h2>Opportunities for You</h2>
-      <p>Jobs, internships, research openings, and mentorship programs curated for Southeast medical students.</p>
+      <h2>Opportunities for SE Students</h2>
+      <p>Jobs, internships, IFMSA exchanges, and mentorship programmes curated for NiMSA SE medical students.</p>
       <div class="gold-line"></div>
     </div>
 
-    <div style="display:flex; flex-direction:column; gap:1rem;">
+    <div style="display:flex;flex-direction:column;gap:1rem;">
       <% const careers = [
-        { title: 'IFMSA Professional Exchange Programme', org: 'IFMSA / NiMSA', type: 'Exchange', deadline: 'April 15, 2026', badge: 'badge-blue', desc: 'Clinical and research exchanges at hospitals across Europe, Asia, and the Americas. Open to 300L+ students.' },
-        { title: 'Medical Research Internship — UNTH', org: 'University of Nigeria Teaching Hospital', type: 'Internship', deadline: 'March 30, 2026', badge: 'badge-green', desc: 'Summer research internship in clinical medicine and basic sciences at UNTH Enugu. Stipend provided.' },
-        { title: 'NiMSA Leadership Academy 2026', org: 'NiMSA National Secretariat', type: 'Training', deadline: 'May 1, 2026', badge: 'badge-gold', desc: 'A 5-day residential leadership training for medical student leaders across all six geopolitical regions.' },
-        { title: 'Public Health Mentorship Programme', org: 'NiMSA SE — Public Health Committee', type: 'Mentorship', deadline: 'Open', badge: 'badge-purple', desc: 'Be mentored by a senior medical student or junior doctor in public health, research, or clinical medicine.' }
+        {
+          title: 'IFMSA Professional Exchange Programme',
+          org: 'IFMSA / NiMSA National', type: 'International Exchange',
+          deadline: 'Check NiMSA Portal', badge: 'badge-blue',
+          desc: 'As a full IFMSA member, NiMSA SE students can apply for clinical and research exchanges at hospitals across Europe, Asia, and the Americas. Open to 300L+ students. Contact your RC for application details.'
+        },
+        {
+          title: 'MAK Health Week Volunteer Coordinators',
+          org: 'NiMSA SE Public Health Committee', type: 'Leadership',
+          deadline: 'Open Year-Round', badge: 'badge-gold',
+          desc: 'Lead outreach teams during the MAK NiMSA Health Week. Coordinators manage logistics, community liaison, and student volunteers — excellent leadership experience for your CV.'
+        },
+        {
+          title: 'NiMSA Leadership Academy',
+          org: 'NiMSA National Secretariat', type: 'Training Programme',
+          deadline: 'Annually — watch NiMSA portal', badge: 'badge-green',
+          desc: 'A residential leadership training for medical student leaders across all six regions. Alumni have gone on to become National Presidents and state health commissioners.'
+        },
+        {
+          title: 'Public Health Mentorship Programme',
+          org: 'NiMSA SE — REC', type: 'Mentorship',
+          deadline: 'Open', badge: 'badge-purple',
+          desc: 'Be paired with a senior medical student, junior doctor, or consultant mentor in public health, clinical medicine, or research. Part of the "Medicine & Politics" mentorship stream.'
+        }
       ]; %>
       <% careers.forEach((job, i) => { %>
-      <div class="card fade-in" style="padding:1.5rem;transition-delay:<%= i*0.1 %>s">
+      <div class="card fade-in" style="padding:1.5rem;transition-delay:<%= i*0.08 %>s">
         <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:1rem;">
-          <div style="flex:1;">
+          <div style="flex:1;min-width:200px;">
             <div style="display:flex;align-items:center;gap:0.8rem;margin-bottom:0.5rem;flex-wrap:wrap;">
-              <h3 style="font-size:1rem;margin:0;"><%= job.title %></h3>
+              <h3 style="font-size:0.95rem;margin:0;"><%= job.title %></h3>
               <span class="badge <%= job.badge %>"><%= job.type %></span>
             </div>
-            <p style="font-size:0.82rem;color:var(--text-muted);margin-bottom:0.5rem;">🏥 <%= job.org %></p>
+            <p style="font-size:0.8rem;color:var(--text-muted);margin-bottom:0.5rem;">🏥 <%= job.org %></p>
             <p style="font-size:0.83rem;color:var(--text-body);"><%= job.desc %></p>
           </div>
           <div style="text-align:right;flex-shrink:0;">
-            <div style="font-size:0.75rem;color:var(--text-muted);margin-bottom:0.8rem;">⏰ Deadline: <strong><%= job.deadline %></strong></div>
-            <a href="/contact" class="btn btn-sm btn-gold">Apply Now</a>
+            <div style="font-size:0.72rem;color:var(--text-muted);margin-bottom:0.8rem;">⏰ <%= job.deadline %></div>
+            <a href="/contact" class="btn btn-sm btn-gold">Apply / Enquire</a>
           </div>
         </div>
       </div>
@@ -95,7 +186,7 @@
     </div>
 
     <div class="info-box" style="margin-top:2rem;">
-      <p>📣 Have an opportunity to share with NiMSA SE students? <a href="/contact">Submit it to us</a> and we'll add it to the Career Corner.</p>
+      <p>📣 Have an opportunity — internship, scholarship, or research opening — to share with NiMSA SE students? <a href="/contact">Submit it to us</a> and we'll feature it here.</p>
     </div>
   </div>
 </section>

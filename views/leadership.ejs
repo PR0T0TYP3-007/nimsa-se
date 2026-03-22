@@ -12,7 +12,7 @@
   <div class="container">
     <div class="eyebrow">Our Leadership</div>
     <h1>Regional Executive Council</h1>
-    <p>Meet the leaders coordinating and governing the NiMSA South East Region — elected to serve over 2,400 medical students.</p>
+    <p>Meet the leaders coordinating and governing NiMSA South East Region — serving 13 member associations across five Southeast states.</p>
   </div>
 </div>
 
@@ -21,7 +21,7 @@
     <% if (success.length) { %><div class="alert alert-success">✓ <%= success[0] %></div><% } %>
 
     <!-- Filter Tabs -->
-    <div class="tabs" id="exec-filter" style="max-width:600px; margin: 0 auto 3rem;">
+    <div class="tabs" id="exec-filter" style="max-width:640px; margin: 0 auto 3rem;">
       <button class="tab-btn active" data-cat="all">All Leaders</button>
       <button class="tab-btn" data-cat="coordinator">Coordinator</button>
       <button class="tab-btn" data-cat="rec">REC Members</button>
@@ -34,22 +34,25 @@
       <div class="exec-card-wrap" data-category="<%= exec.category %>">
         <div class="exec-card">
           <% if (exec.photo) { %>
-            <img src="<%= exec.photo %>" alt="<%= exec.name %>" class="exec-photo" style="width:90px;height:90px;object-fit:cover;border-radius:50%;">
+            <img src="<%= exec.photo %>" alt="<%= exec.name %>"
+              class="exec-photo-wrap" style="width:90px;height:90px;object-fit:cover;border-radius:50%;border:2px solid var(--gold);display:block;margin:1.8rem auto 1.1rem;">
           <% } else { %>
-            <div class="exec-photo"><%= exec.name.charAt(0) %><%= exec.name.split(' ')[1]?.charAt(0) || '' %></div>
+            <div class="exec-photo-wrap"><%= exec.name.charAt(0) %><%= exec.name.split(' ')[1]?.charAt(0) || '' %></div>
           <% } %>
           <div class="exec-name"><%= exec.name %></div>
           <div class="exec-position">
-            <% if (exec.category === 'coordinator') { %><span class="badge badge-gold"><% } else { %><span style="color:var(--gold-dark);font-weight:600;font-size:0.82rem;"><% } %>
-              <%= exec.position %>
-            <% if (exec.category === 'coordinator') { %></span><% } else { %></span><% } %>
+            <% if (exec.category === 'coordinator') { %>
+              <span class="badge badge-gold"><%= exec.position %></span>
+            <% } else { %>
+              <span style="color:var(--gold-dark);font-weight:600;font-size:0.76rem;text-transform:uppercase;letter-spacing:0.04em;"><%= exec.position %></span>
+            <% } %>
           </div>
           <div class="exec-school"><%= exec.school %></div>
           <% if (exec.bio) { %><p class="exec-bio"><%= exec.bio %></p><% } %>
           <div class="exec-footer">
             <% if (exec.whatsapp) { %>
               <a href="https://wa.me/<%= exec.whatsapp %>" class="btn btn-sm" style="background:#25D366;color:white;border-color:#25D366;" target="_blank">
-                <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                <svg width="13" height="13" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
                 WhatsApp
               </a>
             <% } %>
@@ -64,41 +67,84 @@
 
     <% if (isAdmin) { %>
     <div class="info-box" style="margin-top:3rem;">
-      <p>🔧 <strong>Admin:</strong> <a href="/admin/executives">Manage executives</a> — add, edit, or remove REC members and school presidents.</p>
+      <p>🔧 <strong>Admin:</strong> <a href="/admin/executives">Manage executives</a> — add, edit or remove REC members and school chapter presidents.</p>
     </div>
     <% } %>
   </div>
 </section>
 
-<!-- Member Schools -->
+<!-- ALL 13 MEMBER SCHOOLS -->
 <section class="section section-alt">
   <div class="container">
-    <div class="section-header">
-      <div class="eyebrow">Our Schools</div>
-      <h2>Member Institutions</h2>
+    <div class="section-header fade-in">
+      <div class="eyebrow">Member Institutions</div>
+      <h2>13 Schools. One Region.</h2>
+      <p>All accredited by the Medical and Dental Council of Nigeria (MDCN) — federal, state, and private institutions united under NiMSA South East.</p>
       <div class="gold-line"></div>
     </div>
     <div class="grid-3">
-      <% const schools = [
-        { abbr: 'UNN', full: 'University of Nigeria, Nsukka', assoc: 'SUMSA', state: 'Enugu' },
-        { abbr: 'ABSU', full: 'Abia State University', assoc: 'MEDSSA', state: 'Abia' },
-        { abbr: 'ESUT', full: 'Enugu State University of Science & Technology', assoc: 'SMSAS', state: 'Enugu' },
-        { abbr: 'IMSU', full: 'Imo State University', assoc: 'SMSA', state: 'Imo' },
-        { abbr: 'UNIZIK', full: 'Nnamdi Azikiwe University', assoc: 'NUMSA', state: 'Anambra' },
-        { abbr: 'EBSU', full: 'Ebonyi State University', assoc: 'SMSA', state: 'Ebonyi' }
-      ]; %>
-      <% schools.forEach(s => { %>
-      <div class="card" style="padding:1.5rem;">
-        <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1rem;">
-          <div style="width:50px;height:50px;border-radius:12px;background:var(--green-light);display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:800;font-size:0.8rem;color:var(--green-primary);text-align:center;line-height:1.2;"><%= s.abbr %></div>
-          <div>
-            <div style="font-weight:700;color:var(--green-deep);font-size:0.95rem;"><%= s.assoc %></div>
-            <div style="font-size:0.75rem;color:var(--text-muted);"><%= s.state %> State</div>
+      <%
+      const schools = [
+        { abbr:'UNMSA',       assoc:'University of Nigeria Medical Students Association', inst:'University of Nigeria (Enugu Campus)', state:'Enugu',         type:'Federal',  quota:'150–180 Medical, 15 Dental' },
+        { abbr:'NAUMSA',      assoc:'Nnamdi Azikiwe University Medical Students Assoc.',  inst:'Nnamdi Azikiwe University, Nnewi',    state:'Anambra',       type:'Federal',  quota:'100 Medical' },
+        { abbr:'ABSUMSA',     assoc:'Abia State University Medical Students Association', inst:'Abia State University, Uturu',         state:'Abia',          type:'State',    quota:'120–150 Medical' },
+        { abbr:'EBSUMSA',     assoc:'Ebonyi State University Medical Students Assoc.',   inst:'Ebonyi State University, Abakaliki',   state:'Ebonyi',        type:'State',    quota:'100 Medical' },
+        { abbr:'ESUMSA',      assoc:'Enugu State University Medical Students Assoc.',    inst:'Enugu State University (ESUT)',         state:'Enugu',         type:'State',    quota:'50 Medical' },
+        { abbr:'IMSUMSA',     assoc:'Imo State University Medical Students Association', inst:'Imo State University, Owerri',         state:'Imo',           type:'State',    quota:'50 Medical' },
+        { abbr:'COOUMSA',     assoc:'Chukwuemeka Odumegwu Ojukwu University MSA',        inst:'COOU, Anambra',                        state:'Anambra',       type:'State',    quota:'50 Medical' },
+        { abbr:'AE-FUMSA',    assoc:'Alex Ekwueme Federal University MSA',               inst:'Alex Ekwueme Federal University',      state:'Ebonyi',        type:'Federal',  quota:'50 Medical' },
+        { abbr:'GOUMSA',      assoc:'Godfrey Okoye University Medical Students Assoc.',  inst:'Godfrey Okoye University',             state:'Enugu',         type:'Private',  quota:'Accredited' },
+        { abbr:'GUMSA',       assoc:'Gregory University Medical Students Association',   inst:'Gregory University, Uturu',            state:'Abia',          type:'Private',  quota:'120 Medical' },
+        { abbr:'MUMSA',       assoc:'Madonna University Medical Students Association',   inst:'Madonna University, Elele/Okija',      state:'Rivers/Anambra',type:'Private',  quota:'50 Medical' },
+        { abbr:'UNIZIK Dental',assoc:'UNIZIK Dental School Students Association',        inst:'Nnamdi Azikiwe University Dental',     state:'Anambra',       type:'Federal',  quota:'Dental' },
+        { abbr:'DUMSA',       assoc:'David Umahi Federal University MSA',                inst:'David Umahi Federal University',       state:'Ebonyi',        type:'Federal',  quota:'30 (Partially Accredited)' },
+      ];
+      const typeColor = { Federal:'badge-blue', State:'badge-green', Private:'badge-gold' };
+      %>
+      <% schools.forEach((s, i) => { %>
+      <div class="card fade-in" style="transition-delay:<%= i*0.04 %>s">
+        <div style="padding:1.4rem 1.4rem 0;">
+          <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:0.5rem;margin-bottom:0.8rem;">
+            <div style="font-family:var(--font-display);font-size:1.3rem;font-weight:700;color:var(--green-deep);"><%= s.abbr %></div>
+            <span class="badge <%= typeColor[s.type] || 'badge-green' %>"><%= s.type %></span>
           </div>
+          <div style="font-size:0.8rem;font-weight:600;color:var(--text-body);margin-bottom:0.3rem;"><%= s.assoc %></div>
+          <div style="font-size:0.75rem;color:var(--text-muted);margin-bottom:0.6rem;"><%= s.inst %></div>
         </div>
-        <p style="font-size:0.83rem;color:var(--text-muted);"><%= s.full %></p>
+        <div style="padding:0.8rem 1.4rem 1.2rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.4rem;">
+          <span class="badge badge-green"><%= s.state %> State</span>
+          <span style="font-size:0.7rem;color:var(--text-muted);">MDCN Quota: <%= s.quota %></span>
+        </div>
       </div>
       <% }) %>
+    </div>
+  </div>
+</section>
+
+<!-- GOVERNANCE EXPLAINER -->
+<section class="section">
+  <div class="container">
+    <div class="section-header fade-in">
+      <div class="eyebrow">How We Govern</div>
+      <h2>Collaborative Regional Governance</h2>
+      <div class="gold-line"></div>
+    </div>
+    <div class="grid-3">
+      <div class="card fade-in" style="padding:2rem;text-align:center;">
+        <div style="font-size:2.5rem;margin-bottom:1rem;">🧭</div>
+        <h3 style="font-size:1rem;margin-bottom:0.6rem;">Regional Coordinator</h3>
+        <p style="font-size:0.83rem;color:var(--text-muted);">Elected to manage all regional affairs and represent the South East at National Executive Council (NEC) meetings. Bridges the national body and the 13 local MSAs.</p>
+      </div>
+      <div class="card fade-in" style="padding:2rem;text-align:center;transition-delay:0.1s">
+        <div style="font-size:2.5rem;margin-bottom:1rem;">🏛️</div>
+        <h3 style="font-size:1rem;margin-bottom:0.6rem;">Regional Executive Council</h3>
+        <p style="font-size:0.83rem;color:var(--text-muted);">The REC includes the Secretary, Treasurer, and Directors of standing committees — together governing the region's programs, finances, and communications.</p>
+      </div>
+      <div class="card fade-in" style="padding:2rem;text-align:center;transition-delay:0.2s">
+        <div style="font-size:2.5rem;margin-bottom:1rem;">🤝</div>
+        <h3 style="font-size:1rem;margin-bottom:0.6rem;">School Chapter Presidents</h3>
+        <p style="font-size:0.83rem;color:var(--text-muted);">Each of the 13 member schools has its own MSA led by a Chapter President. These leaders collaborate with the RC on regional events, share hosting duties, and ensure grassroots representation.</p>
+      </div>
     </div>
   </div>
 </section>

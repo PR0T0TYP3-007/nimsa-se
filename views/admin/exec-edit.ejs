@@ -12,7 +12,7 @@
   </div>
   <div class="admin-card-body">
     <form action="/admin/executives/<%= exec.id %>/edit" method="POST">
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+      <div class="admin-form-grid">
         <div class="form-group">
           <label class="form-label">Full Name *</label>
           <input type="text" name="name" class="form-control" value="<%= exec.name %>" required>
