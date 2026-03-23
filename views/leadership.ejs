@@ -21,25 +21,30 @@
     <% if (success.length) { %><div class="alert alert-success">✓ <%= success[0] %></div><% } %>
 
     <!-- Filter Tabs -->
-    <div class="tabs" id="exec-filter" style="max-width:640px; margin: 0 auto 3rem;">
-      <button class="tab-btn active" data-cat="all">All Leaders</button>
+    <div class="tabs" id="exec-filter" style="max-width:680px; margin: 0 auto 3rem;">
+      <button class="tab-btn active" data-cat="all">All Leaders (<%= executives.length %>)</button>
       <button class="tab-btn" data-cat="coordinator">Coordinator</button>
-      <button class="tab-btn" data-cat="rec">REC Members</button>
-      <button class="tab-btn" data-cat="school-president">School Presidents</button>
+      <button class="tab-btn" data-cat="rec">REC (<%= executives.filter(e=>e.category==='rec').length %>)</button>
+      <button class="tab-btn" data-cat="school-president">School Presidents (<%= executives.filter(e=>e.category==='school-president').length %>)</button>
     </div>
 
     <!-- Executives Grid -->
     <div class="grid-3" id="exec-grid">
       <% executives.forEach(exec => { %>
+      <% const isVacant = exec.name === '[Vacant]'; %>
       <div class="exec-card-wrap" data-category="<%= exec.category %>">
-        <div class="exec-card">
-          <% if (exec.photo) { %>
+        <div class="exec-card" style="<%= isVacant ? 'opacity:0.65;' : '' %>">
+          <% if (exec.photo && !isVacant) { %>
             <img src="<%= exec.photo %>" alt="<%= exec.name %>"
               class="exec-photo-wrap" style="width:90px;height:90px;object-fit:cover;border-radius:50%;border:2px solid var(--gold);display:block;margin:1.8rem auto 1.1rem;">
           <% } else { %>
-            <div class="exec-photo-wrap"><%= exec.name.charAt(0) %><%= exec.name.split(' ')[1]?.charAt(0) || '' %></div>
+            <div class="exec-photo-wrap" style="<%= isVacant ? 'background:var(--border);color:var(--text-muted);font-size:1.2rem;' : '' %>">
+              <%= isVacant ? '?' : exec.name.charAt(0) + (exec.name.split(' ')[1]?.charAt(0) || '') %>
+            </div>
           <% } %>
-          <div class="exec-name"><%= exec.name %></div>
+          <div class="exec-name" style="<%= isVacant ? 'color:var(--text-muted);font-style:italic;font-size:0.9rem;' : '' %>">
+            <%= isVacant ? 'Position Vacant' : exec.name %>
+          </div>
           <div class="exec-position">
             <% if (exec.category === 'coordinator') { %>
               <span class="badge badge-gold"><%= exec.position %></span>
@@ -48,7 +53,12 @@
             <% } %>
           </div>
           <div class="exec-school"><%= exec.school %></div>
-          <% if (exec.bio) { %><p class="exec-bio"><%= exec.bio %></p><% } %>
+          <% if (exec.bio && !isVacant) { %><p class="exec-bio"><%= exec.bio %></p><% } %>
+          <% if (isVacant) { %>
+          <div style="padding:0.8rem 1.3rem 1.2rem;text-align:center;">
+            <span class="badge badge-orange" style="font-size:0.65rem;">To be appointed</span>
+          </div>
+          <% } else { %>
           <div class="exec-footer">
             <% if (exec.whatsapp) { %>
               <a href="https://wa.me/<%= exec.whatsapp %>" class="btn btn-sm" style="background:#25D366;color:white;border-color:#25D366;" target="_blank">
@@ -60,6 +70,7 @@
               <a href="mailto:<%= exec.email %>" class="btn btn-sm btn-outline-gold">Email</a>
             <% } %>
           </div>
+          <% } %>
         </div>
       </div>
       <% }) %>

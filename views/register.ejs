@@ -29,12 +29,18 @@
         <label class="form-label">Institution</label>
         <select name="institution" class="form-control" required>
           <option value="">— Select your school —</option>
-          <option value="University of Nigeria, Nsukka (UNN)">University of Nigeria, Nsukka (UNN)</option>
-          <option value="Abia State University (ABSU)">Abia State University (ABSU)</option>
-          <option value="Enugu State University of Science & Technology (ESUT)">ESUT</option>
-          <option value="Imo State University (IMSU)">Imo State University (IMSU)</option>
-          <option value="Nnamdi Azikiwe University (UNIZIK)">Nnamdi Azikiwe University (UNIZIK)</option>
-          <option value="Ebonyi State University (EBSU)">Ebonyi State University (EBSU)</option>
+          <option value="University of Nigeria (Enugu Campus)">University of Nigeria, Enugu — UNMSA</option>
+          <option value="Nnamdi Azikiwe University, Nnewi">Nnamdi Azikiwe University, Nnewi — NAUMSA</option>
+          <option value="Abia State University, Uturu">Abia State University, Uturu — ABSUMSA</option>
+          <option value="Enugu State University (ESUT)">Enugu State University (ESUT) — ESUMSA</option>
+          <option value="Imo State University, Owerri">Imo State University, Owerri — IMSUMSA</option>
+          <option value="Ebonyi State University, Abakaliki">Ebonyi State University, Abakaliki — EBSUMSA</option>
+          <option value="Godfrey Okoye University">Godfrey Okoye University — GOUMSA</option>
+          <option value="Gregory University, Uturu">Gregory University, Uturu — GUMSA</option>
+          <option value="Madonna University, Elele/Okija">Madonna University — MAUMSA</option>
+          <option value="Chukwuemeka Odumegwu Ojukwu University">COOU — COOUMSA</option>
+          <option value="Alex Ekwueme Federal University, Ebonyi">Alex Ekwueme Federal University — AE-FUMSA</option>
+          <option value="David Umahi Federal University, Ebonyi">David Umahi Federal University — DUFUMSA</option>
         </select>
       </div>
       <div class="form-group">
@@ -51,11 +57,21 @@
       </div>
       <div class="form-group">
         <label class="form-label">Password</label>
-        <input type="password" name="password" class="form-control" placeholder="Min. 6 characters" required minlength="6" autocomplete="new-password">
+        <div class="password-wrap">
+          <input type="password" name="password" class="form-control" placeholder="Min. 6 characters" required minlength="6" autocomplete="new-password">
+          <button type="button" class="password-toggle" aria-label="Show password">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          </button>
+        </div>
       </div>
       <div class="form-group">
         <label class="form-label">Confirm Password</label>
-        <input type="password" name="confirmPassword" class="form-control" placeholder="Repeat password" required autocomplete="new-password">
+        <div class="password-wrap">
+          <input type="password" name="confirmPassword" class="form-control" placeholder="Repeat password" required autocomplete="new-password">
+          <button type="button" class="password-toggle" aria-label="Show password">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          </button>
+        </div>
       </div>
       <button type="submit" class="btn btn-green btn-block" style="justify-content:center;">Create Account</button>
     </form>

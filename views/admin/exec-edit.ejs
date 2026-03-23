@@ -32,7 +32,21 @@
         <div class="form-group">
           <label class="form-label">School *</label>
           <select name="school" class="form-control" required>
-            <% ['University of Nigeria, Nsukka','Abia State University','Enugu State University of Science & Technology','Imo State University','Nnamdi Azikiwe University','Ebonyi State University'].forEach(s => { %>
+            <% const schoolList = [
+              'University of Nigeria (Enugu Campus)',
+              'Nnamdi Azikiwe University, Nnewi',
+              'Abia State University, Uturu',
+              'Enugu State University (ESUT)',
+              'Imo State University, Owerri',
+              'Ebonyi State University, Abakaliki',
+              'Godfrey Okoye University',
+              'Gregory University, Uturu',
+              'Madonna University, Elele/Okija',
+              'Chukwuemeka Odumegwu Ojukwu University',
+              'Alex Ekwueme Federal University, Ebonyi',
+              'David Umahi Federal University, Ebonyi'
+            ]; %>
+            <% schoolList.forEach(s => { %>
               <option value="<%= s %>" <%= exec.school===s?'selected':'' %>><%= s %></option>
             <% }) %>
           </select>
