@@ -184,9 +184,16 @@
       <% featuredExecs.forEach((exec, i) => { %>
       <div class="exec-card fade-in" style="transition-delay: <%= i * 0.1 %>s">
         <% if (exec.photo) { %>
-          <img src="<%= exec.photo %>" alt="<%= exec.name %>" class="exec-photo" style="width:90px;height:90px;">
+          <div style="display:flex;justify-content:center;margin:1.8rem auto 1.1rem;">
+            <img src="<%= exec.photo %>" alt="<%= exec.name %>"
+              style="width:90px;height:90px;object-fit:cover;border-radius:50%;border:2px solid var(--gold);">
+          </div>
         <% } else { %>
-          <div class="exec-photo"><%= exec.name.charAt(0) %></div>
+          <div style="display:flex;justify-content:center;margin:1.8rem auto 1.1rem;">
+            <div style="width:90px;height:90px;border-radius:50%;border:2px solid var(--gold);background:var(--green-light);display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-size:1.8rem;font-weight:600;color:var(--green-primary);">
+              <%= exec.name.charAt(0) %>
+            </div>
+          </div>
         <% } %>
         <div class="exec-name"><%= exec.name %></div>
         <div class="exec-position"><%= exec.position %></div>

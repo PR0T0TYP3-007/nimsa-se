@@ -102,7 +102,12 @@ document.addEventListener('DOMContentLoaded', () => {
         btn.classList.add('active');
         const cat = btn.dataset.cat;
         document.querySelectorAll('.exec-card-wrap').forEach(card => {
-          card.style.display = (cat === 'all' || card.dataset.category === cat) ? 'block' : 'none';
+          const cardCat = card.dataset.category;
+          // 'rec' tab shows both rec and coordinator
+          const show = cat === 'all'
+            || cardCat === cat
+            || (cat === 'rec' && (cardCat === 'rec' || cardCat === 'coordinator'));
+          card.style.display = show ? 'block' : 'none';
         });
       });
     });

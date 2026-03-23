@@ -21,10 +21,9 @@
     <% if (success.length) { %><div class="alert alert-success">✓ <%= success[0] %></div><% } %>
 
     <!-- Filter Tabs -->
-    <div class="tabs" id="exec-filter" style="max-width:680px; margin: 0 auto 3rem;">
+    <div class="tabs" id="exec-filter" style="max-width:580px; margin: 0 auto 3rem;">
       <button class="tab-btn active" data-cat="all">All Leaders (<%= executives.length %>)</button>
-      <button class="tab-btn" data-cat="coordinator">Coordinator</button>
-      <button class="tab-btn" data-cat="rec">REC (<%= executives.filter(e=>e.category==='rec').length %>)</button>
+      <button class="tab-btn" data-cat="rec">REC (<%= executives.filter(e=>e.category==='rec'||e.category==='coordinator').length %>)</button>
       <button class="tab-btn" data-cat="school-president">School Presidents (<%= executives.filter(e=>e.category==='school-president').length %>)</button>
     </div>
 
@@ -34,14 +33,16 @@
       <% const isVacant = exec.name === '[Vacant]'; %>
       <div class="exec-card-wrap" data-category="<%= exec.category %>">
         <div class="exec-card" style="<%= isVacant ? 'opacity:0.65;' : '' %>">
-          <% if (exec.photo && !isVacant) { %>
-            <img src="<%= exec.photo %>" alt="<%= exec.name %>"
-              class="exec-photo-wrap" style="width:90px;height:90px;object-fit:cover;border-radius:50%;border:2px solid var(--gold);display:block;margin:1.8rem auto 1.1rem;">
-          <% } else { %>
-            <div class="exec-photo-wrap" style="<%= isVacant ? 'background:var(--border);color:var(--text-muted);font-size:1.2rem;' : '' %>">
-              <%= isVacant ? '?' : exec.name.charAt(0) + (exec.name.split(' ')[1]?.charAt(0) || '') %>
-            </div>
-          <% } %>
+          <div style="display:flex;justify-content:center;margin:1.8rem auto 1.1rem;">
+            <% if (exec.photo && !isVacant) { %>
+              <img src="<%= exec.photo %>" alt="<%= exec.name %>"
+                style="width:90px;height:90px;object-fit:cover;border-radius:50%;border:2px solid var(--gold);display:block;flex-shrink:0;">
+            <% } else { %>
+              <div style="width:90px;height:90px;border-radius:50%;border:2px solid <%= isVacant ? 'var(--border)' : 'var(--gold)' %>;background:<%= isVacant ? 'var(--border)' : 'var(--green-light)' %>;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-size:1.8rem;font-weight:600;color:<%= isVacant ? 'var(--text-muted)' : 'var(--green-primary)' %>;flex-shrink:0;">
+                <%= isVacant ? '?' : exec.name.charAt(0) %>
+              </div>
+            <% } %>
+          </div>
           <div class="exec-name" style="<%= isVacant ? 'color:var(--text-muted);font-style:italic;font-size:0.9rem;' : '' %>">
             <%= isVacant ? 'Position Vacant' : exec.name %>
           </div>
