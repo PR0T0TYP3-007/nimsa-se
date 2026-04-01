@@ -27,29 +27,17 @@
             <option value="coordinator">Regional Coordinator</option>
             <option value="rec">REC Member</option>
             <option value="school-president">School Chapter President</option>
+            <option value="standing-committee">Standing Committee Rep</option>
           </select>
         </div>
         <div class="form-group">
           <label class="form-label">School *</label>
           <select name="school" class="form-control" required>
-            <optgroup label="── REC / Coordinator ──">
-              <option value="University of Nigeria (Enugu Campus)">University of Nigeria (Enugu Campus) — UNMSA</option>
-              <option value="Nnamdi Azikiwe University, Nnewi">Nnamdi Azikiwe University, Nnewi — NAUMSA</option>
-              <option value="Abia State University, Uturu">Abia State University, Uturu — ABSUMSA</option>
-              <option value="Enugu State University (ESUT)">Enugu State University (ESUT) — ESUMSA</option>
-              <option value="Imo State University, Owerri">Imo State University, Owerri — IMSUMSA</option>
-              <option value="Ebonyi State University, Abakaliki">Ebonyi State University, Abakaliki — EBSUMSA</option>
-            </optgroup>
-            <optgroup label="── Private Institutions ──">
-              <option value="Godfrey Okoye University">Godfrey Okoye University — GOUMSA</option>
-              <option value="Gregory University, Uturu">Gregory University, Uturu — GUMSA</option>
-              <option value="Madonna University, Elele/Okija">Madonna University, Elele/Okija — MAUMSA</option>
-            </optgroup>
-            <optgroup label="── Federal Institutions ──">
-              <option value="Chukwuemeka Odumegwu Ojukwu University">Chukwuemeka Odumegwu Ojukwu University — COOUMSA</option>
-              <option value="Alex Ekwueme Federal University, Ebonyi">Alex Ekwueme Federal University — AE-FUMSA</option>
-              <option value="David Umahi Federal University, Ebonyi">David Umahi Federal University — DUFUMSA</option>
-            </optgroup>
+            <option value="">— Select institution —</option>
+            <% (institutions||[]).forEach(inst => { %>
+              <option value="<%= inst.name %>"><%= inst.acronym %> — <%= inst.name %></option>
+            <% }) %>
+            <option value="Other">Other</option>
           </select>
         </div>
         <div class="form-group">

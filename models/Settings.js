@@ -14,6 +14,9 @@ const settingsSchema = new mongoose.Schema({
   resScholarships:  { type: String, default: '' },
   resResearch:      { type: String, default: '' },
   resNMAMDCN:       { type: String, default: '' },
+  heroImage:        { type: String, default: '' },
+  watermarkImage:   { type: String, default: '' },
+  watermarkText:    { type: String, default: '' },
 }, { timestamps: true });
 
 module.exports = mongoose.model('Settings', settingsSchema);

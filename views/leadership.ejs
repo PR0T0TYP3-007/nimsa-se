@@ -11,8 +11,8 @@
 <div class="page-hero">
   <div class="container">
     <div class="eyebrow">Our Leadership</div>
-    <h1>Regional Executive Council</h1>
-    <p>Meet the leaders coordinating and governing NiMSA South East Region — serving 13 member associations across five Southeast states.</p>
+    <h1>NiMSA SE Leadership</h1>
+    <p>Meet the Regional Executive Council, School Chapter Presidents, and Standing Committee Representatives of NiMSA South East Region.</p>
   </div>
 </div>
 
@@ -21,10 +21,10 @@
     <% if (success.length) { %><div class="alert alert-success">✓ <%= success[0] %></div><% } %>
 
     <!-- Filter Tabs -->
-    <div class="tabs" id="exec-filter" style="max-width:580px; margin: 0 auto 3rem;">
-      <button class="tab-btn active" data-cat="all">All Leaders (<%= executives.length %>)</button>
-      <button class="tab-btn" data-cat="rec">REC (<%= executives.filter(e=>e.category==='rec'||e.category==='coordinator').length %>)</button>
+    <div class="tabs" id="exec-filter" style="max-width:700px; margin: 0 auto 3rem;">
+      <button class="tab-btn active" data-cat="rec">REC — Regional Executive Council (<%= executives.filter(e=>e.category==='rec'||e.category==='coordinator').length %>)</button>
       <button class="tab-btn" data-cat="school-president">School Presidents (<%= executives.filter(e=>e.category==='school-president').length %>)</button>
+      <button class="tab-btn" data-cat="standing-committee">Standing Committee</button>
     </div>
 
     <!-- Executives Grid -->
@@ -49,6 +49,8 @@
           <div class="exec-position">
             <% if (exec.category === 'coordinator') { %>
               <span class="badge badge-gold"><%= exec.position %></span>
+            <% } else if (exec.category === 'standing-committee') { %>
+              <span class="badge badge-purple"><%= exec.position %></span>
             <% } else { %>
               <span style="color:var(--gold-dark);font-weight:600;font-size:0.76rem;text-transform:uppercase;letter-spacing:0.04em;"><%= exec.position %></span>
             <% } %>

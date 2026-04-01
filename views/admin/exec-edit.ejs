@@ -27,28 +27,17 @@
             <option value="coordinator" <%= exec.category==='coordinator'?'selected':'' %>>Regional Coordinator</option>
             <option value="rec" <%= exec.category==='rec'?'selected':'' %>>REC Member</option>
             <option value="school-president" <%= exec.category==='school-president'?'selected':'' %>>School Chapter President</option>
+            <option value="standing-committee" <%= exec.category==='standing-committee'?'selected':'' %>>Standing Committee Rep</option>
           </select>
         </div>
         <div class="form-group">
           <label class="form-label">School *</label>
           <select name="school" class="form-control" required>
-            <% const schoolList = [
-              'University of Nigeria (Enugu Campus)',
-              'Nnamdi Azikiwe University, Nnewi',
-              'Abia State University, Uturu',
-              'Enugu State University (ESUT)',
-              'Imo State University, Owerri',
-              'Ebonyi State University, Abakaliki',
-              'Godfrey Okoye University',
-              'Gregory University, Uturu',
-              'Madonna University, Elele/Okija',
-              'Chukwuemeka Odumegwu Ojukwu University',
-              'Alex Ekwueme Federal University, Ebonyi',
-              'David Umahi Federal University, Ebonyi'
-            ]; %>
-            <% schoolList.forEach(s => { %>
-              <option value="<%= s %>" <%= exec.school===s?'selected':'' %>><%= s %></option>
+            <option value="">— Select institution —</option>
+            <% (institutions||[]).forEach(inst => { %>
+              <option value="<%= inst.name %>" <%= exec.school===inst.name?'selected':'' %>><%= inst.acronym %> — <%= inst.name %></option>
             <% }) %>
+            <option value="Other" <%= exec.school==='Other'?'selected':'' %>>Other</option>
           </select>
         </div>
         <div class="form-group">

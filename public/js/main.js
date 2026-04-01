@@ -96,20 +96,26 @@ document.addEventListener('DOMContentLoaded', () => {
   // ── EXEC FILTER TABS ──
   const execFilter = document.getElementById('exec-filter');
   if (execFilter) {
+    // Apply default filter on page load (first tab = REC)
+    const defaultBtn = execFilter.querySelector('.tab-btn.active');
+    if (defaultBtn) applyExecFilter(defaultBtn.dataset.cat);
+
     execFilter.querySelectorAll('.tab-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         execFilter.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
-        const cat = btn.dataset.cat;
-        document.querySelectorAll('.exec-card-wrap').forEach(card => {
-          const cardCat = card.dataset.category;
-          // 'rec' tab shows both rec and coordinator
-          const show = cat === 'all'
-            || cardCat === cat
-            || (cat === 'rec' && (cardCat === 'rec' || cardCat === 'coordinator'));
-          card.style.display = show ? 'block' : 'none';
-        });
+        applyExecFilter(btn.dataset.cat);
       });
+    });
+  }
+
+  function applyExecFilter(cat) {
+    document.querySelectorAll('.exec-card-wrap').forEach(card => {
+      const cardCat = card.dataset.category;
+      const show = cat === 'all'
+        || cardCat === cat
+        || (cat === 'rec' && (cardCat === 'rec' || cardCat === 'coordinator'));
+      card.style.display = show ? 'block' : 'none';
     });
   }
 

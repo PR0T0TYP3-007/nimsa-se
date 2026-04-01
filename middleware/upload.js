@@ -46,4 +46,5 @@ module.exports = {
   uploadBulletin: multer({ storage: makeStorage('bulletins', true),  fileFilter, limits: limitsLarge }),
   uploadNews:     multer({ storage: makeStorage('news'),             fileFilter, limits }),
   uploadGallery:  multer({ storage: makeStorage('gallery'),          fileFilter, limits }),
+  uploadSite:     multer({ storage: makeStorage('site'),             fileFilter, limits }),
 };

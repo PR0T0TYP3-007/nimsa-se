@@ -2,7 +2,7 @@ const express     = require('express');
 const router      = express.Router();
 const bcrypt      = require('bcryptjs');
 const { requireAdmin } = require('../middleware/auth');
-const { cloudinary, uploadExec, uploadEvent, uploadBulletin, uploadNews, uploadGallery } = require('../middleware/upload');
+const { cloudinary, uploadExec, uploadEvent, uploadBulletin, uploadNews, uploadGallery, uploadSite } = require('../middleware/upload');
 
 const User        = require('../models/User');
 const Executive   = require('../models/Executive');
@@ -71,8 +71,12 @@ router.get('/', async (req, res) => {
    EXECUTIVES
 ════════════════════════════════ */
 router.get('/executives', async (req, res) => {
-  const [settings, executives] = await Promise.all([getSettings(), Executive.find().sort({ order: 1, createdAt: 1 })]);
-  res.render('admin/executives', { title: 'Manage Executives — Admin', executives, settings });
+  const [settings, executives, institutions] = await Promise.all([
+    getSettings(),
+    Executive.find().sort({ order: 1, createdAt: 1 }),
+    Institution.find().sort({ order: 1 })
+  ]);
+  res.render('admin/executives', { title: 'Manage Executives — Admin', executives, institutions, settings });
 });
 
 router.post('/executives', uploadExec.single('photoFile'), async (req, res) => {
@@ -91,9 +95,13 @@ router.post('/executives', uploadExec.single('photoFile'), async (req, res) => {
 
 router.get('/executives/:id/edit', async (req, res) => {
   try {
-    const [settings, exec] = await Promise.all([getSettings(), Executive.findById(req.params.id)]);
+    const [settings, exec, institutions] = await Promise.all([
+      getSettings(),
+      Executive.findById(req.params.id),
+      Institution.find().sort({ order: 1 })
+    ]);
     if (!exec) { req.flash('error', 'Executive not found.'); return res.redirect('/admin/executives'); }
-    res.render('admin/exec-edit', { title: 'Edit Executive — Admin', exec, settings });
+    res.render('admin/exec-edit', { title: 'Edit Executive — Admin', exec, institutions, settings });
   } catch { req.flash('error', 'Not found.'); res.redirect('/admin/executives'); }
 });
 
@@ -422,17 +430,42 @@ router.get('/settings', async (req, res) => {
   res.render('admin/settings', { title: 'Site Settings — Admin', settings });
 });
 
-router.post('/settings', async (req, res) => {
+router.post('/settings', uploadSite.fields([
+  { name: 'heroImageFile',      maxCount: 1 },
+  { name: 'watermarkImageFile', maxCount: 1 }
+]), async (req, res) => {
   try {
     let s = await Settings.findOne();
-    if (s) {
-      Object.assign(s, req.body);
-      await s.save();
-    } else {
-      await Settings.create(req.body);
+    if (!s) s = new Settings();
+
+    // Text fields
+    const textFields = ['whatsappNumber','email','facebook','instagram','twitter','youtube',
+      'siteName','resPastQuestions','resClinicalGuides','resIFMSA','resScholarships',
+      'resResearch','resNMAMDCN','watermarkText'];
+    textFields.forEach(f => { if (req.body[f] !== undefined) s[f] = req.body[f]; });
+
+    // Hero background image
+    if (req.files?.heroImageFile?.[0]) {
+      await deleteCloudinaryFile(s.heroImage);
+      s.heroImage = req.files.heroImageFile[0].path;
+    } else if (req.body.heroImage !== undefined) {
+      s.heroImage = req.body.heroImage;
     }
+
+    // Watermark image
+    if (req.files?.watermarkImageFile?.[0]) {
+      await deleteCloudinaryFile(s.watermarkImage);
+      s.watermarkImage = req.files.watermarkImageFile[0].path;
+    } else if (req.body.watermarkImage !== undefined) {
+      s.watermarkImage = req.body.watermarkImage;
+    }
+
+    await s.save();
     req.flash('success', 'Settings saved.');
-  } catch { req.flash('error', 'Failed to save settings.'); }
+  } catch (err) {
+    console.error(err);
+    req.flash('error', 'Failed to save settings.');
+  }
   res.redirect('/admin/settings');
 });
 

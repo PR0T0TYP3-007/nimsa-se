@@ -13,9 +13,8 @@
 <!-- Flash Messages -->
 
 <!-- HERO -->
-<section class="hero">
+<section class="hero" id="hero" style="<%= settings.heroImage ? `background-image: linear-gradient(155deg, rgba(0,34,0,0.82) 0%, rgba(0,50,0,0.76) 50%, rgba(0,82,0,0.70) 100%), url('${settings.heroImage}'); background-size:cover; background-position:center; background-repeat:no-repeat;` : '' %>">
   <div class="hero-content">
-    <!-- Flash messages inside hero so no dark strip -->
     <% if (success.length) { %><div class="alert alert-success" style="margin-bottom:1.5rem;max-width:500px;">✓ <%= success[0] %></div><% } %>
     <% if (error.length) { %><div class="alert alert-error" style="margin-bottom:1.5rem;max-width:500px;">✗ <%= error[0] %></div><% } %>
     <div class="hero-tag">
@@ -27,7 +26,7 @@
       <span class="gold">South East Region</span>
     </h1>
     <p class="hero-subtitle">
-      Advocacy. Outreach. Excellence. The NiMSA South East Region represents over 2,400 medical students across Abia, Anambra, Ebonyi, Enugu, and Imo states.
+      Advocacy. Outreach. Excellence. The NiMSA South East Region represents over 3,500 medical students across Abia, Anambra, Ebonyi, Enugu, and Imo states.
     </p>
     <div class="hero-actions">
       <a href="/join" class="btn btn-gold btn-lg">Join NiMSA SE</a>
@@ -52,6 +51,16 @@
       </div>
     </div>
   </div>
+
+  <!-- Watermark — Face of NiMSA SE or custom image -->
+  <% if (settings.watermarkImage) { %>
+  <div class="hero-watermark">
+    <img src="<%= settings.watermarkImage %>" alt="<%= settings.watermarkText || 'Face of NiMSA SE' %>">
+    <% if (settings.watermarkText) { %>
+    <div class="hero-watermark-caption"><%= settings.watermarkText %></div>
+    <% } %>
+  </div>
+  <% } %>
 </section>
 
 <!-- QUICK ACTIONS -->
