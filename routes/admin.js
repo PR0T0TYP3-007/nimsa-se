@@ -70,6 +70,21 @@ router.get('/', async (req, res) => {
 /* ════════════════════════════════
    EXECUTIVES
 ════════════════════════════════ */
+// REORDER executives — accepts array of {id, order}
+router.post('/executives/reorder', async (req, res) => {
+  try {
+    const { items } = req.body; // [{id, order}, ...]
+    if (!Array.isArray(items)) return res.status(400).json({ error: 'Invalid data' });
+    await Promise.all(items.map(item =>
+      Executive.findByIdAndUpdate(item.id, { order: item.order })
+    ));
+    res.json({ success: true });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Reorder failed' });
+  }
+});
+
 router.get('/executives', async (req, res) => {
   const [settings, executives, institutions] = await Promise.all([
     getSettings(),

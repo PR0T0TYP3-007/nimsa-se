@@ -12,7 +12,7 @@
   <div class="container">
     <div class="eyebrow">Our Leadership</div>
     <h1>NiMSA SE Leadership</h1>
-    <p>Meet the Regional Executive Council, School Chapter Presidents, and Standing Committee Representatives of NiMSA South East Region.</p>
+    <p>Meet the Regional Executive Council, MSA Presidents, and Standing Committee Representatives of NiMSA South East Region.</p>
   </div>
 </div>
 
@@ -21,15 +21,28 @@
     <% if (success.length) { %><div class="alert alert-success">✓ <%= success[0] %></div><% } %>
 
     <!-- Filter Tabs -->
-    <div class="tabs" id="exec-filter" style="max-width:700px; margin: 0 auto 3rem;">
-      <button class="tab-btn active" data-cat="rec">REC — Regional Executive Council (<%= executives.filter(e=>e.category==='rec'||e.category==='coordinator').length %>)</button>
-      <button class="tab-btn" data-cat="school-president">School Presidents (<%= executives.filter(e=>e.category==='school-president').length %>)</button>
-      <button class="tab-btn" data-cat="standing-committee">Standing Committee</button>
+    <div class="tabs" id="exec-filter" style="max-width:800px; margin: 0 auto 3rem; flex-wrap:wrap;">
+      <button class="tab-btn active" data-cat="rec">REC (<%= executives.filter(e=>e.category==='rec'||e.category==='coordinator').length %>)</button>
+      <button class="tab-btn" data-cat="school-president">MSA Presidents (<%= executives.filter(e=>e.category==='school-president').length %>)</button>
+      <button class="tab-btn" data-cat="standing-committee">Standing Committee (<%= executives.filter(e=>e.category==='standing-committee').length %>)</button>
+      <button class="tab-btn" data-cat="past-coordinator">Past Coordinators (<%= executives.filter(e=>e.category==='past-coordinator').length %>)</button>
     </div>
 
-    <!-- Executives Grid -->
+    <!-- Dynamic section title -->
+    <h3 id="exec-section-title" style="text-align:center;color:var(--green-deep);margin-bottom:2rem;font-family:var(--font-display);font-size:1.4rem;">Regional Executive Council</h3>
+
+    <!-- Executives Grid — MSA Presidents sorted alphabetically by school -->
     <div class="grid-3" id="exec-grid">
-      <% executives.forEach(exec => { %>
+      <%
+        // Sort: keep order for REC/coordinator/standing-committee, sort MSA presidents alphabetically by school
+        const sortedExecs = [...executives].sort((a, b) => {
+          if (a.category === 'school-president' && b.category === 'school-president') {
+            return (a.school || '').localeCompare(b.school || '');
+          }
+          return 0; // keep original order for everything else
+        });
+      %>
+      <% sortedExecs.forEach(exec => { %>
       <% const isVacant = exec.name === '[Vacant]'; %>
       <div class="exec-card-wrap" data-category="<%= exec.category %>">
         <div class="exec-card" style="<%= isVacant ? 'opacity:0.65;' : '' %>">
@@ -56,6 +69,11 @@
             <% } %>
           </div>
           <div class="exec-school"><%= exec.school %></div>
+          <% if (exec.tenure) { %>
+          <div style="margin-bottom:0.5rem;">
+            <span class="badge badge-blue" style="font-size:0.65rem;">📅 Tenure: <%= exec.tenure %></span>
+          </div>
+          <% } %>
           <% if (exec.bio && !isVacant) { %><p class="exec-bio"><%= exec.bio %></p><% } %>
           <% if (isVacant) { %>
           <div style="padding:0.8rem 1.3rem 1.2rem;text-align:center;">
@@ -146,7 +164,7 @@
       </div>
       <div class="card fade-in" style="padding:2rem;text-align:center;transition-delay:0.2s">
         <div style="font-size:2.5rem;margin-bottom:1rem;">🤝</div>
-        <h3 style="font-size:1rem;margin-bottom:0.6rem;">School Chapter Presidents</h3>
+        <h3 style="font-size:1rem;margin-bottom:0.6rem;">MSA Presidents</h3>
         <p style="font-size:0.83rem;color:var(--text-muted);">Each of the 13 member schools has its own MSA led by a Chapter President. These leaders collaborate with the RC on regional events, share hosting duties, and ensure grassroots representation.</p>
       </div>
     </div>

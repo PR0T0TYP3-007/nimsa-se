@@ -24,10 +24,11 @@
         <div class="form-group">
           <label class="form-label">Category *</label>
           <select name="category" class="form-control" required>
-            <option value="coordinator" <%= exec.category==='coordinator'?'selected':'' %>>Regional Coordinator</option>
+            <option value="coordinator" <%= exec.category==='coordinator'?'selected':'' %>>Regional Coordinator (Current)</option>
             <option value="rec" <%= exec.category==='rec'?'selected':'' %>>REC Member</option>
-            <option value="school-president" <%= exec.category==='school-president'?'selected':'' %>>School Chapter President</option>
+            <option value="school-president" <%= exec.category==='school-president'?'selected':'' %>>MSA President</option>
             <option value="standing-committee" <%= exec.category==='standing-committee'?'selected':'' %>>Standing Committee Rep</option>
+            <option value="past-coordinator" <%= exec.category==='past-coordinator'?'selected':'' %>>Past Regional Coordinator</option>
           </select>
         </div>
         <div class="form-group">
@@ -43,6 +44,10 @@
         <div class="form-group">
           <label class="form-label">WhatsApp Number</label>
           <input type="text" name="whatsapp" class="form-control" value="<%= exec.whatsapp %>">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Tenure / Year <span style="color:var(--text-muted);font-weight:400;">(for Past Coordinators)</span></label>
+          <input type="text" name="tenure" class="form-control" value="<%= exec.tenure || '' %>" placeholder="e.g. 2022/2023">
         </div>
         <div class="form-group">
           <label class="form-label">Email</label>

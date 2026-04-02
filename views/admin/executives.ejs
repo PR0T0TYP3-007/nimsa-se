@@ -24,10 +24,11 @@
         <div class="form-group">
           <label class="form-label">Category *</label>
           <select name="category" class="form-control" required>
-            <option value="coordinator">Regional Coordinator</option>
+            <option value="coordinator">Regional Coordinator (Current)</option>
             <option value="rec">REC Member</option>
-            <option value="school-president">School Chapter President</option>
+            <option value="school-president">MSA President</option>
             <option value="standing-committee">Standing Committee Rep</option>
+            <option value="past-coordinator">Past Regional Coordinator</option>
           </select>
         </div>
         <div class="form-group">
@@ -41,7 +42,9 @@
           </select>
         </div>
         <div class="form-group">
-          <label class="form-label">WhatsApp Number</label>
+          <label class="form-label">Tenure / Year <span style="color:var(--text-muted);font-weight:400;">(for Past Coordinators)</span></label>
+          <input type="text" name="tenure" class="form-control" placeholder="e.g. 2022/2023">
+        </div>
           <input type="text" name="whatsapp" class="form-control" placeholder="e.g. 2348012345678">
         </div>
         <div class="form-group">
@@ -97,4 +100,176 @@
   </div>
 </div>
 
+<!-- ── DRAG & DROP REORDER ── -->
+<div class="admin-card">
+  <div class="admin-card-header">
+    <h3>🔀 Drag & Drop Reorder</h3>
+    <button class="btn btn-gold btn-sm save-order-btn" id="saveOrderBtn" onclick="saveOrder()">💾 Save Order</button>
+  </div>
+  <div class="admin-card-body">
+    <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:1.2rem;">Drag people up or down to set the order they appear on the leadership page. Click <strong>Save Order</strong> when done.</p>
+
+    <!-- Category tabs -->
+    <div class="reorder-tabs">
+      <button class="reorder-tab active" onclick="showReorderGroup('rec', this)">REC & Coordinator</button>
+      <button class="reorder-tab" onclick="showReorderGroup('school-president', this)">MSA Presidents</button>
+      <button class="reorder-tab" onclick="showReorderGroup('standing-committee', this)">Standing Committee</button>
+      <button class="reorder-tab" onclick="showReorderGroup('past-coordinator', this)">Past Coordinators</button>
+    </div>
+
+    <!-- Reorder lists per group -->
+    <% const groups = {
+      'rec':              executives.filter(e => e.category === 'rec' || e.category === 'coordinator'),
+      'school-president': executives.filter(e => e.category === 'school-president').sort((a,b) => (a.school||'').localeCompare(b.school||'')),
+      'standing-committee': executives.filter(e => e.category === 'standing-committee'),
+      'past-coordinator': executives.filter(e => e.category === 'past-coordinator')
+    }; %>
+
+    <% Object.entries(groups).forEach(([groupKey, groupMembers]) => { %>
+    <div class="reorder-list" id="reorder-<%= groupKey %>" style="<%= groupKey !== 'rec' ? 'display:none;' : '' %>">
+      <% if (!groupMembers.length) { %>
+      <div style="text-align:center;padding:2rem;color:var(--text-muted);font-size:0.85rem;border:2px dashed var(--border);border-radius:10px;">
+        No members in this group yet. Add them above.
+      </div>
+      <% } %>
+      <% groupMembers.forEach(exec => { %>
+      <div class="reorder-item" draggable="true" data-id="<%= exec._id %>" data-group="<%= groupKey %>">
+        <span class="reorder-handle">⠿⠿</span>
+        <% if (exec.photo) { %>
+          <img src="<%= exec.photo %>" class="reorder-avatar" alt="<%= exec.name %>">
+        <% } else { %>
+          <div class="reorder-avatar"><%= exec.name.charAt(0) %></div>
+        <% } %>
+        <div class="reorder-info">
+          <div class="reorder-name"><%= exec.name === '[Vacant]' ? exec.position + ' (Vacant)' : exec.name %></div>
+          <div class="reorder-pos"><%= exec.position %> · <%= exec.school %></div>
+        </div>
+        <span style="font-size:0.7rem;color:var(--text-muted);flex-shrink:0;">#<span class="order-num"><%= exec.order || 0 %></span></span>
+      </div>
+      <% }) %>
+    </div>
+    <% }) %>
+  </div>
+</div>
+
 <%- include('layout-bottom') %>
+
+<script>
+// ── REORDER GROUP TABS ──
+function showReorderGroup(group, btn) {
+  document.querySelectorAll('.reorder-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.reorder-list').forEach(l => l.style.display = 'none');
+  document.getElementById('reorder-' + group).style.display = 'flex';
+}
+
+// ── DRAG AND DROP ──
+let dragSrc = null;
+
+document.querySelectorAll('.reorder-item').forEach(item => {
+  item.addEventListener('dragstart', function(e) {
+    dragSrc = this;
+    this.classList.add('dragging');
+    e.dataTransfer.effectAllowed = 'move';
+  });
+  item.addEventListener('dragend', function() {
+    this.classList.remove('dragging');
+    document.querySelectorAll('.reorder-item').forEach(i => i.classList.remove('drag-over'));
+    updateOrderNumbers();
+    document.getElementById('saveOrderBtn').classList.add('visible');
+  });
+  item.addEventListener('dragover', function(e) {
+    e.preventDefault();
+    if (dragSrc === this) return;
+    // Only allow within same group
+    if (dragSrc.dataset.group !== this.dataset.group) return;
+    this.classList.add('drag-over');
+    e.dataTransfer.dropEffect = 'move';
+  });
+  item.addEventListener('dragleave', function() {
+    this.classList.remove('drag-over');
+  });
+  item.addEventListener('drop', function(e) {
+    e.preventDefault();
+    if (dragSrc === this) return;
+    if (dragSrc.dataset.group !== this.dataset.group) return;
+    this.classList.remove('drag-over');
+    const list = this.parentNode;
+    const items = [...list.querySelectorAll('.reorder-item')];
+    const srcIdx  = items.indexOf(dragSrc);
+    const destIdx = items.indexOf(this);
+    if (srcIdx < destIdx) {
+      list.insertBefore(dragSrc, this.nextSibling);
+    } else {
+      list.insertBefore(dragSrc, this);
+    }
+  });
+});
+
+// Touch support for mobile
+let touchSrc = null, touchClone = null;
+document.querySelectorAll('.reorder-item').forEach(item => {
+  item.addEventListener('touchstart', function(e) {
+    touchSrc = this;
+    this.classList.add('dragging');
+  }, { passive: true });
+  item.addEventListener('touchend', function(e) {
+    if (!touchSrc) return;
+    touchSrc.classList.remove('dragging');
+    const touch = e.changedTouches[0];
+    const el = document.elementFromPoint(touch.clientX, touch.clientY);
+    const target = el?.closest('.reorder-item');
+    if (target && target !== touchSrc && target.dataset.group === touchSrc.dataset.group) {
+      const list = target.parentNode;
+      const items = [...list.querySelectorAll('.reorder-item')];
+      const si = items.indexOf(touchSrc), di = items.indexOf(target);
+      list.insertBefore(touchSrc, si < di ? target.nextSibling : target);
+    }
+    updateOrderNumbers();
+    document.getElementById('saveOrderBtn').classList.add('visible');
+    touchSrc = null;
+  }, { passive: true });
+});
+
+function updateOrderNumbers() {
+  document.querySelectorAll('.reorder-list').forEach(list => {
+    list.querySelectorAll('.reorder-item').forEach((item, idx) => {
+      const numEl = item.querySelector('.order-num');
+      if (numEl) numEl.textContent = idx + 1;
+    });
+  });
+}
+
+async function saveOrder() {
+  const items = [];
+  document.querySelectorAll('.reorder-item').forEach((item, idx) => {
+    // Get position within its own list
+    const list = item.parentNode;
+    const siblings = [...list.querySelectorAll('.reorder-item')];
+    const pos = siblings.indexOf(item);
+    items.push({ id: item.dataset.id, order: pos + 1 });
+  });
+
+  try {
+    const res = await fetch('/admin/executives/reorder', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ items })
+    });
+    const data = await res.json();
+    if (data.success) {
+      document.getElementById('saveOrderBtn').classList.remove('visible');
+      // Show success briefly
+      const btn = document.getElementById('saveOrderBtn');
+      btn.textContent = '✓ Saved!';
+      btn.classList.add('visible');
+      setTimeout(() => {
+        btn.textContent = '💾 Save Order';
+        btn.classList.remove('visible');
+      }, 2000);
+    }
+  } catch (err) {
+    alert('Failed to save order. Please try again.');
+  }
+}
+</script>

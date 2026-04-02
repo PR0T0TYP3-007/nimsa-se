@@ -117,6 +117,15 @@ document.addEventListener('DOMContentLoaded', () => {
         || (cat === 'rec' && (cardCat === 'rec' || cardCat === 'coordinator'));
       card.style.display = show ? 'block' : 'none';
     });
+    // Update section header
+    const headers = {
+      'rec': 'Regional Executive Council',
+      'school-president': 'MSA Presidents',
+      'standing-committee': 'Standing Committee Representatives',
+      'past-coordinator': 'Past Regional Coordinators'
+    };
+    const headerEl = document.getElementById('exec-section-title');
+    if (headerEl && headers[cat]) headerEl.textContent = headers[cat];
   }
 
   // ── EVENT FILTER TABS ──
